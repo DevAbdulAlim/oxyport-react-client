@@ -18,6 +18,7 @@ const linkVariants = cva(
         purple: "bg-purple-500 text-white hover:bg-purple-700",
         edit: "bg-yellow-500 text-white hover:bg-yellow-700",
         delete: "bg-red-500 text-white hover:bg-red-700",
+        link: "hover:underline"
       },
       size: {
         default: "h-10 px-6 ",

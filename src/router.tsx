@@ -20,6 +20,7 @@ import EditProducts from "./pages/admin/products/EditProducts";
 import CreateProducts from "./pages/admin/products/CreateProducts";
 import Products from "./pages/admin/products/Products";
 import EditCategory from "./pages/admin/categories/EditCategory";
+import Cart from "./pages/Cart";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
         <Route index element={<Home />} />
         <Route path="search" element={<Search />} />
         <Route path="product/:productId" element={<Product />} />
+        <Route path="cart" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
       </Route>
 
