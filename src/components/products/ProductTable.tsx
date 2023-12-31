@@ -1,6 +1,7 @@
 import Link from "../Link";
 import { Product } from "../../lib/models";
 import Button from "../Button";
+import Avatar from "../Avater";
 
 interface ProductTableProps {
     products: Product[];
@@ -29,7 +30,7 @@ const ProductTable: React.FC<ProductTableProps> = ({products, onDelete}) => {
             <tr key={product.id} className="border-t border-gray-500">
               <td className="px-4 py-2">{product.id}</td>
               <td className="px-4 py-2">
-                <img src={product.image} alt="Product" className="w-10 h-10" />
+                <Avatar src={process.env.PUBLIC_URL + '/img/avatar.jpg'} alt="Product" />
               </td>
               <td className="px-4 py-2">{product.price}</td>
               <td className="px-4 py-2">{product.stock}</td>
