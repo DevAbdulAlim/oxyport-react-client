@@ -1,7 +1,18 @@
-import React from 'react'
+// AdminLayout.tsx
 
-export default function AdminLayout() {
+import React from 'react';
+import AdminSidebar from '../../components/AdminSidebar';
+import { Outlet } from 'react-router-dom';
+
+const AdminLayout: React.FC = () => {
   return (
-    <div>AdminLayout</div>
-  )
-}
+    <div className="flex flex-col h-screen">
+    <AdminSidebar />
+    <div className="flex-1 p-4 ml-64 overflow-x-hidden overflow-y-auto bg-gray-200">
+     <Outlet />
+    </div>
+  </div>
+  );
+};
+
+export default AdminLayout;

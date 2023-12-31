@@ -1,25 +1,29 @@
 // App.tsx
-import React from 'react';
-import { AuthProvider } from './context/AuthContext';
-import { ProductProvider } from './context/ProductContext';
-import ProductList from './components/products/ProductList';
+import React from "react";
+import { AuthProvider } from "./context/AuthContext";
+import { ProductProvider } from "./context/ProductContext";
+import { RouterProvider } from "react-router-dom";
+import router from "./router";
+
+
 
 export default function App() {
   const login = () => {
     // Your login logic here
-    console.log('User logged in');
+    console.log("User logged in");
   };
 
   const logout = () => {
     // Your logout logic here
-    console.log('User logged out');
+    console.log("User logged out");
   };
+
+
 
   return (
     <AuthProvider>
       <ProductProvider>
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
-        <ProductList />
+        <RouterProvider router={router} />
       </ProductProvider>
     </AuthProvider>
   );

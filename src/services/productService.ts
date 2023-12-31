@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Product } from '../models/Product';
+import { Product } from '../lib/models';
 
 const API_BASE_URL = 'http://localhost:5000/api'; 
 

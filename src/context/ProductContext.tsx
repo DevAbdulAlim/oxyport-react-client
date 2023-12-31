@@ -1,7 +1,8 @@
 import React, { createContext, useReducer, useEffect, ReactNode, Dispatch } from 'react';
 import productReducer, { ProductAction } from './reducers/productReducer'
 import productService from '../services/productService';
-import { Product } from '../models/Product';
+import { Product } from '../lib/models';
+
 
 interface ProductContextProps {
   children: ReactNode;

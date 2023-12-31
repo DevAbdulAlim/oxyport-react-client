@@ -1,4 +1,5 @@
-import { Product } from "../../models/Product";
+import { Product } from "../../lib/models";
+
 
 
 export type ProductAction =
