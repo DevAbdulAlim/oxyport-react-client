@@ -1,5 +1,5 @@
 import Link from "../Link";
-import { Product } from "../../lib/models";
+import { Product } from "../../lib/types";
 import Button from "../Button";
 import Avatar from "../Avater";
 

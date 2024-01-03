@@ -1,4 +1,4 @@
-import { Product } from "../../lib/models";
+import { Product } from "../../lib/types";
 
 
 

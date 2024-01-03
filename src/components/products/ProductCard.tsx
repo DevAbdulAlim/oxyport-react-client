@@ -1,5 +1,5 @@
 import React from "react";
-import { Product } from "../../lib/models";
+import { Product } from "../../lib/types";
 import Link from "../Link";
 
 interface ProductCardProps {

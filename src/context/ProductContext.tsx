@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useEffect, ReactNode, Dispatch } from 'react';
 import productReducer, { ProductAction } from './reducers/productReducer'
 import productService from '../services/productService';
-import { Product } from '../lib/models';
+import { Product } from '../lib/types';
 
 
 interface ProductContextProps {

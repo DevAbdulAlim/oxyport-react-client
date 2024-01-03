@@ -1,21 +1,29 @@
 import axios from 'axios';
-import { Product } from '../lib/models';
-
-const API_BASE_URL = 'http://localhost:5000/api'; 
+import { Product } from '../lib/types';
+import config from '../config'
 
 const productService = {
   getProducts: async (): Promise<Product[]> => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/products`);
-      return response.data;
+      const response = await axios.get(`${config.apiBaseUrl}/products`);
+      return response.data.products;
     } catch (error) {
       throw new Error('Failed to fetch products');
     }
   },
 
+  getProductDetails: async (productId: number): Promise<Product> => {
+    try {
+      const response = await axios.get(`${config.apiBaseUrl}/products/${productId}`);
+      return response.data.product;
+    } catch (error) {
+      throw new Error('Failed to fetch product');
+    }
+  },
+
   createProduct: async (productData: Product): Promise<Product> => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/products`, productData);
+      const response = await axios.post(`${config.apiBaseUrl}/products`, productData);
       return response.data;
     } catch (error) {
       throw new Error('Failed to create product');
@@ -24,7 +32,7 @@ const productService = {
 
   updateProduct: async (productId: number, productData: Product): Promise<Product> => {
     try {
-      const response = await axios.put(`${API_BASE_URL}/products/${productId}`, productData);
+      const response = await axios.put(`${config.apiBaseUrl}/products/${productId}`, productData);
       return response.data;
     } catch (error) {
       throw new Error('Failed to update product');
@@ -33,7 +41,7 @@ const productService = {
 
   deleteProduct: async (productId: number): Promise<void> => {
     try {
-      await axios.delete(`${API_BASE_URL}/products/${productId}`);
+      await axios.delete(`${config.apiBaseUrl}/products/${productId}`);
     } catch (error) {
       throw new Error('Failed to delete product');
     }

@@ -1,4 +1,4 @@
-export interface User {
+export type User = {
   id: number;
   name: string;
   email: string;
@@ -10,25 +10,24 @@ export interface User {
   birthDate?: Date | null;
   gender?: string | null;
   active: boolean;
-}
+};
 
-export interface Address {
+export type Address = {
   id: number;
   city: string;
   state: string;
   postalCode: string;
   country: string;
   userId: number;
-}
+};
 
-export interface Category {
+export type Category = {
   id: number;
   name: string;
   description?: string | null;
+};
 
-}
-
-export interface Product {
+export type Product = {
   id: number;
   name: string;
   description?: string | null;
@@ -37,31 +36,38 @@ export interface Product {
   stock: number;
   categoryId: number;
   userId: number;
+};
 
-}
+export type ProductFormValues = {
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  stock: number;
+  categoryId: number;
+  userId: number;
+};
 
-export interface Review {
+export type Review = {
   id: number;
   text: string;
   rating: number;
   productId: number;
+};
 
-}
-
-export interface Cart {
+export type Cart = {
   id: number;
   userId: number;
-}
+};
 
-export interface CartItem {
+export type CartItem = {
   id: number;
   cartId: number;
   productId: number;
   quantity: number;
+};
 
-}
-
-export interface Order {
+export type Order = {
   id: number;
   userId: number;
   total: number;
@@ -69,12 +75,11 @@ export interface Order {
   paymentMethod: string;
   transactionId?: string | null;
   deliveryDate?: Date | null;
-}
+};
 
-export interface OrderItem {
+export type OrderItem = {
   id: number;
   orderId: number;
   productId: number;
   quantity: number;
-
-}
+};
