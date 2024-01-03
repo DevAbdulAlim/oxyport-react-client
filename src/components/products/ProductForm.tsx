@@ -2,6 +2,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Button from "../Button";
 import { ProductFormValues } from "../../lib/types";
+import productService from "../../services/productService";
 
 const ProductSchema = Yup.object({
   name: Yup.string().required("Name is required"),
@@ -17,20 +18,31 @@ const ProductSchema = Yup.object({
   userId: Yup.number().required("User ID is required"),
 });
 
-
-const ProductForm = ({ defaultValue, edit }: { defaultValue: ProductFormValues, edit?: boolean }) => {
-
+const ProductForm = ({
+  defaultValue,
+  edit,
+}: {
+  defaultValue: ProductFormValues;
+  edit?: boolean;
+}) => {
   return (
     <div className="max-w-md p-6 mx-auto mt-10 bg-white rounded-md shadow-md">
       <h1 className="mb-4 text-2xl font-semibold">Product Form</h1>
       <Formik
         initialValues={defaultValue}
         validationSchema={ProductSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            setSubmitting(true);
+
+            await productService.createProduct(values);
+
+            console.log("Product created successfully");
+          } catch (error) {
+            console.error(error);
+          } finally {
             setSubmitting(false);
-          }, 400);
+          }
         }}
       >
         <Form className="space-y-4">
@@ -168,7 +180,7 @@ const ProductForm = ({ defaultValue, edit }: { defaultValue: ProductFormValues, 
           </div>
 
           <div>
-            <Button type="submit">{edit ? 'Update' : 'Create'}</Button>
+            <Button type="submit">{edit ? "Update" : "Create"}</Button>
           </div>
         </Form>
       </Formik>

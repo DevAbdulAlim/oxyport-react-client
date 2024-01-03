@@ -1,28 +1,18 @@
 import React, { useState, useEffect } from "react";
 import ProductForm from "../../../components/products/ProductForm";
-import axios from "axios";
 import { Product, ProductFormValues } from "../../../lib/types";
 import { useParams } from "react-router-dom";
-import config from "../../../config";
+import productService from "../../../services/productService";
 
 export default function EditProducts() {
   const [product, setProduct] = useState<Product | null>(null);
   const { productId } = useParams();
 
   useEffect(() => {
-    const fetchProductDetails = async () => {
-      try {
-        const response = await axios.get(
-          `${config.apiBaseUrl}/products/${productId}`
-        );
-        setProduct(response.data.product as Product);
-      } catch (error) {
-        console.error("Failed to fetch product", error);
-        // Handle the error, show a message, or redirect as needed
-      }
-    };
-
-    fetchProductDetails();
+    (async () => {
+      const response = await productService.getProductDetails(productId!);
+      setProduct(response);
+    })();
   }, [productId]);
 
   const initialValues: ProductFormValues = {

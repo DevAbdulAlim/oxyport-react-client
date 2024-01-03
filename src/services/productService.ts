@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { Product } from '../lib/types';
-import config from '../config'
+import axios from "axios";
+import { Product, ProductFormValues } from "../lib/types";
+import config from "../config";
 
 const productService = {
   getProducts: async (): Promise<Product[]> => {
@@ -8,34 +8,45 @@ const productService = {
       const response = await axios.get(`${config.apiBaseUrl}/products`);
       return response.data.products;
     } catch (error) {
-      throw new Error('Failed to fetch products');
+      throw new Error("Failed to fetch products");
     }
   },
 
-  getProductDetails: async (productId: number): Promise<Product> => {
+  getProductDetails: async (productId: string): Promise<Product> => {
     try {
-      const response = await axios.get(`${config.apiBaseUrl}/products/${productId}`);
+      const response = await axios.get(
+        `${config.apiBaseUrl}/products/${productId}`
+      );
       return response.data.product;
     } catch (error) {
-      throw new Error('Failed to fetch product');
+      throw new Error("Failed to fetch product");
     }
   },
 
-  createProduct: async (productData: Product): Promise<Product> => {
+  createProduct: async (productData: ProductFormValues): Promise<Product> => {
     try {
-      const response = await axios.post(`${config.apiBaseUrl}/products`, productData);
+      const response = await axios.post(
+        `${config.apiBaseUrl}/products`,
+        productData
+      );
       return response.data;
     } catch (error) {
-      throw new Error('Failed to create product');
+      throw new Error("Failed to create product");
     }
   },
 
-  updateProduct: async (productId: number, productData: Product): Promise<Product> => {
+  updateProduct: async (
+    productId: number,
+    productData: Product
+  ): Promise<Product> => {
     try {
-      const response = await axios.put(`${config.apiBaseUrl}/products/${productId}`, productData);
+      const response = await axios.put(
+        `${config.apiBaseUrl}/products/${productId}`,
+        productData
+      );
       return response.data;
     } catch (error) {
-      throw new Error('Failed to update product');
+      throw new Error("Failed to update product");
     }
   },
 
@@ -43,7 +54,7 @@ const productService = {
     try {
       await axios.delete(`${config.apiBaseUrl}/products/${productId}`);
     } catch (error) {
-      throw new Error('Failed to delete product');
+      throw new Error("Failed to delete product");
     }
   },
 };

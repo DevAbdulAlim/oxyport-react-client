@@ -1,8 +1,13 @@
-import React, { createContext, useReducer, useEffect, ReactNode, Dispatch } from 'react';
-import productReducer, { ProductAction } from './reducers/productReducer'
-import productService from '../services/productService';
-import { Product } from '../lib/types';
-
+import React, {
+  createContext,
+  useReducer,
+  useEffect,
+  ReactNode,
+  Dispatch,
+} from "react";
+import productReducer, { ProductAction } from "./reducers/productReducer";
+import productService from "../services/productService";
+import { Product, ProductFormValues } from "../lib/types";
 
 interface ProductContextProps {
   children: ReactNode;
@@ -16,12 +21,14 @@ interface ProductState {
 
 export interface ProductContextValue extends ProductState {
   dispatch: Dispatch<ProductAction>;
-  createProduct: (productData: Product) => void;
+  createProduct: (productData: ProductFormValues) => void;
   updateProduct: (productId: number, productData: Product) => void;
   deleteProduct: (productId: number) => void;
 }
 
-const ProductContext = createContext<ProductContextValue | undefined>(undefined);
+const ProductContext = createContext<ProductContextValue | undefined>(
+  undefined
+);
 
 const ProductProvider: React.FC<ProductContextProps> = ({ children }) => {
   const initialState: ProductState = {
@@ -34,45 +41,48 @@ const ProductProvider: React.FC<ProductContextProps> = ({ children }) => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      dispatch({ type: 'FETCH_PRODUCTS_REQUEST' });
+      dispatch({ type: "FETCH_PRODUCTS_REQUEST" });
       try {
         const products = await productService.getProducts();
-        dispatch({ type: 'FETCH_PRODUCTS_SUCCESS', payload: products });
+        dispatch({ type: "FETCH_PRODUCTS_SUCCESS", payload: products });
       } catch (error: any) {
-        dispatch({ type: 'FETCH_PRODUCTS_FAILURE', payload: error.message });
+        dispatch({ type: "FETCH_PRODUCTS_FAILURE", payload: error.message });
       }
     };
 
     fetchProducts();
   }, []);
 
-  const createProduct = async (productData: Product) => {
-    dispatch({ type: 'CREATE_PRODUCT_REQUEST' });
+  const createProduct = async (productData: ProductFormValues) => {
+    dispatch({ type: "CREATE_PRODUCT_REQUEST" });
     try {
       const newProduct = await productService.createProduct(productData);
-      dispatch({ type: 'CREATE_PRODUCT_SUCCESS', payload: newProduct });
+      dispatch({ type: "CREATE_PRODUCT_SUCCESS", payload: newProduct });
     } catch (error: any) {
-      dispatch({ type: 'CREATE_PRODUCT_FAILURE', payload: error.message });
+      dispatch({ type: "CREATE_PRODUCT_FAILURE", payload: error.message });
     }
   };
 
   const updateProduct = async (productId: number, productData: Product) => {
-    dispatch({ type: 'UPDATE_PRODUCT_REQUEST' });
+    dispatch({ type: "UPDATE_PRODUCT_REQUEST" });
     try {
-      const updatedProduct = await productService.updateProduct(productId, productData);
-      dispatch({ type: 'UPDATE_PRODUCT_SUCCESS', payload: updatedProduct });
+      const updatedProduct = await productService.updateProduct(
+        productId,
+        productData
+      );
+      dispatch({ type: "UPDATE_PRODUCT_SUCCESS", payload: updatedProduct });
     } catch (error: any) {
-      dispatch({ type: 'UPDATE_PRODUCT_FAILURE', payload: error.message });
+      dispatch({ type: "UPDATE_PRODUCT_FAILURE", payload: error.message });
     }
   };
 
   const deleteProduct = async (productId: number) => {
-    dispatch({ type: 'DELETE_PRODUCT_REQUEST' });
+    dispatch({ type: "DELETE_PRODUCT_REQUEST" });
     try {
       await productService.deleteProduct(productId);
-      dispatch({ type: 'DELETE_PRODUCT_SUCCESS', payload: productId });
+      dispatch({ type: "DELETE_PRODUCT_SUCCESS", payload: productId });
     } catch (error: any) {
-      dispatch({ type: 'DELETE_PRODUCT_FAILURE', payload: error.message });
+      dispatch({ type: "DELETE_PRODUCT_FAILURE", payload: error.message });
     }
   };
 
@@ -84,7 +94,11 @@ const ProductProvider: React.FC<ProductContextProps> = ({ children }) => {
     deleteProduct,
   };
 
-  return <ProductContext.Provider value={contextValue}>{children}</ProductContext.Provider>;
+  return (
+    <ProductContext.Provider value={contextValue}>
+      {children}
+    </ProductContext.Provider>
+  );
 };
 
 export { ProductContext, ProductProvider };
