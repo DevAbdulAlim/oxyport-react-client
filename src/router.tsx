@@ -21,6 +21,8 @@ import CreateProducts from "./pages/admin/products/CreateProducts";
 import Products from "./pages/admin/products/Products";
 import EditCategory from "./pages/admin/categories/EditCategory";
 import Cart from "./pages/Cart";
+import LoginForm from "./pages/auth/Login";
+import RegistrationForm from "./pages/auth/Register";
 import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter(
@@ -70,6 +72,10 @@ const router = createBrowserRouter(
         <Route path="users" element={<Users />} />
         <Route path="users/details/:userId" element={<UserDetails />} />
       </Route>
+
+      {/* Auth Routes */}
+      <Route path="/login" element={<LoginForm />} />
+      <Route path="/register" element={<RegistrationForm />} />
     </Route>
   )
 );
