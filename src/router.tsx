@@ -21,6 +21,7 @@ import CreateProducts from "./pages/admin/products/CreateProducts";
 import Products from "./pages/admin/products/Products";
 import EditCategory from "./pages/admin/categories/EditCategory";
 import Cart from "./pages/Cart";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,11 +31,25 @@ const router = createBrowserRouter(
         <Route path="search" element={<Search />} />
         <Route path="product/:productId" element={<Product />} />
         <Route path="cart" element={<Cart />} />
-        <Route path="checkout" element={<Checkout />} />
+        <Route
+          path="checkout"
+          element={
+            <PrivateRoute>
+              <Checkout />
+            </PrivateRoute>
+          }
+        />
       </Route>
 
       {/* Admin Routes */}
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route
+        path="/admin"
+        element={
+          <PrivateRoute isAdminRoute={true}>
+            <AdminLayout />
+          </PrivateRoute>
+        }
+      >
         <Route index element={<Dashboard />} />
 
         {/* Categories Routes */}
