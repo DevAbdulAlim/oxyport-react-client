@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState } from 'react';
+import axios from "axios";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import config from "../config";
 
 interface AuthContextProps {
   children: React.ReactNode;
@@ -7,7 +9,7 @@ interface AuthContextProps {
 interface AuthContextValue {
   isAuthenticated: boolean;
   isAdmin: boolean;
-  login: () => void;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -17,10 +19,25 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const login = () => {
-    // Your authentication logic here
+  useEffect(() => {
     setIsAuthenticated(true);
     setIsAdmin(true);
+  }, []);
+
+  console.log(isAuthenticated);
+
+  const login = async (email: string, password: string) => {
+    try {
+      const response = await axios.post(`${config.apiBaseUrl}/users/login`, {
+        email,
+        password,
+      });
+      console.log("Login successful:", response.data);
+      setIsAuthenticated(true);
+      setIsAdmin(true);
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   const logout = () => {
@@ -33,20 +50,18 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     isAuthenticated,
     isAdmin,
     login,
-    logout
+    logout,
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 
 export const useAuth = (): AuthContextValue => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
