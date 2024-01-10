@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 
@@ -13,13 +13,13 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   redirectTo,
   children,
 }) => {
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated, isAdmin, verifyToken } = useAuth();
 
-  // useEffect(() => {
-  //   (async () => {
-
-  //   })()
-  // },[])
+  useEffect(() => {
+    (async () => {
+      await verifyToken();
+    })();
+  }, [verifyToken]);
 
   return isAuthenticated ? (
     isAdminRoute && !isAdmin ? (

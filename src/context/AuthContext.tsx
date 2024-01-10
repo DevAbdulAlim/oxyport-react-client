@@ -10,6 +10,7 @@ interface AuthContextValue {
   isAuthenticated: boolean;
   isAdmin: boolean;
   login: (email: string, password: string) => Promise<void>;
+  verifyToken: () => Promise<void>;
   logout: () => void;
 }
 
@@ -40,6 +41,27 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     }
   };
 
+  const verifyToken = async () => {
+    try {
+      const response = await axios.post(
+        `${config.apiBaseUrl}/users/verifyToken`
+      );
+
+      if (response.data.user) {
+        const { role } = response.data.user;
+
+        if (role === "admin") {
+          setIsAdmin(true);
+        }
+
+        setIsAuthenticated(true);
+      }
+    } catch (error) {
+      console.error("Error while verifying token:", error);
+      // Handle specific errors or add additional logic if needed
+    }
+  };
+
   const logout = () => {
     // Your logout logic here
     setIsAuthenticated(false);
@@ -50,6 +72,7 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     isAuthenticated,
     isAdmin,
     login,
+    verifyToken,
     logout,
   };
 
