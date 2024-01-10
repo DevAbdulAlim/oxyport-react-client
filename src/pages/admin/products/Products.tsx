@@ -1,25 +1,42 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProductTable from "../../../components/products/ProductTable";
-import { ProductContext } from "../../../context/ProductContext";
+import { useProduct } from "../../../context/ProductContext";
 import Pagination from "../../../components/Pagination";
 import Link from "../../../components/Link";
+import { productParams } from "../../../services/productService";
 
 export default function Products() {
-  const productContext = useContext(ProductContext);
+  const [itemsPerPage, setItemsPerPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  if (!productContext) {
-    return <div>Loading...</div>; // or handle the undefined case in another way
-  }
+  const { fetchProducts, deleteProduct, products, total, error, loading } =
+    useProduct();
 
-  // Destructure the properties you need
-  const { products, loading, error, deleteProduct } = productContext;
+  useEffect(() => {
+    const params: productParams = {
+      sortBy: "",
+      sortOrder: "",
+      search: "",
+      page: currentPage.toString(),
+    };
+
+    fetchProducts(params);
+  }, [currentPage]);
 
   const handleDelete = (productId: number) => {
-    // You might want to show a confirmation dialog before deleting
     deleteProduct(productId);
   };
 
-  const handlePageChange = () => {};
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    console.log(`Page ${page}`);
+  };
+
+  const handleSearch = () => {};
+
+  const handleSort = () => {};
+
+  const totalPages = Math.ceil(total / itemsPerPage);
 
   return (
     <div className="container mx-auto mt-8">
@@ -49,9 +66,10 @@ export default function Products() {
         <div>No products found.</div>
       )}
       <Pagination
-        totalItems={100}
-        itemsPerPage={10}
-        currentPage={1}
+        itemsPerPage={itemsPerPage}
+        totalItems={total}
+        totalPages={totalPages}
+        currentPage={currentPage}
         onPageChange={handlePageChange}
       />
     </div>

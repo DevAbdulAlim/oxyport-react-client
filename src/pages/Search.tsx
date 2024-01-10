@@ -1,28 +1,19 @@
-import React, { useContext, useState } from 'react';
-import ProductCard from '../components/products/ProductCard';
+import React, { useContext, useState } from "react";
+import ProductCard from "../components/products/ProductCard";
 
-import { ProductContext } from '../context/ProductContext';
+import { useProduct } from "../context/ProductContext";
 
 const ProductSearch = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
+  const { products, loading } = useProduct();
 
-  const productContext = useContext(ProductContext);
-
-  if (!productContext) {
-    return <div>No Products found</div>;
-  }
-
-  const { products, loading } = productContext;
-
-  const handleSearch = () => {
- 
-  };
+  const handleSearch = () => {};
 
   return (
     <div className="container mx-auto mt-8">
       <h2 className="mb-4 text-3xl font-semibold">Product Search</h2>
-  
+
       {/* Display Search Results */}
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {products.map((product: any) => (

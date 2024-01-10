@@ -1,15 +1,9 @@
 import React, { useContext } from "react";
-import { ProductContext } from "../context/ProductContext";
+import { useProduct } from "../context/ProductContext";
 import ProductCard from "../components/products/ProductCard";
 
 export default function Home() {
-  const productContext = useContext(ProductContext);
-
-  if (!productContext) {
-    return <div>No Products found</div>;
-  }
-
-  const { products, loading } = productContext;
+  const { products, loading } = useProduct();
 
   return (
     <>

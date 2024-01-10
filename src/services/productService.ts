@@ -2,13 +2,27 @@ import axios from "axios";
 import { Product, ProductFormValues } from "../lib/types";
 import config from "../config";
 
+export type productParams = {
+  sortBy: string;
+  sortOrder: string;
+  search: string;
+  page: string;
+};
+
 const productService = {
-  getProducts: async (): Promise<Product[]> => {
+  getProducts: async (
+    params: productParams
+  ): Promise<{ products: Product[]; total: number }> => {
     try {
-      const response = await axios.get(`${config.apiBaseUrl}/products`);
-      return response.data.products;
+      const response = await axios.get(`${config.apiBaseUrl}/products`, {
+        params,
+      });
+      return {
+        products: response.data.products,
+        total: response.data.totalItems,
+      };
     } catch (error) {
-      throw new Error("Failed to fetch products");
+      throw new Error(`Failed to fetch products: ${error}`);
     }
   },
 

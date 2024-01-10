@@ -1,12 +1,12 @@
 import React, {
   createContext,
   useReducer,
-  useEffect,
   ReactNode,
   Dispatch,
+  useContext,
 } from "react";
 import productReducer, { ProductAction } from "./reducers/productReducer";
-import productService from "../services/productService";
+import productService, { productParams } from "../services/productService";
 import { Product, ProductFormValues } from "../lib/types";
 
 interface ProductContextProps {
@@ -15,12 +15,14 @@ interface ProductContextProps {
 
 interface ProductState {
   products: Product[];
+  total: number;
   loading: boolean;
   error: string | null;
 }
 
 export interface ProductContextValue extends ProductState {
   dispatch: Dispatch<ProductAction>;
+  fetchProducts: (params: productParams) => void;
   createProduct: (productData: ProductFormValues) => void;
   updateProduct: (productId: number, productData: Product) => void;
   deleteProduct: (productId: number) => void;
@@ -30,28 +32,30 @@ const ProductContext = createContext<ProductContextValue | undefined>(
   undefined
 );
 
-const ProductProvider: React.FC<ProductContextProps> = ({ children }) => {
+export const ProductProvider: React.FC<ProductContextProps> = ({
+  children,
+}) => {
   const initialState: ProductState = {
     products: [],
+    total: 0,
     loading: false,
     error: null,
   };
 
   const [state, dispatch] = useReducer(productReducer, initialState);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      dispatch({ type: "FETCH_PRODUCTS_REQUEST" });
-      try {
-        const products = await productService.getProducts();
-        dispatch({ type: "FETCH_PRODUCTS_SUCCESS", payload: products });
-      } catch (error: any) {
-        dispatch({ type: "FETCH_PRODUCTS_FAILURE", payload: error.message });
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  const fetchProducts = async (params: productParams) => {
+    dispatch({ type: "FETCH_PRODUCTS_REQUEST" });
+    try {
+      const { products, total } = await productService.getProducts(params);
+      dispatch({
+        type: "FETCH_PRODUCTS_SUCCESS",
+        payload: { products, total },
+      });
+    } catch (error: any) {
+      dispatch({ type: "FETCH_PRODUCTS_FAILURE", payload: error.message });
+    }
+  };
 
   const createProduct = async (productData: ProductFormValues) => {
     dispatch({ type: "CREATE_PRODUCT_REQUEST" });
@@ -89,6 +93,7 @@ const ProductProvider: React.FC<ProductContextProps> = ({ children }) => {
   const contextValue: ProductContextValue = {
     ...state,
     dispatch,
+    fetchProducts,
     createProduct,
     updateProduct,
     deleteProduct,
@@ -101,4 +106,10 @@ const ProductProvider: React.FC<ProductContextProps> = ({ children }) => {
   );
 };
 
-export { ProductContext, ProductProvider };
+export const useProduct = (): ProductContextValue => {
+  const context = useContext(ProductContext);
+  if (!context) {
+    throw new Error("useProduct must be used within an ProductProvider");
+  }
+  return context;
+};
