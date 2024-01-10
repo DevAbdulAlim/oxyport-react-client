@@ -22,7 +22,8 @@ const Navbar = () => {
         <div >
           <Link to="/home" className="mx-4 text-white">Home</Link>
           <Link to="/cart" className="mx-4 text-white">Cart</Link>
-          <Link to="/categories" className="mx-4 text-white">Categories</Link>
+          <Link to="/checkout" className="mx-4 text-white">Checkout</Link>
+          <Link to="/search" className="mx-4 text-white">Categories</Link>
           {/* Add more category links as needed */}
         </div>
 
