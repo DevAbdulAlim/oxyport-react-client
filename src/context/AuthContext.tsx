@@ -95,9 +95,17 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    // Your logout logic here
-    dispatch({ type: "LOGOUT" });
+  const logout = async () => {
+    try {
+      // Send logout request to the server
+      await axios.post(`${config.apiBaseUrl}/users/logout`);
+
+      // Dispatch the logout action
+      dispatch({ type: "LOGOUT" });
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // Handle logout failure if needed
+    }
   };
 
   const verifyToken = async () => {
