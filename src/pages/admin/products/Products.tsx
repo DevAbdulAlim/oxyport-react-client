@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductTable from "../../../components/products/ProductTable";
 import { useProduct } from "../../../context/ProductContext";
 import Pagination from "../../../components/Pagination";
 import Link from "../../../components/Link";
 import { productParams } from "../../../services/productService";
+import { useDebounce } from "usehooks-ts"; // Import the useDebounce hook
 
 export default function Products() {
   const [itemsPerPage] = useState(1);
@@ -15,16 +16,19 @@ export default function Products() {
   const { fetchProducts, deleteProduct, products, total, error, loading } =
     useProduct();
 
+  const debouncedSearch = useDebounce(search, 500); // Debounce the search value
+  const debouncedSortBy = useDebounce(sortBy, 500); // Debounce the sortBy value
+
   useEffect(() => {
     const params: productParams = {
-      sortBy,
+      sortBy: debouncedSortBy,
       sortOrder,
-      search,
+      search: debouncedSearch,
       page: currentPage.toString(),
     };
 
     fetchProducts(params);
-  }, [currentPage, sortBy, sortOrder, search]);
+  }, [currentPage, debouncedSortBy, sortOrder, debouncedSearch]);
 
   const handleDelete = (productId: number) => {
     deleteProduct(productId);
@@ -37,9 +41,9 @@ export default function Products() {
   const handleSearch = () => {
     // Implement your search logic here
     const params: productParams = {
-      sortBy,
+      sortBy: debouncedSortBy,
       sortOrder,
-      search,
+      search: debouncedSearch,
       page: "1",
     };
 
@@ -55,7 +59,7 @@ export default function Products() {
     const params: productParams = {
       sortBy: selectedSortBy,
       sortOrder: "asc", // or 'desc' based on your logic
-      search,
+      search: debouncedSearch,
       page: "1",
     };
 
@@ -104,9 +108,11 @@ export default function Products() {
           </select>
         </div>
       </form>
-      {loading && <div>Loading...</div>}
-      {error && <div>Error: {error}</div>}
-      {products && products.length > 0 ? (
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>Error: {error}</div>
+      ) : products && products.length > 0 ? (
         <ProductTable products={products} onDelete={handleDelete} />
       ) : (
         <div>No products found.</div>
