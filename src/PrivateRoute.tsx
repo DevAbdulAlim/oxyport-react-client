@@ -24,10 +24,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
     isAdminRoute && !state.isAdmin ? (
       <Navigate to="/unauthorized" replace={true} /> // Redirect to unauthorized page for non-admins
     ) : (
-      <>
-        {children}
-        <Outlet />
-      </>
+      <>{children}</>
     )
   ) : (
     <Navigate to={redirectTo || "/login"} replace={true} /> // Redirect to login or default path
