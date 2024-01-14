@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+
 
 const Checkout = () => {
+  const {verifyToken} = useAuth()
+
+useEffect(() => {
+  (async () => {
+    await verifyToken();
+  })()
+}, [])
+
   return (
     <div className="container mx-auto mt-8">
       <h2 className="mb-4 text-3xl font-semibold">Checkout</h2>

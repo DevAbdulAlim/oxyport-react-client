@@ -1,9 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useProduct } from "../context/ProductContext";
 import ProductCard from "../components/products/ProductCard";
+import { useAuth } from "../context/AuthContext";
 
 export default function Home() {
-  const { products, loading } = useProduct();
+  const { products, fetchProducts, loading } = useProduct();
+  
+useEffect(() => {
+  (async ()=> {
+     await fetchProducts({
+      sortBy: '',
+      sortOrder: '',
+      search: '',
+      page: '',
+     });
+  })()
+}, [])
 
   return (
     <>

@@ -44,7 +44,11 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
   const verifyToken = async () => {
     try {
       const response = await axios.post(
-        `${config.apiBaseUrl}/users/verifyToken`
+        `${config.apiBaseUrl}/users/verify-token`,
+        {},
+        {
+          withCredentials: true,
+        }
       );
 
       if (response.data.user) {
