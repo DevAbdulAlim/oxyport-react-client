@@ -1,31 +1,72 @@
+import React, { createContext, useContext, useEffect, useReducer } from "react";
 import axios from "axios";
-import React, { createContext, useContext, useEffect, useState } from "react";
 import config from "../config";
 
 interface AuthContextProps {
   children: React.ReactNode;
 }
 
-interface AuthContextValue {
+interface AuthState {
   isAuthenticated: boolean;
   isAdmin: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  verifyToken: () => Promise<void>;
-  logout: () => void;
+  isLoading: boolean;
 }
 
-const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+type AuthAction =
+  | { type: "AUTHENTICATED" }
+  | { type: "ADMIN" }
+  | { type: "LOGOUT" }
+  | { type: "LOADING_COMPLETE" };
+
+const authReducer = (state: AuthState, action: AuthAction): AuthState => {
+  switch (action.type) {
+    case "AUTHENTICATED":
+      return {
+        ...state,
+        isAuthenticated: true,
+      };
+
+    case "ADMIN":
+      return {
+        ...state,
+        isAdmin: true,
+        isAuthenticated: true,
+      };
+
+    case "LOGOUT":
+      return {
+        ...state,
+        isAuthenticated: false,
+        isAdmin: false,
+      };
+
+    case "LOADING_COMPLETE":
+      return {
+        ...state,
+        isLoading: false,
+      };
+
+    default:
+      return state;
+  }
+};
+
+const AuthContext = createContext<
+  | {
+      state: AuthState;
+      dispatch: React.Dispatch<AuthAction>;
+      login: (email: string, password: string) => Promise<void>;
+      logout: () => void;
+    }
+  | undefined
+>(undefined);
 
 export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    setIsAuthenticated(true);
-    setIsAdmin(true);
-  }, []);
-
-  console.log(isAuthenticated);
+  const [state, dispatch] = useReducer(authReducer, {
+    isAuthenticated: false,
+    isAdmin: false,
+    isLoading: true,
+  });
 
   const login = async (email: string, password: string) => {
     try {
@@ -33,59 +74,74 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
         email,
         password,
       });
-      console.log("Login successful:", response.data);
-      setIsAuthenticated(true);
-      setIsAdmin(true);
+
+      if (response.data.success) {
+        console.log("Login successful:", response.data);
+
+        const userRole = response.data.user.role;
+
+        if (userRole === "admin") {
+          dispatch({ type: "ADMIN" });
+        } else {
+          console.log("User is not an admin.");
+        }
+
+        dispatch({ type: "AUTHENTICATED" });
+      } else {
+        console.error("Login failed:", response.data.message);
+      }
     } catch (error) {
       console.error("Login failed:", error);
     }
+  };
+
+  const logout = () => {
+    // Your logout logic here
+    dispatch({ type: "LOGOUT" });
   };
 
   const verifyToken = async () => {
     try {
       const response = await axios.post(
         `${config.apiBaseUrl}/users/verify-token`,
-        {},
-        {
-          withCredentials: true,
-        }
+        {}
       );
-
-      if (response.data.user) {
-        const { role } = response.data.user;
-
-        if (role === "admin") {
-          setIsAdmin(true);
-        }
-
-        setIsAuthenticated(true);
+      if (response.data.success) {
+        return {
+          authenticated: true,
+          admin: response.data.user.role === "admin" ? true : false,
+        };
+      } else {
+        console.error("Token verification failed:", response.data.message);
       }
     } catch (error) {
-      console.error("Error while verifying token:", error);
-      // Handle specific errors or add additional logic if needed
+      console.error("Token verification failed:", error);
     }
   };
 
-  const logout = () => {
-    // Your logout logic here
-    setIsAuthenticated(false);
-    setIsAdmin(false);
-  };
+  useEffect(() => {
+    (async () => {
+      const data = await verifyToken();
+      if (data && data.authenticated) {
+        const { admin } = data;
+        dispatch({ type: "AUTHENTICATED" });
+        if (admin) {
+          dispatch({ type: "ADMIN" });
+          console.log("admin");
+        }
+      }
+      dispatch({ type: "LOADING_COMPLETE" });
+    })();
+  }, []);
 
-  const contextValue: AuthContextValue = {
-    isAuthenticated,
-    isAdmin,
-    login,
-    verifyToken,
-    logout,
-  };
+  const contextValue = { state, dispatch, login, logout };
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 
-export const useAuth = (): AuthContextValue => {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");

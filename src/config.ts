@@ -1,6 +1,6 @@
 const config = {
-    apiBaseUrl: "http://localhost:5000/api",
-    apiKey: "",
-}
+  apiBaseUrl: "/api",
+  apiKey: "",
+};
 
 export default config;

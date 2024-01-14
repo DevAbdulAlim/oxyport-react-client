@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 
@@ -13,18 +13,15 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   redirectTo,
   children,
 }) => {
-  // const { isAuthenticated, isAdmin, verifyToken } = useAuth();
+  const { state } = useAuth();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     await verifyToken();
-  //   })();
-  // }, [verifyToken]);
-  const isAuthenticated = true;
-  const isAdmin = true;
+  if (state.isLoading) {
+    // Render loading state or placeholder
+    return <div>Loading...</div>;
+  }
 
-  return isAuthenticated ? (
-    isAdminRoute && !isAdmin ? (
+  return state.isAuthenticated ? (
+    isAdminRoute && !state.isAdmin ? (
       <Navigate to="/unauthorized" replace={true} /> // Redirect to unauthorized page for non-admins
     ) : (
       <>

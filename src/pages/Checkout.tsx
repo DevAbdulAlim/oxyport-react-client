@@ -1,16 +1,7 @@
-import React, { useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-
+import React, { useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const Checkout = () => {
-  const {verifyToken} = useAuth()
-
-useEffect(() => {
-  (async () => {
-    await verifyToken();
-  })()
-}, [])
-
   return (
     <div className="container mx-auto mt-8">
       <h2 className="mb-4 text-3xl font-semibold">Checkout</h2>
@@ -22,7 +13,10 @@ useEffect(() => {
             {/* Add form fields for shipping address, e.g., name, address, etc. */}
             <form>
               <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Name
                 </label>
                 <input
@@ -34,7 +28,10 @@ useEffect(() => {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="address"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Address
                 </label>
                 <textarea
@@ -63,11 +60,12 @@ useEffect(() => {
             </div>
             {/* Repeat the above block for each item in the cart */}
           </div>
-          
+
           {/* Total Amount */}
           <div className="flex justify-between pt-4 border-t">
             <span className="font-semibold">Total</span>
-            <span className="font-semibold">$XX.XX</span> {/* Replace with the actual total amount */}
+            <span className="font-semibold">$XX.XX</span>{" "}
+            {/* Replace with the actual total amount */}
           </div>
 
           {/* Checkout Button */}

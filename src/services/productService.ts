@@ -16,7 +16,6 @@ const productService = {
     try {
       const response = await axios.get(`${config.apiBaseUrl}/products`, {
         params,
-        withCredentials: true,
       });
       return {
         products: response.data.products,
