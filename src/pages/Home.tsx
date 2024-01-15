@@ -5,21 +5,21 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Home() {
   const { products, fetchProducts, loading } = useProduct();
-  
-useEffect(() => {
-  (async ()=> {
-     await fetchProducts({
-      sortBy: '',
-      sortOrder: '',
-      search: '',
-      page: '',
-     });
-  })()
-}, [])
+
+  useEffect(() => {
+    (async () => {
+      await fetchProducts({
+        sortBy: "",
+        sortOrder: "",
+        search: "",
+        page: "",
+      });
+    })();
+  }, []);
 
   return (
     <>
-      <section className="container mx-auto mt-8">
+      <section className="container py-20 mx-auto">
         <h3 className="mb-6 text-3xl font-semibold">Featured Products</h3>
         {loading ? (
           <div>Loading...</div>
