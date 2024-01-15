@@ -4,9 +4,7 @@ import { useCart } from "../context/CartContext";
 import { CartItem } from "../lib/types";
 
 const Cart: React.FC = () => {
-  const { items, handleIncrease, handleDecrease,  removeFromCart } = useCart();
-
-
+  const { items, handleIncrease, handleDecrease, removeFromCart } = useCart();
 
   return (
     <div className="container p-8 mx-auto">
@@ -24,21 +22,25 @@ const Cart: React.FC = () => {
             <div className="flex items-center justify-between mb-4">
               <span className="text-lg font-bold">${item.price}</span>
               <div className="flex items-center space-x-2">
-                <button
-                  aria-label="decrease item"
-                  onClick={() => handleDecrease(item.id)}
-                  className="text-blue-500 hover:text-blue-700"
-                >
-                  decrease
-                </button>
+                {item.quantity > 1 && (
+                  <button
+                    aria-label="decrease item"
+                    onClick={() => handleDecrease(item.id)}
+                    className="text-blue-500 hover:text-blue-700"
+                  >
+                    decrease
+                  </button>
+                )}
                 <span className="text-xl">{item.quantity}</span>
-                <button
-                  aria-label="increase item"
-                  onClick={() => handleIncrease(item.id)}
-                  className="text-blue-500 hover:text-blue-700"
-                >
-                  increase
-                </button>
+                {item.quantity < item.stock && (
+                  <button
+                    aria-label="increase item"
+                    onClick={() => handleIncrease(item.id)}
+                    className="text-blue-500 hover:text-blue-700"
+                  >
+                    increase
+                  </button>
+                )}
               </div>
             </div>
             <button

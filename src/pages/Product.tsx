@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useCart } from '../context/CartContext';
-import axios from 'axios';
-import config from '../config';
-import { useParams } from 'react-router-dom';
-import { Product } from '../lib/types';
+import React, { useState, useEffect } from "react";
+import { useCart } from "../context/CartContext";
+import axios from "axios";
+import config from "../config";
+import { useParams } from "react-router-dom";
+import { Product } from "../lib/types";
 
 export default function ProductDetails() {
   const { addToCart } = useCart();
@@ -13,7 +13,9 @@ export default function ProductDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${config.apiBaseUrl}/products/${params.productId}`);
+        const response = await axios.get(
+          `${config.apiBaseUrl}/products/${params.productId}`
+        );
         setProduct(response.data.product);
       } catch (err) {
         console.error(err);
@@ -41,6 +43,7 @@ export default function ProductDetails() {
           <h2 className="mb-4 text-3xl font-semibold">{product.name}</h2>
           <p className="mb-4 text-gray-600">${product.price.toFixed(2)}</p>
           <p className="mb-6 text-gray-800">{product.description}</p>
+          <p className="mb-6 text-gray-800">{product.stock}</p>
           <button
             className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none"
             onClick={() =>
@@ -48,6 +51,7 @@ export default function ProductDetails() {
                 id: product.id,
                 name: product.name,
                 price: product.price,
+                stock: product.stock,
                 quantity: 1,
               })
             }

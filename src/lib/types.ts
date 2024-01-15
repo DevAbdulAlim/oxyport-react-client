@@ -59,12 +59,13 @@ export type CartItem = {
   id: number;
   name: string;
   price: number;
+  stock: number;
   quantity: number;
 };
 
 export type CartState = {
   items: CartItem[];
-}
+};
 
 export type Order = {
   id: number;
