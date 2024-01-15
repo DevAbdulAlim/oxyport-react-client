@@ -1,21 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useCart } from '../context/CartContext';
+import axios from 'axios';
+import config from '../config';
+import { useParams } from 'react-router-dom';
+import { Product } from '../lib/types';
 
-const Product = () => {
-  // Placeholder product details
-  const product = {
-    id: 1,
-    name: 'Product Name',
-    price: 29.99,
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vehicula odio at felis aliquam, in tincidunt odio facilisis.',
-    imageUrl: 'https://via.placeholder.com/400', // Replace with the actual URL of your product image
-  };
+export default function ProductDetails() {
+  const { addToCart } = useCart();
+  const params = useParams();
+  const [product, setProduct] = useState<Product | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${config.apiBaseUrl}/products/${params.productId}`);
+        setProduct(response.data.product);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, [params.productId]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="container mx-auto mt-8">
       <div className="flex">
         <div className="w-1/2">
           <img
-            src={product.imageUrl}
+            src={product.image}
             alt={product.name}
             className="object-cover w-full h-64 mb-4 rounded-md"
           />
@@ -26,7 +43,14 @@ const Product = () => {
           <p className="mb-6 text-gray-800">{product.description}</p>
           <button
             className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none"
-            // Add your onClick handler, e.g., to add the product to the cart
+            onClick={() =>
+              addToCart({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: 1,
+              })
+            }
           >
             Add to Cart
           </button>
@@ -34,6 +58,4 @@ const Product = () => {
       </div>
     </div>
   );
-};
-
-export default Product;
+}

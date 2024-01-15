@@ -6,23 +6,13 @@ import React, {
   Dispatch,
   useContext,
 } from "react";
-
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-}
-
-interface CartState {
-  items: CartItem[];
-}
+import { CartItem, CartState } from "../lib/types";
 
 export interface CartContextValue extends CartState {
   dispatch: Dispatch<CartAction>;
   addToCart: (item: CartItem) => void;
   removeFromCart: (itemId: number) => void;
-  handleIncrease: (item: CartItem) => void;
+  handleIncrease: (item: number) => void;
   handleDecrease: (itemId: number) => void;
 }
 

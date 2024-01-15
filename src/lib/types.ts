@@ -55,17 +55,16 @@ export type Review = {
   productId: number;
 };
 
-export type Cart = {
-  id: number;
-  userId: number;
-};
-
 export type CartItem = {
   id: number;
-  cartId: number;
-  productId: number;
+  name: string;
+  price: number;
   quantity: number;
 };
+
+export type CartState = {
+  items: CartItem[];
+}
 
 export type Order = {
   id: number;
