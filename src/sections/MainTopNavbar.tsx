@@ -11,7 +11,7 @@ import {
   FaGlobe,
   FaDollarSign,
 } from "react-icons/fa";
-import Button from "./Button";
+import Button from "../components/Button";
 
 const TopBar = () => {
   return (
