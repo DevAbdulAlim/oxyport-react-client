@@ -61,15 +61,15 @@ const Navbar = () => {
   return (
     <>
       <TopBar />
-      <nav className="p-4 bg-blue-500">
-        <div className="container flex items-center justify-between mx-auto">
+      <nav className="p-4 bg-gray-100">
+        <div className="container flex items-center justify-between mx-auto space-x-5">
           {/* Logo on the left */}
-          <Link to="/" className="text-xl font-bold text-white">
+          <Link to="/" className="text-xl font-bold ">
             Your Logo
           </Link>
 
           {/* Categories Button */}
-          <Button>
+          <Button variant="ghost">
             <FaShoppingBasket className="mr-2" />
             Categories
           </Button>
@@ -88,15 +88,15 @@ const Navbar = () => {
 
           {/* Category links and buttons on the right */}
           <div className="flex items-center">
-            <Link to="/cart" className="flex items-center mx-4 text-white">
+            <Link to="/cart" className="flex items-center mx-4 ">
               <FaShoppingCart className="mr-2" />
               Cart
             </Link>
-            <Link to="/signin" className="flex items-center mx-4 text-white">
+            <Link to="/signin" className="flex items-center mx-4 ">
               <FaSignInAlt className="mr-2" />
               Sign In
             </Link>
-            <Link to="/signup" className="flex items-center mx-4 text-white">
+            <Link to="/signup" className="flex items-center mx-4 ">
               <FaUserPlus className="mr-2" />
               Sign Up
             </Link>

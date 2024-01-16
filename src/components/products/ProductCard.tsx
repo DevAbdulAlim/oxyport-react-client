@@ -9,15 +9,17 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="relative bg-white">
-      <div className="absolute top-0 left-0 px-2 py-1 text-white bg-red-500 rounded-tr-md rounded-bl-md">
+      <div className="absolute top-0 left-0 z-10 px-2 py-1 text-white bg-red-500 rounded-tr-md rounded-bl-md">
         <span className="text-sm">Save X%</span>
       </div>
 
-      <img
-        src={process.env.PUBLIC_URL + "/img/products/product-10.png"}
-        alt={product.name}
-        className="object-cover w-full h-64 p-2 mb-4 bg-gray-100"
-      />
+      <div className="overflow-hidden h-80">
+        <img
+          src={process.env.PUBLIC_URL + "/img/products/product-10.png"}
+          alt={product.name}
+          className="object-cover w-full p-2 mb-4 transition-all duration-300 bg-gray-100 hover:scale-110"
+        />
+      </div>
 
       <Link
         to={`/product/${product.id}`}

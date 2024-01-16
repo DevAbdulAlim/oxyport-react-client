@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { useProduct } from "../context/ProductContext";
 import ProductCard from "../components/products/ProductCard";
 import { useAuth } from "../context/AuthContext";
+import Facts from "../components/Facts";
+import RecentPosts from "../components/RecentPosts";
 
 export default function Home() {
   const { products, fetchProducts, loading } = useProduct();
@@ -33,6 +35,8 @@ export default function Home() {
           </div>
         )}
       </section>
+      <Facts />
+      <RecentPosts />
     </>
   );
 }

@@ -17,8 +17,6 @@ export default function RootLayout() {
         <Outlet />
       </main>
 
-      <Facts />
-      <RecentPosts />
       <Footer />
       <Copyright />
     </div>
