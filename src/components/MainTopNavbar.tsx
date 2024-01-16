@@ -92,11 +92,11 @@ const Navbar = () => {
               <FaShoppingCart className="mr-2" />
               Cart
             </Link>
-            <Link to="/signin" className="flex items-center mx-4 ">
+            <Link to="/login" className="flex items-center mx-4 ">
               <FaSignInAlt className="mr-2" />
               Sign In
             </Link>
-            <Link to="/signup" className="flex items-center mx-4 ">
+            <Link to="/register" className="flex items-center mx-4 ">
               <FaUserPlus className="mr-2" />
               Sign Up
             </Link>
