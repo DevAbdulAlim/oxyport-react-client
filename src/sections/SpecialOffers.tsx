@@ -1,57 +1,46 @@
-import React from 'react';
+import React from "react";
+import Button from "../components/Button";
 
-const SpecialOffersSection = () => {
-  const specialOffers = [
-    {
-      title: 'Limited Time Offer',
-      description: 'Explore our exclusive collection with discounts up to 30%. Don\'t miss out!',
-      image: 'https://placekitten.com/800/400', // Placeholder image URL
-      link: '/shop/limited-offer',
-    },
-    {
-      title: 'Free Gift with Purchase',
-      description: 'Receive a free gift on orders over $50. Limited stock available!',
-      image: 'https://placekitten.com/800/401', // Placeholder image URL
-      link: '/shop/free-gift',
-    },
-    {
-      title: 'Seasonal Clearance',
-      description: 'Save on seasonal favorites! Enjoy up to 50% off on select items.',
-      image: 'https://placekitten.com/800/402', // Placeholder image URL
-      link: '/shop/seasonal-clearance',
-    },
-    // Add more special offers as needed
-  ];
-
+const SpecialOffers = () => {
   return (
-    <section className="bg-gray-100 py-12">
-      <div className="container mx-auto">
-        <h2 className="text-3xl md:text-4xl font-semibold text-center mb-8">
-          Discover Our Special Offers & Promotions
-        </h2>
+    <div className="container mx-auto my-8">
+      <h2 className="mb-4 text-3xl font-semibold">Special Offers</h2>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {/* Special Offer 1 */}
+        <div
+          className="p-6 bg-gray-300 bg-center bg-cover rounded-md shadow-md"
+          style={{ backgroundImage: `url('/img/offers/special-offer-1.png')` }}
+        >
+          <h3 className="mb-2 text-xl font-semibold">Fruits & Vegetables</h3>
+          <p className="mb-4 text-gray-600">Get Upto 35% Off</p>
+          <Button>Shop Now</Button>
+        </div>
 
-        <ul className="flex flex-col items-center space-y-8">
-          {specialOffers.map((offer, index) => (
-            <li key={index} className="flex flex-col items-center">
-              <img
-                src={offer.image}
-                alt={offer.title}
-                className="w-full h-40 object-cover mb-4 rounded-md"
-              />
-              <h3 className="text-xl font-semibold mb-2">{offer.title}</h3>
-              <p className="text-gray-600 mb-4 text-center">{offer.description}</p>
-              <a
-                href={offer.link}
-                className="text-blue-500 hover:text-blue-700 font-semibold underline"
-              >
-                Explore Offer
-              </a>
-            </li>
-          ))}
-        </ul>
+        {/* Special Offer 2 */}
+        <div
+          className="p-6 bg-gray-300 bg-center bg-cover rounded-md shadow-md"
+          style={{ backgroundImage: `url('/img/offers/special-offer-2.jpg')` }}
+        >
+          <h3 className="mb-2 text-xl font-semibold">Fresh Fruits</h3>
+          <p className="mb-4 text-gray-600">Get Upto 40% Off</p>
+
+          <Button>Shop Now</Button>
+        </div>
+
+        {/* Special Offer 3 */}
+        <div
+          className="p-6 bg-gray-300 bg-center bg-cover rounded-md shadow-md"
+          style={{ backgroundImage: `url('/img/offers/special-offer-3.jpg')` }}
+        >
+          <h3 className="mb-2 text-xl font-semibold">Freshly Baked Buns</h3>
+          <p className="mb-4 text-gray-600">Get Upto 30% Off</p>
+
+          <Button>Shop Now</Button>
+        </div>
+        {/* Add more special offers as needed */}
       </div>
-    </section>
+    </div>
   );
 };
 
-export default SpecialOffersSection;
+export default SpecialOffers;
