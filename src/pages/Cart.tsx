@@ -7,16 +7,19 @@ const Cart: React.FC = () => {
   const { items, handleIncrease, handleDecrease, removeFromCart } = useCart();
 
   // Calculate the total price and quantity of the cart
-  const cartTotal = items.reduce((total, item) => total + item.price * item.quantity, 0);
+  const cartTotal = items.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
   const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <div className="container mx-auto p-8">
-      <div className="flex justify-between items-center mb-8">
+    <div className="container p-8 mx-auto">
+      <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold">Your Shopping Cart</h1>
         <Link
           to="/checkout"
-          className="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-300"
+          className="px-6 py-3 text-white transition duration-300 bg-blue-500 rounded-md hover:bg-blue-700"
         >
           Proceed to Checkout ({totalQuantity} items)
         </Link>
@@ -24,16 +27,19 @@ const Cart: React.FC = () => {
 
       <div className="grid grid-cols-1 gap-6">
         {items.map((item: CartItem) => (
-          <div key={item.id} className="flex items-center border-b border-gray-200 py-4">
+          <div
+            key={item.id}
+            className="flex items-center py-4 border-b border-gray-200"
+          >
             <img
-              src={process.env.PUBLIC_URL + "/images/sample-product.jpg"}
+              src={process.env.PUBLIC_URL + "/img/products/product-10.png"}
               alt="Product"
-              className="w-16 h-16 object-cover rounded-md mr-4"
+              className="object-cover w-20 h-20 mr-4 rounded-md"
             />
             <div className="flex-1">
-              <h2 className="text-lg font-semibold mb-2">{item.name}</h2>
+              <h2 className="mb-2 text-lg font-semibold">{item.name}</h2>
               <p className="text-gray-600">${item.price} each</p>
-              <div className="flex items-center space-x-2 mt-2">
+              <div className="flex items-center mt-2 space-x-2">
                 {item.quantity > 1 && (
                   <button
                     aria-label="decrease item"
@@ -62,7 +68,7 @@ const Cart: React.FC = () => {
               </p>
               <button
                 onClick={() => removeFromCart(item.id)}
-                className="text-red-500 hover:text-red-700 mt-2 focus:outline-none"
+                className="mt-2 text-red-500 hover:text-red-700 focus:outline-none"
               >
                 Remove
               </button>
@@ -71,15 +77,15 @@ const Cart: React.FC = () => {
         ))}
       </div>
 
-      <div className="mt-8 p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-xl font-bold mb-4">Cart Summary</h2>
+      <div className="p-6 mt-8 bg-white rounded-lg shadow-md">
+        <h2 className="mb-4 text-xl font-bold">Cart Summary</h2>
         <div className="flex justify-between">
           <span className="text-lg">Total:</span>
           <span className="text-lg font-bold">${cartTotal.toFixed(2)}</span>
         </div>
         <Link
           to="/checkout"
-          className="block w-full mt-4 px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition duration-300 text-center"
+          className="block w-full px-6 py-3 mt-4 text-center text-white transition duration-300 bg-blue-500 rounded-md hover:bg-blue-700"
         >
           Proceed to Checkout ({totalQuantity} items)
         </Link>

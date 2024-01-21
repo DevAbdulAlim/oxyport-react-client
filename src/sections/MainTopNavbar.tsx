@@ -65,7 +65,7 @@ const Navbar = () => {
         <div className="container flex items-center justify-between mx-auto space-x-5">
           {/* Logo on the left */}
           <Link to="/" className="text-xl font-bold ">
-            Your Logo
+            <img src="/img/logo.png" alt="Logo" className="w-full h-8" />
           </Link>
 
           {/* Categories Button */}
