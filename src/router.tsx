@@ -15,7 +15,7 @@ import CreateCategory from "./pages/admin/categories/CreateCategory";
 import Users from "./pages/admin/users/Users";
 import UserDetails from "./pages/admin/users/UserDetails";
 import OrderDetails from "./pages/admin/orders/OrderDetails";
-import Orders from "./pages/admin/orders/Orders";
+import AdminOrders from "./pages/admin/orders/Orders";
 import EditProducts from "./pages/admin/products/EditProducts";
 import CreateProducts from "./pages/admin/products/CreateProducts";
 import Products from "./pages/admin/products/Products";
@@ -24,6 +24,14 @@ import Cart from "./pages/Cart";
 import LoginForm from "./pages/auth/Login";
 import RegistrationForm from "./pages/auth/Register";
 import PrivateRoute from "./PrivateRoute";
+import UserLayout from "./pages/user/UserLayout";
+import Orders from "./pages/user/Orders";
+import Profile from "./pages/user/Profile";
+import UserDashboard from "./pages/user/UserDashboard";
+import PaymentHistory from "./pages/user/PaymentHistory";
+import Reviews from "./pages/user/Reviews";
+import Settings from "./pages/user/Settings";
+import CancelOrders from "./pages/user/CancelOrders";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,6 +49,24 @@ const router = createBrowserRouter(
             </PrivateRoute>
           }
         />
+
+        {/* user routes */}
+        <Route
+          path="/user"
+          element={
+            <PrivateRoute isAdminRoute={false}>
+              <UserLayout />
+            </PrivateRoute>
+          }
+        >
+          <Route index element={<UserDashboard />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="payment-history" element={<PaymentHistory />} />
+          <Route path="reviews" element={<Reviews />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="cancel-orders" element={<CancelOrders />} />
+        </Route>
       </Route>
 
       {/* Admin Routes */}
@@ -65,7 +91,7 @@ const router = createBrowserRouter(
         <Route path="products/edit/:productId" element={<EditProducts />} />
 
         {/* Orders Routes */}
-        <Route path="orders" element={<Orders />} />
+        <Route path="orders" element={<AdminOrders />} />
         <Route path="orders/details/:orderId" element={<OrderDetails />} />
 
         {/* Users Routes */}
