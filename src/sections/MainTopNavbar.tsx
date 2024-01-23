@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   FaSearch,
   FaShoppingCart,
   FaShoppingBasket,
-  FaSignInAlt,
-  FaUserPlus,
   FaPhoneAlt,
   FaMapMarker,
   FaGlobe,
   FaDollarSign,
+  FaUserCircle,
+  FaBars,
 } from "react-icons/fa";
 import Button from "../components/Button";
+import ClientSideNavbar from "./ClientSideNav";
+import CartSidebar from "./CartSidebar";
+import CategoryDropdown from "./CategoryDropdown";
 
 const TopBar = () => {
   return (
@@ -58,9 +61,48 @@ const TopBar = () => {
 };
 
 const Navbar = () => {
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+
+  const handleNavToggle = () => {
+    setIsNavOpen(!isNavOpen);
+  };
+
+  const handleCartToggle = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+
+  const handleCategoryToggle = () => {
+    setIsCategoryOpen(!isCategoryOpen);
+  };
+
+  const handleNavToggleButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.stopPropagation(); // Prevent the click event from reaching parent elements
+    handleNavToggle();
+  };
+
+  const handleCartToggleButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.stopPropagation();
+    handleCartToggle();
+  };
+
+  const handleCategoryToggleButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.stopPropagation();
+    handleCategoryToggle();
+  };
+
   return (
     <>
       <TopBar />
+      <CartSidebar isOpen={isCartOpen} handleClick={handleCartToggle} />
+      <ClientSideNavbar isOpen={isNavOpen} handleClick={handleNavToggle} />
       <nav className="p-4 bg-gray-100">
         <div className="container flex items-center justify-between mx-auto space-x-5">
           {/* Logo on the left */}
@@ -69,38 +111,51 @@ const Navbar = () => {
           </Link>
 
           {/* Categories Button */}
-          <Button variant="ghost">
-            <FaShoppingBasket className="mr-2" />
-            Categories
-          </Button>
+          <div className="relative">
+            <Button
+              onClick={handleCategoryToggleButtonClick}
+              variant="ghost"
+              className="hidden text-xl md:flex"
+            >
+              <FaShoppingBasket className="mx-4" />
+              Categories
+            </Button>
+            <CategoryDropdown
+              isOpen={isCategoryOpen}
+              handleClick={handleCategoryToggle}
+            />
+          </div>
 
           {/* Search box in the center */}
-          <div className="flex-grow">
-            <div className="relative">
+          <div className="flex-grow hidden md:block ">
+            <div className="relative lg:mx-10">
               <input
                 type="text"
                 placeholder="Search"
-                className="p-2 pl-10 border-none rounded-md"
+                className="w-full p-2 pl-10 border-none rounded-md"
               />
               <FaSearch className="absolute text-gray-500 top-3 left-3" />
             </div>
           </div>
 
-          {/* Category links and buttons on the right */}
-          <div className="flex items-center">
-            <Link to="/cart" className="flex items-center mx-4 ">
-              <FaShoppingCart className="mr-2" />
-              Cart
+          {/* Wishlist, Cart, Account, and Hamburger Icon on the right */}
+          <div className="flex items-center space-x-10">
+            <Link to="/" className="text-2xl text-gray-600">
+              <FaShoppingBasket />
             </Link>
-            <Link to="/login" className="flex items-center mx-4 ">
-              <FaSignInAlt className="mr-2" />
-              Sign In
+            <Button onClick={handleCartToggleButtonClick}>
+              <FaShoppingCart />
+            </Button>
+            <Link to="/user" className="text-2xl text-gray-600">
+              <FaUserCircle />
             </Link>
-            <Link to="/register" className="flex items-center mx-4 ">
-              <FaUserPlus className="mr-2" />
-              Sign Up
-            </Link>
-            {/* Add more category links or buttons as needed */}
+            <button
+              type="button"
+              aria-label="navbar toggle"
+              onClick={handleNavToggleButtonClick}
+            >
+              <FaBars className="text-2xl text-gray-600 cursor-pointer" />
+            </button>
           </div>
         </div>
       </nav>
