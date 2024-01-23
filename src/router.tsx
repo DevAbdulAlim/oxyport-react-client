@@ -26,11 +26,12 @@ import RegistrationForm from "./pages/auth/Register";
 import PrivateRoute from "./PrivateRoute";
 import UserLayout from "./pages/user/UserLayout";
 import Orders from "./pages/user/Orders";
-import PaymentMethods from "./pages/user/PaymentMethods";
-import Address from "./pages/user/Address";
 import Profile from "./pages/user/Profile";
-import SupportTicket from "./pages/user/SupportTicket";
-import WishList from "./pages/user/WishList";
+import UserDashboard from "./pages/user/UserDashboard";
+import PaymentHistory from "./pages/user/PaymentHistory";
+import Reviews from "./pages/user/Reviews";
+import Settings from "./pages/user/Settings";
+import CancelOrders from "./pages/user/CancelOrders";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,12 +59,13 @@ const router = createBrowserRouter(
             </PrivateRoute>
           }
         >
-          <Route index element={<Orders />} />
-          <Route path="wishlist" element={<WishList />} />
-          <Route path="support-tickets" element={<SupportTicket />} />
+          <Route index element={<UserDashboard />} />
+          <Route path="orders" element={<Orders />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="address" element={<Address />} />
-          <Route path="payment-methods" element={<PaymentMethods />} />
+          <Route path="payment-history" element={<PaymentHistory />} />
+          <Route path="reviews" element={<Reviews />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="cancel-orders" element={<CancelOrders />} />
         </Route>
       </Route>
 
