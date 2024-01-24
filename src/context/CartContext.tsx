@@ -7,6 +7,7 @@ import React, {
   useContext,
 } from "react";
 import { CartItem, CartState } from "../lib/types";
+import { toast } from "react-toastify";
 
 export interface CartContextValue extends CartState {
   dispatch: Dispatch<CartAction>;
@@ -79,19 +80,45 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       );
 
       if (existingItem) {
-        return {
-          ...state,
-          items: state.items.map((item) =>
-            item.id === action.payload.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          ),
-        };
+        const newQuantity = existingItem.quantity + 1;
+
+        // Check if the stock is sufficient
+        if (newQuantity <= existingItem.stock) {
+          const updatedState = {
+            ...state,
+            items: state.items.map((item) =>
+              item.id === action.payload.id
+                ? { ...item, quantity: newQuantity }
+                : item
+            ),
+          };
+
+          // Notify the user with a success message
+          toast.success(`Item ${existingItem.name} added to the cart.`, {
+            position: "top-right",
+          });
+
+          return updatedState;
+        } else {
+          // Notify the user that the item is out of stock
+          toast.error(`Item ${existingItem.name} is out of stock.`, {
+            position: "top-right",
+          });
+
+          return state;
+        }
       } else {
-        return {
+        const updatedState = {
           ...state,
           items: [...state.items, { ...action.payload, quantity: 1 }],
         };
+
+        // Notify the user with a success message
+        toast.success(`Item ${action.payload.name} added to the cart.`, {
+          position: "top-right",
+        });
+
+        return updatedState;
       }
 
     case "REMOVE_FROM_CART":

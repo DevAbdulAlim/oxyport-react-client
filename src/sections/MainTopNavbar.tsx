@@ -4,10 +4,6 @@ import {
   FaSearch,
   FaShoppingCart,
   FaShoppingBasket,
-  FaPhoneAlt,
-  FaMapMarker,
-  FaGlobe,
-  FaDollarSign,
   FaUserCircle,
   FaBars,
 } from "react-icons/fa";
@@ -15,50 +11,7 @@ import Button from "../components/Button";
 import ClientSideNavbar from "./ClientSideNav";
 import CartSidebar from "./CartSidebar";
 import CategoryDropdown from "./CategoryDropdown";
-
-const TopBar = () => {
-  return (
-    <div className="py-2 bg-gray-200">
-      <div className="container flex items-center justify-between mx-auto">
-        {/* Phone and Address section */}
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center">
-            <FaPhoneAlt className="mr-2" />
-            <p>(02) 587 - 898 - 250</p>
-          </div>
-          <div className="flex items-center">
-            <FaMapMarker className="mr-2" />
-            <p>Favicon, New York, USA - 254230</p>
-          </div>
-        </div>
-
-        {/* Language and Currency selection */}
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center">
-            <FaGlobe className="mr-2" />
-            <select
-              aria-label="select language"
-              className="bg-transparent border-none"
-            >
-              <option value="en">English</option>
-              {/* Add more language options as needed */}
-            </select>
-          </div>
-          <div className="flex items-center">
-            <FaDollarSign className="mr-2" />
-            <select
-              aria-label="select currency"
-              className="bg-transparent border-none"
-            >
-              <option value="usd">USD</option>
-              {/* Add more currency options as needed */}
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -98,12 +51,14 @@ const Navbar = () => {
     handleCategoryToggle();
   };
 
+  const { items } = useCart();
+  const totalItems = items.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <>
-      <TopBar />
       <CartSidebar isOpen={isCartOpen} handleClick={handleCartToggle} />
       <ClientSideNavbar isOpen={isNavOpen} handleClick={handleNavToggle} />
-      <nav className="p-4 bg-gray-100">
+      <nav className="p-4 bg-gray-100 ">
         <div className="container flex items-center justify-between mx-auto space-x-5">
           {/* Logo on the left */}
           <Link to="/" className="text-xl font-bold ">
@@ -143,8 +98,17 @@ const Navbar = () => {
             <Link to="/" className="text-2xl text-gray-600">
               <FaShoppingBasket />
             </Link>
-            <Button onClick={handleCartToggleButtonClick}>
+            <Button
+              className="relative"
+              variant="secondary"
+              onClick={handleCartToggleButtonClick}
+            >
               <FaShoppingCart />
+              {totalItems > 0 && (
+                <span className="absolute px-2 text-white bg-red-500 rounded-full -right-2 -top-2">
+                  {totalItems}
+                </span>
+              )}
             </Button>
             <Link to="/user" className="text-2xl text-gray-600">
               <FaUserCircle />
