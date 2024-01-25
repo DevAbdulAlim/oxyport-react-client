@@ -1,7 +1,7 @@
 export default function Copyright() {
   return (
-    <div className="container flex justify-between py-4 mx-auto">
-      <p>
+    <div className="container flex flex-wrap items-center justify-center py-4 mx-auto space-x-4 space-y-4 md:justify-between">
+      <p className="text-center">
         All Rights Reserved | Copyrighted by ©2023{" "}
         <span className="font-semibold">Abdul Alim</span>
       </p>

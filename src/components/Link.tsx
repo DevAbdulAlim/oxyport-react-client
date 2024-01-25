@@ -9,6 +9,7 @@ const linkVariants = cva(
     variants: {
       variant: {
         default: "bg-slate-900 text-white hover:bg-slate-800",
+        secondary: "bg-gray-300 text-gray-700 hover:bg-gray-200",
         ghost: "bg-transparent hover:text-slate-900 hover:bg-slate-200",
         success: "bg-green-500 text-white hover:bg-green-700",
         danger: "bg-red-500 text-white hover:bg-red-700",
@@ -18,7 +19,7 @@ const linkVariants = cva(
         purple: "bg-purple-500 text-white hover:bg-purple-700",
         edit: "bg-yellow-500 text-white hover:bg-yellow-700",
         delete: "bg-red-500 text-white hover:bg-red-700",
-        link: "hover:underline"
+        link: "hover:underline",
       },
       size: {
         default: "h-10 px-6 ",
@@ -33,9 +34,7 @@ const linkVariants = cva(
   }
 );
 
-interface RouterLinkProps
-  extends LinkProps,
-  VariantProps<typeof linkVariants> {
+interface RouterLinkProps extends LinkProps, VariantProps<typeof linkVariants> {
   isLoading?: boolean;
   to: string;
 }
@@ -52,10 +51,8 @@ const Link: FC<RouterLinkProps> = ({
     <RouterLink
       to={to}
       className={cn(linkVariants({ variant, size, className }))}
-  
       {...props}
     >
-
       {children}
     </RouterLink>
   );

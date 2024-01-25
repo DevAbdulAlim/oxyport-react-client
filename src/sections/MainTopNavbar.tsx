@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "../components/Link";
 import {
   FaSearch,
   FaShoppingCart,
   FaShoppingBasket,
   FaUserCircle,
   FaBars,
+  FaHeart,
 } from "react-icons/fa";
 import Button from "../components/Button";
 import ClientSideNavbar from "./ClientSideNav";
@@ -59,9 +60,9 @@ const Navbar = () => {
       <CartSidebar isOpen={isCartOpen} handleClick={handleCartToggle} />
       <ClientSideNavbar isOpen={isNavOpen} handleClick={handleNavToggle} />
       <nav className="p-4 bg-gray-100 ">
-        <div className="container flex items-center justify-between mx-auto space-x-5">
+        <div className="container flex items-center justify-between mx-auto space-x-2 md:space-x-5">
           {/* Logo on the left */}
-          <Link to="/" className="text-xl font-bold ">
+          <Link to="/" variant="secondary">
             <img src="/img/logo.png" alt="Logo" className="w-full h-8" />
           </Link>
 
@@ -94,12 +95,13 @@ const Navbar = () => {
           </div>
 
           {/* Wishlist, Cart, Account, and Hamburger Icon on the right */}
-          <div className="flex items-center space-x-10">
-            <Link to="/" className="text-2xl text-gray-600">
-              <FaShoppingBasket />
+          <div className="flex items-center space-x-2 md:space-x-10">
+            <Link to="/" size="sm" variant="secondary">
+              <FaHeart />
             </Link>
             <Button
               className="relative"
+              size="sm"
               variant="secondary"
               onClick={handleCartToggleButtonClick}
             >
@@ -110,7 +112,7 @@ const Navbar = () => {
                 </span>
               )}
             </Button>
-            <Link to="/user" className="text-2xl text-gray-600">
+            <Link to="/user" size="sm" variant="secondary">
               <FaUserCircle />
             </Link>
             <button

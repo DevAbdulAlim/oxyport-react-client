@@ -91,11 +91,24 @@ const CartSidebar = ({
                     +
                   </Button>
                 </div>
-                <p>Price: ${item.price}</p>
+                <p>
+                  <span>${item.price}</span>
+                  <span className="font-semibold">x</span>
+                  <span>{item.quantity}</span>
+                  <span className="mx-2 font-bold">
+                    ${item.quantity * item.price}
+                  </span>
+                </p>
               </div>
             </div>
 
-            <Button variant="danger" onClick={() => removeFromCart(item.id)}>
+            <Button
+              variant="danger"
+              onClick={(e) => {
+                e.stopPropagation();
+                removeFromCart(item.id);
+              }}
+            >
               X
             </Button>
           </div>

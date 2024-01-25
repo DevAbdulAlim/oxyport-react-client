@@ -95,14 +95,14 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 
           // Notify the user with a success message
           toast.success(`Item ${existingItem.name} added to the cart.`, {
-            position: "top-right",
+            position: "top-left",
           });
 
           return updatedState;
         } else {
           // Notify the user that the item is out of stock
           toast.error(`Item ${existingItem.name} is out of stock.`, {
-            position: "top-right",
+            position: "top-left",
           });
 
           return state;
@@ -115,7 +115,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 
         // Notify the user with a success message
         toast.success(`Item ${action.payload.name} added to the cart.`, {
-          position: "top-right",
+          position: "top-left",
         });
 
         return updatedState;
