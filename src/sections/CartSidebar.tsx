@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Button from "../components/Button";
+import { useCart } from "../context/CartContext";
+import Link from "../components/Link";
 
 const CartSidebar = ({
   isOpen,
@@ -8,6 +10,12 @@ const CartSidebar = ({
   isOpen: boolean;
   handleClick: () => void;
 }) => {
+  const { items, handleIncrease, handleDecrease, removeFromCart } = useCart();
+
+  const calculateTotal = () => {
+    return items.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
   const cartRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -37,27 +45,82 @@ const CartSidebar = ({
   return (
     <div
       ref={cartRef}
-      className="fixed top-0 right-0 z-30 w-full h-screen p-4 text-white bg-gray-800 shadow-2xl md:w-[400px]"
+      className="fixed top-0 right-0 z-30 w-full h-screen p-4 text-gray-800 bg-white shadow-2xl md:w-[400px]"
     >
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl font-bold">Shopping Cart</h2>
+      <div className="flex flex-col items-center mb-8">
+        <h2 className="mb-4 text-2xl font-bold">Shopping Cart</h2>
         <Button variant="danger" onClick={handleClick}>
-          X
+          Close
         </Button>
-        {/* Add a close button or icon if needed */}
       </div>
 
-      {/* Add your cart items and details here */}
-      <div className="mb-4">Cart Item 1</div>
-      <div className="mb-4">Cart Item 2</div>
-      {/* Add more cart items as needed */}
+      <div className="grid gap-4">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="flex items-center justify-between p-4 border rounded shadow-md"
+          >
+            <div className="flex items-center">
+              <img
+                src="/img/products/product-10.png"
+                className="w-12 h-12 mr-4"
+                alt=""
+              />
+              <div>
+                <p className="text-sm font-bold">{item.name}</p>
+                <div className="flex">
+                  <Button
+                    size="sm"
+                    disabled={!(item.quantity > 1)}
+                    variant="secondary"
+                    aria-label="decrease item"
+                    onClick={() => handleDecrease(item.id)}
+                  >
+                    -
+                  </Button>
 
-      <div className="mt-8">
-        {/* Add total and checkout button */}
-        <p className="text-xl font-bold">Total: $100</p>
-        <button className="p-2 text-white bg-blue-500 rounded-md">
-          Checkout
-        </button>
+                  <p className="mx-2">{item.quantity}</p>
+
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    disabled={!(item.quantity < item.stock)}
+                    aria-label="increase item"
+                    onClick={() => handleIncrease(item.id)}
+                  >
+                    +
+                  </Button>
+                </div>
+                <p>
+                  <span>${item.price}</span>
+                  <span className="font-semibold">x</span>
+                  <span>{item.quantity}</span>
+                  <span className="mx-2 font-bold">
+                    ${item.quantity * item.price}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <Button
+              variant="danger"
+              onClick={(e) => {
+                e.stopPropagation();
+                removeFromCart(item.id);
+              }}
+            >
+              X
+            </Button>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex justify-between mt-8">
+        <Link to="/cart">View Cart</Link>
+        <Link to="/checkout" className="flex items-center">
+          <span>Checkout</span>
+          <p className="ml-2 font-bold">${calculateTotal()}</p>
+        </Link>
       </div>
     </div>
   );

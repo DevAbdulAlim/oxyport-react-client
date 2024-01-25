@@ -2,8 +2,8 @@ import { FaPhoneAlt, FaClock, FaEnvelope } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="py-12 bg-gray-100">
-      <div className="container grid grid-cols-1 gap-8 mx-auto md:grid-cols-4">
+    <footer className="px-3 py-12 bg-gray-100">
+      <div className="container grid grid-cols-1 gap-8 mx-auto md:grid-cols-2 2xl:grid-cols-4">
         {/* Column 1: About Us */}
         <div className="flex flex-col items-center md:items-start">
           <h1 className="mb-4 text-3xl font-bold text-center md:text-left">

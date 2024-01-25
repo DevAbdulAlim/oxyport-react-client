@@ -2,6 +2,7 @@ import React from "react";
 import Link from "../components/Link";
 import { useCart } from "../context/CartContext";
 import { CartItem } from "../lib/types";
+import Button from "../components/Button";
 
 const Cart: React.FC = () => {
   const { items, handleIncrease, handleDecrease, removeFromCart } = useCart();
@@ -41,24 +42,26 @@ const Cart: React.FC = () => {
               <p className="text-gray-600">${item.price} each</p>
               <div className="flex items-center mt-2 space-x-2">
                 {item.quantity > 1 && (
-                  <button
+                  <Button
+                    size="sm"
+                    variant="secondary"
                     aria-label="decrease item"
                     onClick={() => handleDecrease(item.id)}
-                    className="text-blue-500 hover:text-blue-700 focus:outline-none"
                   >
                     -
-                  </button>
+                  </Button>
                 )}
 
                 <span className="text-xl">{item.quantity}</span>
                 {item.quantity < item.stock && (
-                  <button
+                  <Button
+                    size="sm"
+                    variant="secondary"
                     aria-label="increase item"
                     onClick={() => handleIncrease(item.id)}
-                    className="text-blue-500 hover:text-blue-700 focus:outline-none"
                   >
                     +
-                  </button>
+                  </Button>
                 )}
               </div>
             </div>
@@ -66,12 +69,9 @@ const Cart: React.FC = () => {
               <p className="text-lg font-bold">
                 ${(item.price * item.quantity).toFixed(2)}
               </p>
-              <button
-                onClick={() => removeFromCart(item.id)}
-                className="mt-2 text-red-500 hover:text-red-700 focus:outline-none"
-              >
+              <Button onClick={() => removeFromCart(item.id)} variant="delete">
                 Remove
-              </button>
+              </Button>
             </div>
           </div>
         ))}
