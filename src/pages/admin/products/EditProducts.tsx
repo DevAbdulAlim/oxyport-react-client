@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 import ProductForm from "../../../components/products/ProductForm";
 import { Product, ProductFormValues } from "../../../lib/types";
 import { useParams } from "react-router-dom";
-import productService from "../../../services/productService";
+import { productService } from "../../../services/api";
 
 export default function EditProducts() {
   const [product, setProduct] = useState<Product | null>(null);
   const { productId } = useParams();
 
   useEffect(() => {
-    (async () => {
-      const response = await productService.getProductDetails(productId!);
-      setProduct(response);
-    })();
+    if (productId !== undefined) {
+      productService
+        .getProductDetails(parseInt(productId, 10))
+        .then((response) => setProduct(response.data.product))
+        .catch((error) => console.error(error));
+    }
   }, [productId]);
 
   const initialValues: ProductFormValues = {

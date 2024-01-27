@@ -1,72 +1,113 @@
 import React, { useEffect, useState } from "react";
 import ProductTable from "../../../components/products/ProductTable";
-import { useProduct } from "../../../context/ProductContext";
 import Pagination from "../../../components/Pagination";
 import Link from "../../../components/Link";
-import { productParams } from "../../../services/productService";
 import { useDebounce } from "usehooks-ts"; // Import the useDebounce hook
+import { Product } from "../../../lib/types";
+import { productService } from "../../../services/api";
 
 export default function Products() {
-  const [itemsPerPage] = useState(1);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<Boolean>(true);
+  const [totalProducts, setTotalProducts] = useState<number>(0);
+  const [error, setError] = useState();
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("");
   const [search, setSearch] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const { fetchProducts, deleteProduct, products, total, error, loading } =
-    useProduct();
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
 
   const debouncedSearch = useDebounce(search, 500); // Debounce the search value
   const debouncedSortBy = useDebounce(sortBy, 500); // Debounce the sortBy value
 
   useEffect(() => {
-    const params: productParams = {
+    const params = {
       sortBy: debouncedSortBy,
       sortOrder,
       search: debouncedSearch,
-      page: currentPage.toString(),
+      page: page,
+      pageSize: pageSize,
     };
 
-    fetchProducts(params);
-  }, [currentPage, debouncedSortBy, sortOrder, debouncedSearch]);
+    productService
+      .getProducts(params)
+      .then((response) => {
+        setProducts(response.data.products);
+        setTotalProducts(response.data.totalItems);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching products", error);
+        setError(error);
+      });
+  }, [page, pageSize, debouncedSortBy, sortOrder, debouncedSearch]);
 
   const handleDelete = (productId: number) => {
-    deleteProduct(productId);
+    productService
+      .deleteProduct(productId)
+      .then((response) => {
+        console.log("Product deleted", response.data);
+        setProducts(products.filter((product) => product.id !== productId));
+      })
+      .catch((error) => {
+        console.log("Product deleted Fail", error);
+        setError(error);
+      });
   };
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+    setPage(page);
   };
 
   const handleSearch = () => {
     // Implement your search logic here
-    const params: productParams = {
+    const params = {
       sortBy: debouncedSortBy,
       sortOrder,
       search: debouncedSearch,
-      page: "1",
+      page: 1,
+      pageSize: 5,
     };
 
-    fetchProducts(params);
+    productService
+      .getProducts(params)
+      .then((response) => {
+        setProducts(response.data.products);
+        setTotalProducts(response.data.totalItems);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching products", error);
+        setError(error);
+      });
   };
 
   const handleSort = (selectedSortBy: string) => {
-    // Implement your sorting logic here
     setSortBy(selectedSortBy);
-    // You may also want to toggle sortOrder between 'asc' and 'desc' based on the current state
     setSortOrder("asc");
 
-    const params: productParams = {
+    const params = {
       sortBy: selectedSortBy,
       sortOrder: "asc", // or 'desc' based on your logic
       search: debouncedSearch,
-      page: "1",
+      page: 1,
+      pageSize: 5,
     };
 
-    fetchProducts(params);
+    productService
+      .getProducts(params)
+      .then((response) => {
+        setProducts(response.data.products);
+        setTotalProducts(response.data.totalItems);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching products", error);
+        setError(error);
+      });
   };
 
-  const totalPages = Math.ceil(total / itemsPerPage);
+  const totalPages = Math.ceil(totalProducts / pageSize);
 
   return (
     <div className="container mx-auto mt-8">
@@ -118,10 +159,10 @@ export default function Products() {
         <div>No products found.</div>
       )}
       <Pagination
-        itemsPerPage={itemsPerPage}
-        totalItems={total}
+        itemsPerPage={pageSize}
+        totalItems={totalProducts}
         totalPages={totalPages}
-        currentPage={currentPage}
+        currentPage={page}
         onPageChange={handlePageChange}
       />
     </div>

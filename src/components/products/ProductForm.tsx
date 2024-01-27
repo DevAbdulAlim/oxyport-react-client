@@ -2,7 +2,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Button from "../Button";
 import { ProductFormValues } from "../../lib/types";
-import productService from "../../services/productService";
+import { productService } from "../../services/api";
 
 const ProductSchema = Yup.object({
   name: Yup.string().required("Name is required"),
@@ -32,17 +32,18 @@ const ProductForm = ({
         initialValues={defaultValue}
         validationSchema={ProductSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          try {
-            setSubmitting(true);
-
-            await productService.createProduct(values);
-
-            console.log("Product created successfully");
-          } catch (error) {
-            console.error(error);
-          } finally {
-            setSubmitting(false);
-          }
+          setSubmitting(true);
+          productService
+            .addProduct(values)
+            .then((response) => {
+              console.log("Product Successfully added", response.data);
+            })
+            .catch((error) => {
+              console.error("Error adding product:", error);
+            })
+            .finally(() => {
+              setSubmitting(false);
+            });
         }}
       >
         <Form className="space-y-4">

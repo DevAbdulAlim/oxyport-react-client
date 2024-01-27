@@ -1,12 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "../components/products/ProductCard";
-
-import { useProduct } from "../context/ProductContext";
+import { Product } from "../lib/types";
+import { productService } from "../services/api";
 
 const ProductSearch = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const { products, loading } = useProduct();
+  useEffect(() => {
+    productService
+      .getProducts()
+      .then((response) => {
+        setProducts(response.data.products);
+        setLoading(false);
+      })
+      .catch((error) => console.error("Error fetching products", error));
+  }, []);
 
   const handleSearch = () => {};
 
