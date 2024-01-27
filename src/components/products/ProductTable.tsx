@@ -36,7 +36,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onDelete }) => {
                 />
               </td>
               <td className="px-4 py-2">{product.name}</td>
-              <td className="px-4 py-2">{product.price}</td>
+              <td className="px-4 py-2">${product.price}</td>
               <td className="px-4 py-2">{product.stock}</td>
               <td className="px-4 py-2">{product.categoryId}</td>
               <td className="px-4 py-2">{product.userId}</td>

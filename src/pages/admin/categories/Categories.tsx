@@ -46,7 +46,7 @@ export default function Categories() {
     <div>
       <h2>Categories</h2>
       <SelectSearch />
-      <SelectImage onFileUpload={handleFileUpload} />
+      {/* <SelectImage onFileUpload={handleFileUpload} /> */}
       <ExportCategory />
       <br />
       {/* Button to trigger printing */}
