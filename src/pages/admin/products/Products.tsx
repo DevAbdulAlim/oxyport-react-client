@@ -5,6 +5,12 @@ import Link from "../../../components/Link";
 import { useDebounce } from "usehooks-ts"; // Import the useDebounce hook
 import { Product } from "../../../lib/types";
 import { productService } from "../../../services/api";
+import { FiSearch } from "react-icons/fi";
+import Select from "../../../components/Select";
+import Input from "../../../components/Input";
+import NotFound from "../../../components/NotFound";
+import Loading from "../../../components/Loading";
+import ExportCSV from "../../../components/ExportCSV";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -110,54 +116,72 @@ export default function Products() {
   const totalPages = Math.ceil(totalProducts / pageSize);
 
   return (
-    <div className="container mx-auto mt-8">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-3xl font-semibold">Admin Product List</h2>
-        <Link to="/admin/products/create">Create Product</Link>
+    <div className="container px-3 py-8 mx-auto">
+      {/* topbar */}
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-gray-800">Product List</h2>
+        <Link to="/admin/products/create">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-5 h-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 2a1 1 0 00-1 1v6H3a1 1 0 100 2h6v6a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 00-1-1z"
+              clipRule="evenodd"
+            />
+          </svg>
+          Create Product
+        </Link>
       </div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSearch();
-        }}
-      >
-        <div className="flex mb-4">
-          <label className="mr-2">Search:</label>
-          <input
-            type="text"
-            className="px-2 py-1 border border-gray-400"
-            placeholder="Search products..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <button
-            type="submit"
-            className="px-2 py-1 ml-2 text-white bg-blue-500"
-          >
-            Search
-          </button>
-          <label className="ml-4 mr-2">Sort by:</label>
-          <select
-            className="px-2 py-1 border border-gray-400"
-            value={sortBy}
-            onChange={(e) => handleSort(e.target.value)}
-            title="Sort by"
-          >
-            <option value="name">Name</option>
-            <option value="price">Price</option>
-            {/* Add more options as needed */}
-          </select>
-        </div>
-      </form>
+
+      {/* filter */}
+      <div className="flex flex-col items-center justify-between space-x-4 space-y-4 xl:flex-row">
+        <form
+          onSubmit={handleSearch}
+          className="flex flex-col items-center space-y-4 md:flex-row md:space-y-0 md:space-x-4"
+        >
+          <div className="relative flex items-center md:w-64">
+            <FiSearch className="absolute w-6 h-6 text-gray-400 pointer-events-none left-1 top-2" />
+            <Input
+              type="text"
+              id="search"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-8"
+            />
+          </div>
+          <div className="flex items-center">
+            <label htmlFor="sortBy" className="mr-2 font-medium text-gray-700">
+              Sort by:
+            </label>
+            <Select
+              id="sortBy"
+              value={sortBy}
+              onChange={(e) => handleSort(e.target.value)}
+            >
+              <option value="name">Name</option>
+              <option value="price">Price</option>
+            </Select>
+          </div>
+        </form>
+        <ExportCSV data={products} />
+      </div>
+      {/* product table */}
       {loading ? (
-        <div>Loading...</div>
+        <Loading />
       ) : error ? (
         <div>Error: {error}</div>
       ) : products && products.length > 0 ? (
         <ProductTable products={products} onDelete={handleDelete} />
       ) : (
-        <div>No products found.</div>
+        <NotFound />
       )}
+
+      {/* pagination */}
       <Pagination
         itemsPerPage={pageSize}
         totalItems={totalProducts}

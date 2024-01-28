@@ -1,7 +1,11 @@
+import React from "react";
+import { FiEdit, FiTrash2, FiEye } from "react-icons/fi";
+
+import Button from "../Button";
 import Link from "../Link";
 import { Product } from "../../lib/types";
-import Button from "../Button";
 import Avatar from "../Avater";
+import { truncateName } from "../../lib/utils";
 
 interface ProductTableProps {
   products: Product[];
@@ -10,11 +14,10 @@ interface ProductTableProps {
 
 const ProductTable: React.FC<ProductTableProps> = ({ products, onDelete }) => {
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4 text-2xl font-bold">Product Table</h2>
-      <table className="w-full border border-collapse border-gray-800 table-auto">
-        <thead>
-          <tr className="text-white bg-gray-800">
+    <div className="container mt-8 overflow-auto rounded-lg shadow">
+      <table className="min-w-full overflow-hidden g-white">
+        <thead className="bg-gray-200">
+          <tr className="text-gray-800">
             <th className="px-4 py-2">ID</th>
             <th className="px-4 py-2">Image</th>
             <th className="px-4 py-2">Name</th>
@@ -27,34 +30,44 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onDelete }) => {
         </thead>
         <tbody>
           {products.map((product) => (
-            <tr key={product.id} className="border-t border-gray-500">
-              <td className="px-4 py-2">{product.id}</td>
-              <td className="px-4 py-2">
+            <tr key={product.id} className="text-gray-700">
+              <td className="px-4 py-2 text-nowrap">{product.id}</td>
+              <td className="px-4 py-2 text-nowrap">
                 <Avatar
                   src={process.env.PUBLIC_URL + "/img/avatar.jpg"}
                   alt="Product"
                 />
               </td>
-              <td className="px-4 py-2">{product.name}</td>
-              <td className="px-4 py-2">${product.price}</td>
-              <td className="px-4 py-2">{product.stock}</td>
-              <td className="px-4 py-2">{product.categoryId}</td>
-              <td className="px-4 py-2">{product.userId}</td>
-              <td className="px-4 py-2">
+              <td className="px-4 py-2 text-nowrap">
+                {truncateName(product.name, 20)}
+              </td>
+              <td className="px-4 py-2 text-nowrap">${product.price}</td>
+              <td className="px-4 py-2 text-nowrap">{product.stock}</td>
+              <td className="px-4 py-2 text-nowrap">{product.categoryId}</td>
+              <td className="px-4 py-2 text-nowrap">{product.userId}</td>
+              <td className="px-4 py-2 text-center text-nowrap">
+                <Link
+                  to={`/admin/products/view/${product.id}`}
+                  size="sm"
+                  variant="ghost"
+                  className="mr-2"
+                >
+                  <FiEye />
+                </Link>
                 <Link
                   to={`/admin/products/edit/${product.id}`}
                   size="sm"
-                  variant="edit"
+                  variant="ghost"
+                  className="mr-2"
                 >
-                  Edit
+                  <FiEdit />
                 </Link>
                 <Button
                   onClick={() => onDelete(product.id)}
                   size="sm"
-                  variant="delete"
-                  className="ml-4"
+                  variant="ghost"
                 >
-                  Delete
+                  <FiTrash2 />
                 </Button>
               </td>
             </tr>

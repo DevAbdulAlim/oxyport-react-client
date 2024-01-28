@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import config from "../../../config";
 import SelectSearch from "./SelectSearch";
 import SelectImage from "./SelectImage";
-import ExportCategory from "./ExportCategory";
 import Button from "../../../components/Button";
 import PrintComponent from "./PrintComponent";
 import { useReactToPrint } from "react-to-print";
@@ -47,7 +46,7 @@ export default function Categories() {
       <h2>Categories</h2>
       <SelectSearch />
       {/* <SelectImage onFileUpload={handleFileUpload} /> */}
-      <ExportCategory />
+
       <br />
       {/* Button to trigger printing */}
       <button onClick={handlePrint} className="print:hidden">

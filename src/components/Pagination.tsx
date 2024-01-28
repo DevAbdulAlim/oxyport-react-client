@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 
 interface PaginationProps {
@@ -16,8 +15,6 @@ const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   onPageChange,
 }) => {
-  const navigate = useNavigate();
-
   const handlePrevious = () => {
     if (currentPage > 1) {
       const newPage = currentPage - 1;
@@ -36,16 +33,24 @@ const Pagination: React.FC<PaginationProps> = ({
     <div className="flex items-center justify-between mt-6 text-sm text-gray-500">
       <div>
         <span className="font-medium">
-          showing {itemsPerPage} out of {totalItems} items
+          Showing {Math.min(currentPage * itemsPerPage, totalItems)} out of{" "}
+          {totalItems} items
         </span>
       </div>
       <div className="flex items-center space-x-2">
-        {currentPage > 1 && <Button onClick={handlePrevious}>Previous</Button>}
-
-        <span className="text-slate-500">
+        {currentPage > 1 && (
+          <Button onClick={handlePrevious} variant="ghost">
+            Previous
+          </Button>
+        )}
+        <span className="text-gray-600">
           Page {currentPage} of {totalPages}
         </span>
-        {currentPage < totalPages && <Button onClick={handleNext}>Next</Button>}
+        {currentPage < totalPages && (
+          <Button onClick={handleNext} variant="ghost">
+            Next
+          </Button>
+        )}
       </div>
     </div>
   );
