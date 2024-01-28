@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import Button from "../components/Button";
+import Button from "../components/ui/Button";
 import { useCart } from "../context/CartContext";
-import Link from "../components/Link";
+import Link from "../components/ui/Link";
 
 const CartSidebar = ({
   isOpen,

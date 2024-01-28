@@ -17,19 +17,20 @@ export default function EditProducts() {
     }
   }, [productId]);
 
-  const initialValues: ProductFormValues = {
-    name: product ? product.name : "",
-    description: product?.description ? product.description : "",
-    price: product ? product.price : 0,
-    image: product ? product.image : "",
-    stock: product ? product.stock : 0,
-    categoryId: product ? product.categoryId : 0,
-    userId: product ? product.userId : 0,
-  };
+  // const initialValues: ProductFormValues = {
+  //   name: product ? product.name : "",
+  //   description: product?.description ? product.description : "",
+  //   price: product ? product.price : 0,
+  //   image: product ? product.image : "",
+  //   stock: product ? product.stock : 0,
+  //   categoryId: product ? product.categoryId : 0,
+  //   userId: product ? product.userId : 0,
+  //   category: product ? product.category?.name : "",
+  // };
 
   return (
     <div>
-      {product && <ProductForm defaultValue={initialValues} edit={true} />}
+      {/* {product && <ProductForm defaultValue={initialValues} edit={true} />} */}
     </div>
   );
 }

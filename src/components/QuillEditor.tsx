@@ -2,16 +2,14 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-interface MyQuillEditorProps {
+interface QuillEditorProps {
+  value: string;
   onEditorChange: (content: string) => void;
 }
 
-const MyQuillEditor: React.FC<MyQuillEditorProps> = ({ onEditorChange }) => {
-  const [value, setValue] = useState<string>("");
-
+const QuillEditor: React.FC<QuillEditorProps> = ({ value, onEditorChange }) => {
   const handleChange = (content: string) => {
-    setValue(content);
-    onEditorChange(content); // Pass the editor content to the parent component
+    onEditorChange(content);
   };
 
   return (
@@ -51,4 +49,4 @@ const MyQuillEditor: React.FC<MyQuillEditorProps> = ({ onEditorChange }) => {
   );
 };
 
-export default MyQuillEditor;
+export default QuillEditor;

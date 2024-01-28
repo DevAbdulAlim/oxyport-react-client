@@ -6,7 +6,7 @@ import { FiLogOut } from "react-icons/fi";
 import { GiMoebiusTriangle } from "react-icons/gi";
 import { FaShopify } from "react-icons/fa";
 import { ImMenu } from "react-icons/im";
-import Button from "../components/Button";
+import Button from "../components/ui/Button";
 
 const menuItems = [
   {

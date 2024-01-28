@@ -9,8 +9,9 @@ import {
   MdPerson,
 } from "react-icons/md";
 import { BsActivity } from "react-icons/bs";
-import Button from "../components/Button";
+import Button from "../components/ui/Button";
 import { ImMenu } from "react-icons/im";
+import Avatar from "../components/ui/Avater";
 
 const AdminTopNavbar = ({
   handleNavToggle,
@@ -18,7 +19,7 @@ const AdminTopNavbar = ({
   handleNavToggle: () => void;
 }) => {
   return (
-    <div className="sticky top-0 flex items-center justify-between w-full p-4 text-gray-500 bg-gray-100 shadow-md">
+    <div className="sticky top-0 z-10 flex items-center justify-between w-full p-4 text-gray-500 bg-gray-100 shadow-md">
       <Button className="xl:hidden" variant="ghost" onClick={handleNavToggle}>
         <ImMenu className="text-xl" />
       </Button>
@@ -32,24 +33,27 @@ const AdminTopNavbar = ({
         />
       </div>
       {/* Icons */}
-      <div className="flex items-center">
-        <span className="mx-4 text-xl font-bold cursor-pointer">
+      <div className="flex items-center space-x-4 sm:space-x-8 lg:space-x-10">
+        <span className="text-xl font-bold cursor-pointer ">
           <BsActivity />
         </span>
-        <span className="mx-4 text-xl font-bold cursor-pointer">
+        <span className="text-xl font-bold cursor-pointer ">
           <MdNotifications />
         </span>
-        <span className="mx-4 text-xl font-bold cursor-pointer">
+        <span className="text-xl font-bold cursor-pointer ">
           <MdMessage />
         </span>
-        <span className="mx-4 text-xl font-bold cursor-pointer">
+        <span className="text-xl font-bold cursor-pointer ">
           <MdApps />
         </span>
-        <span className="mx-4 text-xl font-bold cursor-pointer">
+        <span className="text-xl font-bold cursor-pointer ">
           <MdWbSunny />
         </span>
-        <span className="mx-4 text-xl font-bold cursor-pointer">
-          <MdPerson />
+        <span className="text-xl font-bold cursor-pointer ">
+          <Avatar
+            src={process.env.PUBLIC_URL + "/img/avatar.jpg"}
+            alt="account"
+          />
         </span>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "../components/Link";
+import Link from "../components/ui/Link";
 
 // Define the Post type
 type PostType = {

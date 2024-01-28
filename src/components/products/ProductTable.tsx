@@ -1,10 +1,10 @@
 import React from "react";
 import { FiEdit, FiTrash2, FiEye } from "react-icons/fi";
 
-import Button from "../Button";
-import Link from "../Link";
+import Button from "../ui/Button";
+import Link from "../ui/Link";
 import { Product } from "../../lib/types";
-import Avatar from "../Avater";
+import Avatar from "../ui/Avater";
 import { truncateName } from "../../lib/utils";
 
 interface ProductTableProps {
@@ -43,8 +43,10 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onDelete }) => {
               </td>
               <td className="px-4 py-2 text-nowrap">${product.price}</td>
               <td className="px-4 py-2 text-nowrap">{product.stock}</td>
-              <td className="px-4 py-2 text-nowrap">{product.categoryId}</td>
-              <td className="px-4 py-2 text-nowrap">{product.userId}</td>
+              <td className="px-4 py-2 text-nowrap ">
+                {product.category?.name}
+              </td>
+              <td className="px-4 py-2 text-nowrap">{product.user?.name}</td>
               <td className="px-4 py-2 text-center text-nowrap">
                 <Link
                   to={`/admin/products/view/${product.id}`}

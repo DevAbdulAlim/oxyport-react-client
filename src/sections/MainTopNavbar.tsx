@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Link from "../components/Link";
+import Link from "../components/ui/Link";
 import {
   FaSearch,
   FaShoppingCart,
@@ -8,7 +8,7 @@ import {
   FaBars,
   FaHeart,
 } from "react-icons/fa";
-import Button from "../components/Button";
+import Button from "../components/ui/Button";
 import ClientSideNavbar from "./ClientSideNav";
 import CartSidebar from "./CartSidebar";
 import CategoryDropdown from "./CategoryDropdown";

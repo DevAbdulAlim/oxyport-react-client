@@ -1,8 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import FileUpload from "./SelectImage";
 import config from "../../../config";
 import axios from "axios";
-import MyQuillEditor from "./MyQuillEditor";
+
+import SelectImage from "../../../components/SelectImage";
 
 interface CategoryData {
   name: string;
@@ -100,7 +100,7 @@ const CreateCategory: React.FC = () => {
           </label>
           {/* Use MyQuillEditor for description */}
           <div className="mt-2 mb-16 h-96">
-            <MyQuillEditor onEditorChange={handleEditorChange} />
+            {/* <QuillEditor onEditorChange={handleEditorChange} /> */}
           </div>
         </div>
         <div>
@@ -111,7 +111,7 @@ const CreateCategory: React.FC = () => {
             Category Images:
           </label>
           <div className="mt-2 ">
-            <FileUpload onFileUpload={handleImageUpload} />
+            <SelectImage onImageUpload={handleImageUpload} />
           </div>
         </div>
 

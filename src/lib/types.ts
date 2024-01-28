@@ -36,16 +36,23 @@ export type Product = {
   stock: number;
   categoryId: number;
   userId: number;
+  category: {
+    name: string;
+  };
+  user: {
+    name: string;
+  };
 };
 
 export type ProductFormValues = {
   name: string;
   description: string;
   price: number;
-  image: string;
+  image: File[];
   stock: number;
   categoryId: number;
   userId: number;
+  category: string;
 };
 
 export type Review = {

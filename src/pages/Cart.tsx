@@ -1,8 +1,8 @@
 import React from "react";
-import Link from "../components/Link";
+import Link from "../components/ui/Link";
 import { useCart } from "../context/CartContext";
 import { CartItem } from "../lib/types";
-import Button from "../components/Button";
+import Button from "../components/ui/Button";
 
 const Cart: React.FC = () => {
   const { items, handleIncrease, handleDecrease, removeFromCart } = useCart();

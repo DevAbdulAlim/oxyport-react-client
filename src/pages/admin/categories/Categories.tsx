@@ -1,10 +1,6 @@
-import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
-import config from "../../../config";
-import SelectSearch from "./SelectSearch";
-import SelectImage from "./SelectImage";
-import Button from "../../../components/Button";
-import PrintComponent from "./PrintComponent";
+import { useEffect, useRef, useState } from "react";
+
+import PrintComponent from "../../../components/PrintComponent";
 import { useReactToPrint } from "react-to-print";
 import { categoryService } from "../../../services/api";
 import { Category } from "../../../lib/types";
@@ -44,7 +40,7 @@ export default function Categories() {
   return (
     <div>
       <h2>Categories</h2>
-      <SelectSearch />
+
       {/* <SelectImage onFileUpload={handleFileUpload} /> */}
 
       <br />

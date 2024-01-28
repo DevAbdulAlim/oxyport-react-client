@@ -1,20 +1,20 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-interface FileUploadProps {
-  onFileUpload: (files: File[]) => void;
+interface SelectImageProps {
+  onImageUpload: (files: File[]) => void;
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
+const SelectImage: React.FC<SelectImageProps> = ({ onImageUpload }) => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       const newFiles = [...uploadedFiles, ...acceptedFiles];
       setUploadedFiles(newFiles);
-      onFileUpload(newFiles);
+      onImageUpload(newFiles);
     },
-    [uploadedFiles, onFileUpload]
+    [uploadedFiles, onImageUpload]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -54,4 +54,4 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
   );
 };
 
-export default FileUpload;
+export default SelectImage;

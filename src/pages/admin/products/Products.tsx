@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import ProductTable from "../../../components/products/ProductTable";
 import Pagination from "../../../components/Pagination";
-import Link from "../../../components/Link";
-import { useDebounce } from "usehooks-ts"; // Import the useDebounce hook
+import Link from "../../../components/ui/Link";
+import { useDebounce } from "usehooks-ts";
 import { Product } from "../../../lib/types";
 import { productService } from "../../../services/api";
 import { FiSearch } from "react-icons/fi";
-import Select from "../../../components/Select";
-import Input from "../../../components/Input";
+import Select from "../../../components/ui/Select";
+import Input from "../../../components/ui/Input";
 import NotFound from "../../../components/NotFound";
-import Loading from "../../../components/Loading";
 import ExportCSV from "../../../components/ExportCSV";
+import Loader from "../../../components/ui/Loader";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -23,8 +23,8 @@ export default function Products() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
 
-  const debouncedSearch = useDebounce(search, 500); // Debounce the search value
-  const debouncedSortBy = useDebounce(sortBy, 500); // Debounce the sortBy value
+  const debouncedSearch = useDebounce(search, 500);
+  const debouncedSortBy = useDebounce(sortBy, 500);
 
   useEffect(() => {
     const params = {
@@ -66,7 +66,6 @@ export default function Products() {
   };
 
   const handleSearch = () => {
-    // Implement your search logic here
     const params = {
       sortBy: debouncedSortBy,
       sortOrder,
@@ -94,7 +93,7 @@ export default function Products() {
 
     const params = {
       sortBy: selectedSortBy,
-      sortOrder: "asc", // or 'desc' based on your logic
+      sortOrder: "asc",
       search: debouncedSearch,
       page: 1,
       pageSize: 5,
@@ -138,7 +137,7 @@ export default function Products() {
       </div>
 
       {/* filter */}
-      <div className="flex flex-col items-center justify-between space-x-4 space-y-4 xl:flex-row">
+      <div className="flex flex-col items-center justify-between space-x-4 space-y-4 md:flex-row">
         <form
           onSubmit={handleSearch}
           className="flex flex-col items-center space-y-4 md:flex-row md:space-y-0 md:space-x-4"
@@ -172,7 +171,7 @@ export default function Products() {
       </div>
       {/* product table */}
       {loading ? (
-        <Loading />
+        <Loader />
       ) : error ? (
         <div>Error: {error}</div>
       ) : products && products.length > 0 ? (

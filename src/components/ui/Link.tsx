@@ -1,9 +1,9 @@
 import { VariantProps, cva } from "class-variance-authority";
-import { Loader2 } from "lucide-react";
-import { ButtonHTMLAttributes, FC } from "react";
-import { cn } from "../lib/utils";
+import { FC } from "react";
+import { Link as RouterLink, LinkProps } from "react-router-dom";
+import { cn } from "../../lib/utils";
 
-const buttonVariants = cva(
+const linkVariants = cva(
   "active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-color focus:outline-none focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events:none",
   {
     variants: {
@@ -19,10 +19,11 @@ const buttonVariants = cva(
         purple: "bg-purple-500 text-white hover:bg-purple-700",
         edit: "bg-yellow-500 text-white hover:bg-yellow-700",
         delete: "bg-red-500 text-white hover:bg-red-700",
+        link: "hover:underline",
       },
       size: {
-        default: "h-10 px-4 ",
-        sm: "h-8 px-2",
+        default: "h-10 px-6 ",
+        sm: "h-8 px-4",
         lg: "h-12 px-8",
       },
     },
@@ -33,30 +34,28 @@ const buttonVariants = cva(
   }
 );
 
-interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+interface RouterLinkProps extends LinkProps, VariantProps<typeof linkVariants> {
   isLoading?: boolean;
+  to: string;
 }
 
-const Button: FC<ButtonProps> = ({
+const Link: FC<RouterLinkProps> = ({
+  to,
   className,
   children,
   variant,
-  isLoading,
   size,
   ...props
 }) => {
   return (
-    <button
-      className={cn(buttonVariants({ variant, size, className }))}
-      disabled={isLoading}
+    <RouterLink
+      to={to}
+      className={cn(linkVariants({ variant, size, className }))}
       {...props}
     >
-      {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
       {children}
-    </button>
+    </RouterLink>
   );
 };
 
-export default Button;
+export default Link;

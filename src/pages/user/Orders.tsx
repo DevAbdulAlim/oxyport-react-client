@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../components/Button";
+import Button from "../../components/ui/Button";
 
 const orders = [
   { id: 1, product: "Product A", quantity: 2, price: 30 },

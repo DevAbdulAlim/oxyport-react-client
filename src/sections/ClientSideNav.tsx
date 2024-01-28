@@ -7,7 +7,7 @@ import {
   FaShoppingCart,
   FaUserCircle,
 } from "react-icons/fa";
-import Button from "../components/Button";
+import Button from "../components/ui/Button";
 
 const ClientSideNavbar = ({
   isOpen,

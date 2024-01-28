@@ -1,7 +1,7 @@
 import React from "react";
 import { Product } from "../../lib/types";
-import Link from "../Link";
-import Button from "../Button";
+import Link from "../ui/Link";
+import Button from "../ui/Button";
 import { FaEye, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { useCart } from "../../context/CartContext";
 

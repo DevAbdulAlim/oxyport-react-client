@@ -1,4 +1,4 @@
-import ProductForm from "../../../components/products/ProductForm";
+import ProductFormContainer from "../../../components/products/ProductForm";
 import { ProductFormValues } from "../../../lib/types";
 
 export default function CreateProducts() {
@@ -6,15 +6,16 @@ export default function CreateProducts() {
     name: "",
     description: "",
     price: 0,
-    image: "",
+    image: [],
     stock: 0,
     categoryId: 0,
     userId: 0,
+    category: "",
   };
 
   return (
     <div>
-      <ProductForm defaultValue={initialValues} />
+      <ProductFormContainer initialValues={initialValues} />
     </div>
   );
 }
