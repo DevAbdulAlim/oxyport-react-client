@@ -51,13 +51,13 @@ const AdminSidebar = ({
 
   return (
     <nav
-      className={`fixed   left-0 h-full p-4 group z-30 overflow-hidden shadow-2xl xl:shadow-none text-white bg-gray-800 ${
+      className={`fixed   left-0 h-full p-4 transition-all duration-300 group z-30 overflow-hidden shadow-2xl xl:shadow-none text-white bg-gray-800 ${
         open
           ? "w-full md:w-64 block"
           : "w-0 md:w-0 hover:w-64 xl:w-16 hidden xl:block"
       }`}
     >
-      <div className="flex items-center mb-5 space-x-2">
+      <div className="absolute flex items-center space-x-2">
         <GiMoebiusTriangle className="text-4xl text-indigo-500" />
         <span
           className={`${
@@ -67,16 +67,18 @@ const AdminSidebar = ({
           ActivEco
         </span>
       </div>
+
       <Button
         onClick={handleNavToggle}
         variant="ghost"
-        className={` absolute  group-hover:block top-2 right-2 ${
-          open ? "block bg-gray-700" : "xl:hidden"
-        }`}
+        className={`absolute top-2 right-2 ${
+          open ? "block opacity-100 bg-gray-700" : "opacity-0"
+        }  group-hover:opacity-100 transition-opacity group-hover:delay-300 duration-100`}
       >
         <ImMenu />
       </Button>
-      <ul className="py-4 border-t border-gray-700">
+      <div className="w-full h-[1px] mt-16 bg-gray-600" />
+      <ul className="absolute py-4 ">
         {menuItems.map((item, index) => (
           <li key={index} className="flex items-center mb-5">
             {item.icon}
@@ -84,7 +86,7 @@ const AdminSidebar = ({
               to={item.link}
               className={`${
                 open ? "block" : "hidden"
-              } text-gray-300 group-hover:block ml-2 hover:text-white`}
+              } text-gray-300 group-hover:block ml-2  hover:text-white`}
             >
               {item.label}
             </Link>
