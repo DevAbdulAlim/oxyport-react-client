@@ -6,6 +6,8 @@ import { ProductFormValues } from "../../lib/types";
 import { productSchema } from "../../lib/yupSchema";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
+import axios from "axios";
+import config from "../../config";
 
 const ProductForm = () => {
   // initial formik hook
@@ -14,7 +16,7 @@ const ProductForm = () => {
 
   // handle adding product image
   const handleImageUpload = (files: File[]) => {
-    setFieldValue("image", files);
+    setFieldValue("images", files);
     console.log("Selected image is: ", files);
   };
 
@@ -161,13 +163,34 @@ const ProductFormContainer = ({
 }: {
   initialValues: ProductFormValues;
 }) => {
+  const handleSubmit = async (
+    values: ProductFormValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    console.log(typeof values.price);
+    try {
+      const response = await axios.post(
+        `${config.apiBaseUrl}/products`,
+        values,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("Form submitted successfully:", response.data);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={productSchema}
-      onSubmit={(values) => {
-        console.log("Form submitted with values:", values);
-      }}
+      onSubmit={handleSubmit}
     >
       <ProductForm />
     </Formik>

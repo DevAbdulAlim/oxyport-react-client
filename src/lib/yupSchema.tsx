@@ -13,15 +13,9 @@ const productSchema = yup.object().shape({
     .min(0, "Discount must be a non-negative number."),
   images: yup
     .array()
-    .required("Product images are required.")
     .min(1, "At least one image is required.")
-    .of(
-      yup.object().shape({
-        type: yup.string().required(),
-        name: yup.string().required(),
-        // size: yup.number().max(1024 * 1024 * 10, "Image size should be less than 10 MB."),
-      })
-    ),
+    .required("Product images are required.")
+    .of(yup.string().required()),
   stock: yup
     .number()
     .required("Stock quantity is required.")

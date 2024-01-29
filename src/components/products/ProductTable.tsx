@@ -6,6 +6,7 @@ import Link from "../ui/Link";
 import { Product } from "../../lib/types";
 import Avatar from "../ui/Avater";
 import { truncateName } from "../../lib/utils";
+import config from "../../config";
 
 interface ProductTableProps {
   products: Product[];
@@ -34,7 +35,9 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onDelete }) => {
               <td className="px-4 py-2 text-nowrap">{product.id}</td>
               <td className="px-4 py-2 text-nowrap">
                 <Avatar
-                  src={process.env.PUBLIC_URL + "/img/avatar.jpg"}
+                  src={`${config.apiStaticPath}/images/${
+                    product.images.split(",")[0]
+                  }`}
                   alt="Product"
                 />
               </td>
