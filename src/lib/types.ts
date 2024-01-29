@@ -25,6 +25,7 @@ export type Category = {
   id: number;
   name: string;
   description?: string | null;
+  image?: string | null;
 };
 
 export type Product = {
@@ -32,7 +33,8 @@ export type Product = {
   name: string;
   description?: string | null;
   price: number;
-  image: string;
+  discount: number;
+  images: string;
   stock: number;
   categoryId: number;
   userId: number;
@@ -48,11 +50,13 @@ export type ProductFormValues = {
   name: string;
   description: string;
   price: number;
-  image: File[];
+  discount: number;
+  images: File[];
   stock: number;
   categoryId: number;
   userId: number;
   category: string;
+  user: string;
 };
 
 export type Review = {

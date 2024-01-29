@@ -1,28 +1,30 @@
-import React from "react";
 import { Formik, Form, useFormikContext } from "formik";
-import * as Yup from "yup";
 import QuillEditor from "../QuillEditor";
 import SelectSearch, { Option } from "../SelectSearch";
 import SelectImage from "../SelectImage";
 import { ProductFormValues } from "../../lib/types";
-
-const validationSchema = Yup.object({
-  description: Yup.string().required("Description is required"),
-  image: Yup.array().min(1, "Image is required").required("Image is required"),
-  categoryId: Yup.number()
-    .required("Category is required")
-    .min(1, "Category is required"),
-});
+import { productSchema } from "../../lib/yupSchema";
+import Input from "../ui/Input";
+import Button from "../ui/Button";
 
 const ProductForm = () => {
-  const { values, setFieldValue, errors } =
+  // initial formik hook
+  const { values, setFieldValue, handleBlur, handleChange, touched, errors } =
     useFormikContext<ProductFormValues>();
 
+  // handle adding product image
+  const handleImageUpload = (files: File[]) => {
+    setFieldValue("image", files);
+    console.log("Selected image is: ", files);
+  };
+
+  // handle adding product description
   const handleEditorChange = (content: string) => {
     setFieldValue("description", content);
     console.log("Description is: ", content);
   };
 
+  // handle adding product category
   const handleCategorySelectChange = (value: Option | null) => {
     if (value) {
       setFieldValue("categoryId", value.value);
@@ -30,37 +32,126 @@ const ProductForm = () => {
     }
   };
 
-  const handleImageUpload = (files: File[]) => {
-    setFieldValue("image", files);
-    console.log("Selected image is: ", files);
+  // handle adding product user
+  const handleUserSelectChange = (value: Option | null) => {
+    if (value) {
+      setFieldValue("userId", value.value);
+      console.log("Selected user is: ", value);
+    }
   };
 
   return (
     <Form>
-      <QuillEditor
-        value={values.description}
-        onEditorChange={handleEditorChange}
-      />
-      {errors.description && <div>{errors.description}</div>}
+      <div className="mb-4">
+        <label className="block mb-1">Name:</label>
+        <Input
+          type="text"
+          name="name"
+          onBlur={handleBlur}
+          onChange={handleChange}
+          value={values.name}
+        />
+        {touched.name && errors.name && (
+          <div className="text-red-500">{errors.name}</div>
+        )}
+      </div>
 
-      <SelectImage onImageUpload={handleImageUpload} />
-      {errors.image && (
-        <div>
-          {typeof errors.image === "string" ? (
-            <div>{errors.image}</div>
-          ) : (
-            <div>{JSON.stringify(errors.image)}</div>
-          )}
-        </div>
-      )}
-      <SelectSearch
-        value={{ value: values.categoryId, label: values.category }}
-        handleSelectChange={handleCategorySelectChange}
-        searchTerm="categories"
-      />
-      {errors.categoryId && <div>{errors.categoryId}</div>}
+      {/* Add product description */}
+      <div className="mb-4">
+        <label className="block mb-1">Add product description:</label>
+        <QuillEditor
+          value={values.description}
+          onEditorChange={handleEditorChange}
+        />
+        {touched.description && errors.description && (
+          <div className="text-red-500">{errors.description}</div>
+        )}
+      </div>
 
-      <button type="submit">Submit</button>
+      <div className="mb-4">
+        <label className="block mb-1">Price:</label>
+        <Input
+          type="number"
+          name="price"
+          onBlur={handleBlur}
+          onChange={handleChange}
+          value={values.price}
+        />
+        {touched.price && errors.price && (
+          <div className="text-red-500">{errors.price}</div>
+        )}
+      </div>
+      <div className="mb-4">
+        <label className="block mb-1">Discount:</label>
+        <Input
+          type="number"
+          name="discount"
+          onBlur={handleBlur}
+          onChange={handleChange}
+          value={values.discount}
+        />
+        {touched.discount && errors.discount && (
+          <div className="text-red-500">{errors.discount}</div>
+        )}
+      </div>
+      <div className="mb-4">
+        <label className="block mb-1">Stock:</label>
+        <Input
+          type="number"
+          name="stock"
+          onBlur={handleBlur}
+          onChange={handleChange}
+          value={values.stock}
+        />
+        {touched.stock && errors.stock && (
+          <div className="text-red-500">{errors.stock}</div>
+        )}
+      </div>
+
+      {/* Select product image */}
+      <div className="mb-4">
+        <label className="block mb-1">Select product images:</label>
+        <SelectImage onImageUpload={handleImageUpload} />
+        {touched.images && errors.images && (
+          <div>
+            {typeof errors.images === "string" ? (
+              <div className="text-red-500">{errors.images}</div>
+            ) : (
+              <div className="text-red-500">
+                {JSON.stringify(errors.images)}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Select product category */}
+      <div className="mb-4">
+        <label className="block mb-1">Select product category:</label>
+        <SelectSearch
+          value={{ value: values.categoryId, label: values.category }}
+          handleSelectChange={handleCategorySelectChange}
+          searchTerm="categories"
+        />
+        {touched.categoryId && errors.categoryId && (
+          <div className="text-red-500">{errors.categoryId}</div>
+        )}
+      </div>
+
+      {/* Select product user */}
+      <div className="mb-4">
+        <label className="block mb-1">Select product user:</label>
+        <SelectSearch
+          value={{ value: values.userId, label: values.user }}
+          handleSelectChange={handleUserSelectChange}
+          searchTerm="users"
+        />
+        {touched.userId && errors.userId && (
+          <div className="text-red-500">{errors.userId}</div>
+        )}
+      </div>
+
+      <Button type="submit">Submit</Button>
     </Form>
   );
 };
@@ -73,7 +164,7 @@ const ProductFormContainer = ({
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={validationSchema}
+      validationSchema={productSchema}
       onSubmit={(values) => {
         console.log("Form submitted with values:", values);
       }}

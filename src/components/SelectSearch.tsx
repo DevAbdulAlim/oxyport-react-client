@@ -14,10 +14,10 @@ interface SelectSearchProps {
   searchTerm: string;
 }
 
-const mapCategoryToOption = (categories: any[]): Option[] => {
-  return categories.map((category: any) => ({
-    value: category.id,
-    label: category.name,
+const mapOption = (items: any[]): Option[] => {
+  return items.map((item: any) => ({
+    value: item.id,
+    label: item.name,
   }));
 };
 
@@ -46,7 +46,7 @@ export default function SelectSearch({
               `${config.apiBaseUrl}/${searchTerm}?search=${inputValue}`
             );
 
-            const options = mapCategoryToOption(response.data[searchTerm]);
+            const options = mapOption(response.data[searchTerm]);
             resolve(options);
           } catch (error) {
             console.error("Error fetching data:", error);
