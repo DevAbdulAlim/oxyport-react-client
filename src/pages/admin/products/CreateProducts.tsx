@@ -4,7 +4,7 @@ import { ProductFormValues } from "../../../lib/types";
 export default function CreateProducts() {
   const initialValues: ProductFormValues = {
     name: "",
-    description: "",
+    description: "hi",
     price: 0,
     discount: 0,
     images: [],

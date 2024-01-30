@@ -113,7 +113,7 @@ const ProductForm = () => {
       {/* Select product image */}
       <div>
         <label className="block mb-1">Select product images:</label>
-        <SelectImage onImageUpload={handleImageUpload} />
+        <SelectImage image={values.images} onImageUpload={handleImageUpload} />
         {touched.images && errors.images && (
           <div>
             {typeof errors.images === "string" ? (

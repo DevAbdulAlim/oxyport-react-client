@@ -111,7 +111,7 @@ const CreateCategory: React.FC = () => {
             Category Images:
           </label>
           <div className="mt-2 ">
-            <SelectImage onImageUpload={handleImageUpload} />
+            {/* <SelectImage onImageUpload={handleImageUpload} /> */}
           </div>
         </div>
 

@@ -1,12 +1,14 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import config from "../config";
 
 interface SelectImageProps {
+  image: File[];
   onImageUpload: (files: File[]) => void;
 }
 
-const SelectImage: React.FC<SelectImageProps> = ({ onImageUpload }) => {
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+const SelectImage: React.FC<SelectImageProps> = ({ image, onImageUpload }) => {
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>(image);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -49,7 +51,7 @@ const SelectImage: React.FC<SelectImageProps> = ({ onImageUpload }) => {
           <div key={index}>
             <p className="my-1">{file.name}</p>
             <img
-              src={URL.createObjectURL(file)}
+              src={`${config.apiStaticPath}/images/${file.name}`}
               alt={`Uploaded File ${index}`}
               className="object-cover w-full h-full"
             />
