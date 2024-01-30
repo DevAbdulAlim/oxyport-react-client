@@ -42,7 +42,9 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onDelete }) => {
                 />
               </td>
               <td className="px-4 py-2 text-nowrap">
-                {truncateName(product.name, 20)}
+                <Link to={`/admin/products/edit/${product.id}`} variant="link">
+                  {truncateName(product.name, 20)}
+                </Link>
               </td>
               <td className="px-4 py-2 text-nowrap">${product.price}</td>
               <td className="px-4 py-2 text-nowrap">{product.stock}</td>
@@ -52,7 +54,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onDelete }) => {
               <td className="px-4 py-2 text-nowrap">{product.user?.name}</td>
               <td className="px-4 py-2 text-center text-nowrap">
                 <Link
-                  to={`/admin/products/view/${product.id}`}
+                  to={`/product/${product.id}`}
                   size="sm"
                   variant="ghost"
                   className="mr-2"

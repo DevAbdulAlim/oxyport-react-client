@@ -4,6 +4,7 @@ import Link from "../ui/Link";
 import Button from "../ui/Button";
 import { FaEye, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { useCart } from "../../context/CartContext";
+import config from "../../config";
 
 interface ProductCardProps {
   product: Product;
@@ -20,11 +21,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Card Image */}
       <div className="relative overflow-hidden h-80 group">
         <img
-          src={process.env.PUBLIC_URL + "/img/products/product-10.png"}
+          src={`${config.apiStaticPath}/images/${product.images.split(",")[0]}`}
           alt={product.name}
-          className="object-cover w-full p-2 mb-4 transition-all duration-300 bg-gray-100 hover:scale-110"
+          className="object-cover w-full h-full mb-4 transition-all duration-300 bg-gray-100 hover:scale-110"
         />
-        <div className="absolute space-x-4 transition-all duration-300 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bottom-4 left-1/2">
+        <div className="absolute flex space-x-2 transition-all duration-300 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bottom-4 left-1/2">
           <Button
             variant="secondary"
             onClick={() =>
@@ -39,9 +40,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           >
             <FaShoppingCart />
           </Button>
-          <Button variant="secondary">
+          <Link
+            to={`/product/${product.id}`}
+            variant="secondary"
+            className="p-4"
+          >
             <FaEye />
-          </Button>
+          </Link>
           <Button variant="secondary">
             <FaHeart />
           </Button>
@@ -55,7 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       >
         {product.name}
       </Link>
-      <div className="flex items-center justify-center space-x-2">
+      <div className="flex items-center justify-center space-x-2 ">
         <del className="text-xl text-gray-500">$450</del>
 
         <div className="flex flex-col items-end">

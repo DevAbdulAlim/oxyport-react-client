@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ProductFormContainer from "../../../components/products/ProductForm";
 import { Product, ProductFormValues } from "../../../lib/types";
 import { useParams } from "react-router-dom";
 import { productService } from "../../../services/api";
+import Button from "../../../components/ui/Button";
+import { useReactToPrint } from "react-to-print";
+import PrintComponent from "../../../components/PrintComponent";
 
 const parseFilenames = (filenames: string): File[] => {
   return filenames.split(",").map((filename, index) => {
@@ -37,8 +40,20 @@ export default function EditProducts() {
     user: product ? product.user?.name : "",
   };
 
+  // Export to PDF handler
+  const componentRef = useRef<HTMLDivElement | null>(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
   return (
     <div className="px-3 py-12 md:px-6 xl:px-12">
+      <div className="flex justify-between py-8">
+        <h3 className="text-2xl font-semibold">Update Product</h3>
+        <Button onClick={handlePrint}>Print Content</Button>
+      </div>
+
+      {/* Product edit form */}
       {product && (
         <ProductFormContainer
           initialValues={initialValues}
@@ -46,6 +61,11 @@ export default function EditProducts() {
           productId={productId}
         />
       )}
+
+      {/* Invisible print component */}
+      <div ref={componentRef}>
+        {/* {product && <PrintComponent product={product} />} */}
+      </div>
     </div>
   );
 }

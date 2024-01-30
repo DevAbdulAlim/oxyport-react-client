@@ -18,12 +18,7 @@ const Cart: React.FC = () => {
     <div className="container p-8 mx-auto">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold">Your Shopping Cart</h1>
-        <Link
-          to="/checkout"
-          className="px-6 py-3 text-white transition duration-300 bg-blue-500 rounded-md hover:bg-blue-700"
-        >
-          Proceed to Checkout ({totalQuantity} items)
-        </Link>
+        <Link to="/checkout">Proceed to Checkout ({totalQuantity} items)</Link>
       </div>
 
       <div className="grid grid-cols-1 gap-6">
@@ -83,12 +78,7 @@ const Cart: React.FC = () => {
           <span className="text-lg">Total:</span>
           <span className="text-lg font-bold">${cartTotal.toFixed(2)}</span>
         </div>
-        <Link
-          to="/checkout"
-          className="block w-full px-6 py-3 mt-4 text-center text-white transition duration-300 bg-blue-500 rounded-md hover:bg-blue-700"
-        >
-          Proceed to Checkout ({totalQuantity} items)
-        </Link>
+        <Link to="/checkout">Proceed to Checkout ({totalQuantity} items)</Link>
       </div>
     </div>
   );

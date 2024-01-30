@@ -4,6 +4,7 @@ import axios from "axios";
 import config from "../config";
 import { useParams } from "react-router-dom";
 import { Product } from "../lib/types";
+import ProductImageSlide from "../components/ProductImageSlide";
 
 export default function ProductDetails() {
   const { addToCart } = useCart();
@@ -33,11 +34,7 @@ export default function ProductDetails() {
     <div className="container mx-auto mt-8">
       <div className="flex">
         <div className="w-1/2">
-          <img
-            src={process.env.PUBLIC_URL + "/img/products/product-10.png"}
-            alt={product.name}
-            className="object-cover w-full mb-4 bg-gray-100 rounded-md"
-          />
+          <ProductImageSlide />
         </div>
         <div className="w-1/2 px-8">
           <h2 className="mb-4 text-3xl font-semibold">{product.name}</h2>

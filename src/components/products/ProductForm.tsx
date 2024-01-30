@@ -152,7 +152,9 @@ const ProductForm = ({ edit }: { edit: boolean }) => {
         )}
       </div>
 
-      <Button type="submit">Create Product</Button>
+      <Button type="submit">
+        {edit ? "Update Product" : "Create Product"}
+      </Button>
     </Form>
   );
 };

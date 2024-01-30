@@ -43,7 +43,7 @@ export default function SelectSearch({
         debounceTimerRef.current = setTimeout(async () => {
           try {
             const response = await axios.get(
-              `${config.apiBaseUrl}/${searchTerm}?search=${inputValue}`
+              `${config.apiBaseUrl}/${searchTerm}?page=1&search=${inputValue}`
             );
 
             const options = mapOption(response.data[searchTerm]);

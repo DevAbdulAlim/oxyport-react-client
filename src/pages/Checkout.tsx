@@ -1,17 +1,10 @@
 import React, { useState } from "react";
-import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const Checkout = () => {
   const { items } = useCart();
-
-  const [shippingAddress, setShippingAddress] = useState({
-    name: "",
-    address: "",
-    // Add more fields as needed
-  });
 
   // Calculate the total amount
   const totalAmount = items.reduce(
