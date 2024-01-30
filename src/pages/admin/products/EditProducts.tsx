@@ -37,12 +37,14 @@ export default function EditProducts() {
     user: product ? product.user?.name : "",
   };
 
-  console.log(product);
-
   return (
     <div className="px-3 py-12 md:px-6 xl:px-12">
       {product && (
-        <ProductFormContainer initialValues={initialValues} edit={true} />
+        <ProductFormContainer
+          initialValues={initialValues}
+          edit={true}
+          productId={productId}
+        />
       )}
     </div>
   );

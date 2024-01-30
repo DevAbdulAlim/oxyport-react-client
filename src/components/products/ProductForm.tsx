@@ -9,6 +9,7 @@ import Button from "../ui/Button";
 import axios from "axios";
 import config from "../../config";
 import { useAuth } from "../../context/AuthContext";
+import { useState } from "react";
 
 const ProductForm = ({ edit }: { edit: boolean }) => {
   // initial formik hook
@@ -41,6 +42,12 @@ const ProductForm = ({ edit }: { edit: boolean }) => {
       setFieldValue("userId", value.value);
       console.log("Selected user is: ", value);
     }
+  };
+
+  // persist image on adding new image
+  const [images, setImages] = useState<File[]>(values.images);
+  const updateImageState = (images: File[]) => {
+    setImages(images);
   };
 
   return (
@@ -114,7 +121,11 @@ const ProductForm = ({ edit }: { edit: boolean }) => {
       {/* Select product image */}
       <div>
         <label className="block mb-1">Select product images:</label>
-        <SelectImage image={values.images} onImageUpload={handleImageUpload} />
+        <SelectImage
+          defaultImages={images}
+          onImageUpload={handleImageUpload}
+          onImageState={updateImageState}
+        />
         {touched.images && errors.images && (
           <div>
             {typeof errors.images === "string" ? (
@@ -149,9 +160,11 @@ const ProductForm = ({ edit }: { edit: boolean }) => {
 const ProductFormContainer = ({
   edit,
   initialValues,
+  productId,
 }: {
   initialValues: ProductFormValues;
   edit: boolean;
+  productId?: string;
 }) => {
   const { state } = useAuth();
 
@@ -164,16 +177,29 @@ const ProductFormContainer = ({
         ...values,
         id: state.user?.id,
       };
-      const response = await axios.post(
-        `${config.apiBaseUrl}/products`,
-        updatedValues,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log("Form submitted successfully:", response.data);
+      if (edit) {
+        const response = await axios.put(
+          `${config.apiBaseUrl}/products/${productId}`,
+          updatedValues,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log("updated successfully:", response.data);
+      } else {
+        const response = await axios.post(
+          `${config.apiBaseUrl}/products`,
+          updatedValues,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log("added successfully:", response.data);
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {

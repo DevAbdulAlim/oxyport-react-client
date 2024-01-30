@@ -3,26 +3,39 @@ import { useDropzone } from "react-dropzone";
 import config from "../config";
 
 interface SelectImageProps {
-  image: File[];
+  defaultImages: File[]; // URLs of default images from the server
   onImageUpload: (files: File[]) => void;
+  onImageState: (files: File[]) => void;
 }
 
-const SelectImage: React.FC<SelectImageProps> = ({ image, onImageUpload }) => {
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>(image);
+const SelectImage: React.FC<SelectImageProps> = ({
+  defaultImages,
+  onImageUpload,
+  onImageState,
+}) => {
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       const newFiles = [...uploadedFiles, ...acceptedFiles];
       setUploadedFiles(newFiles);
-      onImageUpload(newFiles);
+      const finalFiles = [...newFiles, ...defaultImages];
+      onImageUpload(finalFiles);
     },
-    [uploadedFiles, onImageUpload]
+    [uploadedFiles, onImageUpload, defaultImages]
   );
 
   const removeImage = (index: number) => {
     const newFiles = uploadedFiles.filter((_, i) => i !== index);
     setUploadedFiles(newFiles);
     onImageUpload(newFiles);
+  };
+
+  const removeDefaultImage = (index: number) => {
+    const newFiles = defaultImages.filter((_, i) => i !== index);
+    onImageState(newFiles);
+    const finalFiles = [...uploadedFiles, ...newFiles];
+    onImageUpload(finalFiles);
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -47,11 +60,29 @@ const SelectImage: React.FC<SelectImageProps> = ({ image, onImageUpload }) => {
         )}
       </div>
       <div className="grid grid-cols-1 gap-8 px-4 py-8 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-        {uploadedFiles.map((file, index) => (
+        {/* Render default images */}
+        {defaultImages.map((file, index) => (
           <div key={index}>
             <p className="my-1">{file.name}</p>
             <img
               src={`${config.apiStaticPath}/images/${file.name}`}
+              alt={`Default ${index}`}
+              className="object-cover w-full h-full"
+            />
+            <button
+              onClick={() => removeDefaultImage(index)}
+              className="mt-4 text-sm text-red-500"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        {/* Render uploaded images */}
+        {uploadedFiles.map((file, index) => (
+          <div key={index + defaultImages.length}>
+            <p className="my-1">{file.name}</p>
+            <img
+              src={URL.createObjectURL(file)}
               alt={`Uploaded File ${index}`}
               className="object-cover w-full h-full"
             />
