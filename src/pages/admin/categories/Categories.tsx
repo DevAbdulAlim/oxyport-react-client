@@ -49,11 +49,6 @@ export default function Categories() {
         Print Content
       </button>
 
-      {/* Invisible print component */}
-      <div ref={componentRef}>
-        <PrintComponent />
-      </div>
-
       <ul>
         {categories.map((category) => (
           <li key={category.id}>{category.name}</li>

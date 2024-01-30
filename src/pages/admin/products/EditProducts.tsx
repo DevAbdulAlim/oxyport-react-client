@@ -64,7 +64,7 @@ export default function EditProducts() {
 
       {/* Invisible print component */}
       <div ref={componentRef}>
-        {/* {product && <PrintComponent product={product} />} */}
+        {product && <PrintComponent product={product} />}
       </div>
     </div>
   );
