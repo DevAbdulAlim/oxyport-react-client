@@ -6,46 +6,56 @@ interface AuthContextProps {
   children: React.ReactNode;
 }
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 interface AuthState {
   isAuthenticated: boolean;
   isAdmin: boolean;
   isLoading: boolean;
+  user: User | null;
 }
 
 type AuthAction =
-  | { type: "AUTHENTICATED" }
-  | { type: "ADMIN" }
+  | { type: "LOGIN_SUCCESS"; user: User }
+  | { type: "LOGIN_FAILED" }
   | { type: "LOGOUT" }
   | { type: "LOADING_COMPLETE" };
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
-    case "AUTHENTICATED":
+    case "LOGIN_SUCCESS":
       return {
         ...state,
         isAuthenticated: true,
+        isAdmin: action.user.role === "admin",
+        user: action.user,
       };
-
-    case "ADMIN":
+    case "LOGIN_FAILED":
       return {
         ...state,
-        isAdmin: true,
-        isAuthenticated: true,
+        isAuthenticated: false,
+        isAdmin: false,
+        user: null,
       };
-
     case "LOGOUT":
       return {
         ...state,
         isAuthenticated: false,
         isAdmin: false,
+        user: null,
       };
-
     case "LOADING_COMPLETE":
       return {
         ...state,
         isLoading: false,
       };
-
     default:
       return state;
   }
@@ -56,7 +66,7 @@ const AuthContext = createContext<
       state: AuthState;
       dispatch: React.Dispatch<AuthAction>;
       login: (email: string, password: string) => Promise<void>;
-      logout: () => void;
+      logout: () => Promise<void>;
     }
   | undefined
 >(undefined);
@@ -66,6 +76,7 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     isAuthenticated: false,
     isAdmin: false,
     isLoading: true,
+    user: null,
   });
 
   const login = async (email: string, password: string) => {
@@ -76,35 +87,24 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
       });
 
       if (response.data.success) {
-        console.log("Login successful:", response.data);
-
-        const userRole = response.data.user.role;
-
-        if (userRole === "admin") {
-          dispatch({ type: "ADMIN" });
-        } else {
-          console.log("User is not an admin.");
-        }
-
-        dispatch({ type: "AUTHENTICATED" });
+        const user = response.data.user;
+        dispatch({ type: "LOGIN_SUCCESS", user });
       } else {
+        dispatch({ type: "LOGIN_FAILED" });
         console.error("Login failed:", response.data.message);
       }
     } catch (error) {
+      dispatch({ type: "LOGIN_FAILED" });
       console.error("Login failed:", error);
     }
   };
 
   const logout = async () => {
     try {
-      // Send logout request to the server
       await axios.post(`${config.apiBaseUrl}/users/logout`);
-
-      // Dispatch the logout action
       dispatch({ type: "LOGOUT" });
     } catch (error) {
       console.error("Logout failed:", error);
-      // Handle logout failure if needed
     }
   };
 
@@ -118,6 +118,7 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
         return {
           authenticated: true,
           admin: response.data.user.role === "admin" ? true : false,
+          user: response.data.user,
         };
       } else {
         console.error("Token verification failed:", response.data.message);
@@ -131,12 +132,7 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     (async () => {
       const data = await verifyToken();
       if (data && data.authenticated) {
-        const { admin } = data;
-        dispatch({ type: "AUTHENTICATED" });
-        if (admin) {
-          dispatch({ type: "ADMIN" });
-          console.log("admin");
-        }
+        dispatch({ type: "LOGIN_SUCCESS", user: data.user });
       }
       dispatch({ type: "LOADING_COMPLETE" });
     })();

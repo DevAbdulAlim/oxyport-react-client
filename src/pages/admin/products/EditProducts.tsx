@@ -40,8 +40,10 @@ export default function EditProducts() {
   console.log(product);
 
   return (
-    <div>
-      {product && <ProductFormContainer initialValues={initialValues} />}
+    <div className="px-3 py-12 md:px-6 xl:px-12">
+      {product && (
+        <ProductFormContainer initialValues={initialValues} edit={true} />
+      )}
     </div>
   );
 }

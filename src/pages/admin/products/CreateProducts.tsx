@@ -17,7 +17,7 @@ export default function CreateProducts() {
 
   return (
     <div className="px-3 py-12 md:px-6 xl:px-12">
-      <ProductFormContainer initialValues={initialValues} />
+      <ProductFormContainer initialValues={initialValues} edit={false} />
     </div>
   );
 }

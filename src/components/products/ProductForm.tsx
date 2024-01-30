@@ -8,8 +8,9 @@ import Input from "../ui/Input";
 import Button from "../ui/Button";
 import axios from "axios";
 import config from "../../config";
+import { useAuth } from "../../context/AuthContext";
 
-const ProductForm = () => {
+const ProductForm = ({ edit }: { edit: boolean }) => {
   // initial formik hook
   const { values, setFieldValue, handleBlur, handleChange, touched, errors } =
     useFormikContext<ProductFormValues>();
@@ -140,38 +141,32 @@ const ProductForm = () => {
         )}
       </div>
 
-      {/* Select product user */}
-      <div>
-        <label className="block mb-1">Select product user:</label>
-        <SelectSearch
-          value={{ value: values.userId, label: values.user }}
-          handleSelectChange={handleUserSelectChange}
-          searchTerm="users"
-        />
-        {touched.userId && errors.userId && (
-          <div className="text-red-500">{errors.userId}</div>
-        )}
-      </div>
-
       <Button type="submit">Create Product</Button>
     </Form>
   );
 };
 
 const ProductFormContainer = ({
+  edit,
   initialValues,
 }: {
   initialValues: ProductFormValues;
+  edit: boolean;
 }) => {
+  const { state } = useAuth();
+
   const handleSubmit = async (
     values: ProductFormValues,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
-    console.log(typeof values.price);
     try {
+      const updatedValues = {
+        ...values,
+        id: state.user?.id,
+      };
       const response = await axios.post(
         `${config.apiBaseUrl}/products`,
-        values,
+        updatedValues,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -192,7 +187,7 @@ const ProductFormContainer = ({
       validationSchema={productSchema}
       onSubmit={handleSubmit}
     >
-      <ProductForm />
+      <ProductForm edit={edit} />
     </Formik>
   );
 };
