@@ -21,7 +21,7 @@ export default function EditProducts() {
   //   name: product ? product.name : "",
   //   description: product?.description ? product.description : "",
   //   price: product ? product.price : 0,
-  //   image: product ? product.image : "",
+  //   images: product ? product.image : "",
   //   stock: product ? product.stock : 0,
   //   categoryId: product ? product.categoryId : 0,
   //   userId: product ? product.userId : 0,

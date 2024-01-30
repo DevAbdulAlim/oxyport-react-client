@@ -27,7 +27,7 @@ export default function SelectSearch({
   searchTerm,
 }: SelectSearchProps) {
   const debounceTimerRef = useRef<NodeJS.Timeout>();
-  const [selectedValue, setSelectedValue] = useState<Option | null>(null);
+  const [selectedValue, setSelectedValue] = useState<Option | null>(value);
 
   useEffect(() => {
     return () => {

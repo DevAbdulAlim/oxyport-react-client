@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IoIosHome, IoIosListBox, IoIosCart, IoMdPeople } from "react-icons/io";
 import { useAuth } from "../context/AuthContext";

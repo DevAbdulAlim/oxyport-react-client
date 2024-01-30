@@ -43,9 +43,9 @@ const ProductForm = () => {
   };
 
   return (
-    <Form>
-      <div className="mb-4">
-        <label className="block mb-1">Name:</label>
+    <Form className="grid grid-cols-1 gap-8">
+      <div>
+        <label className="block mb-1">Product name:</label>
         <Input
           type="text"
           name="name"
@@ -59,7 +59,7 @@ const ProductForm = () => {
       </div>
 
       {/* Add product description */}
-      <div className="mb-4">
+      <div className="mb-24 md:mb-16 h-72">
         <label className="block mb-1">Add product description:</label>
         <QuillEditor
           value={values.description}
@@ -70,8 +70,8 @@ const ProductForm = () => {
         )}
       </div>
 
-      <div className="mb-4">
-        <label className="block mb-1">Price:</label>
+      <div>
+        <label className="block mb-1">Product price:</label>
         <Input
           type="number"
           name="price"
@@ -83,8 +83,8 @@ const ProductForm = () => {
           <div className="text-red-500">{errors.price}</div>
         )}
       </div>
-      <div className="mb-4">
-        <label className="block mb-1">Discount:</label>
+      <div>
+        <label className="block mb-1">Product discount:</label>
         <Input
           type="number"
           name="discount"
@@ -96,8 +96,8 @@ const ProductForm = () => {
           <div className="text-red-500">{errors.discount}</div>
         )}
       </div>
-      <div className="mb-4">
-        <label className="block mb-1">Stock:</label>
+      <div>
+        <label className="block mb-1">Product stock:</label>
         <Input
           type="number"
           name="stock"
@@ -111,7 +111,7 @@ const ProductForm = () => {
       </div>
 
       {/* Select product image */}
-      <div className="mb-4">
+      <div>
         <label className="block mb-1">Select product images:</label>
         <SelectImage onImageUpload={handleImageUpload} />
         {touched.images && errors.images && (
@@ -128,7 +128,7 @@ const ProductForm = () => {
       </div>
 
       {/* Select product category */}
-      <div className="mb-4">
+      <div>
         <label className="block mb-1">Select product category:</label>
         <SelectSearch
           value={{ value: values.categoryId, label: values.category }}
@@ -141,7 +141,7 @@ const ProductForm = () => {
       </div>
 
       {/* Select product user */}
-      <div className="mb-4">
+      <div>
         <label className="block mb-1">Select product user:</label>
         <SelectSearch
           value={{ value: values.userId, label: values.user }}
@@ -153,7 +153,7 @@ const ProductForm = () => {
         )}
       </div>
 
-      <Button type="submit">Submit</Button>
+      <Button type="submit">Create Product</Button>
     </Form>
   );
 };

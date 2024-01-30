@@ -17,6 +17,12 @@ const SelectImage: React.FC<SelectImageProps> = ({ onImageUpload }) => {
     [uploadedFiles, onImageUpload]
   );
 
+  const removeImage = (index: number) => {
+    const newFiles = uploadedFiles.filter((_, i) => i !== index);
+    setUploadedFiles(newFiles);
+    onImageUpload(newFiles);
+  };
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
@@ -38,7 +44,7 @@ const SelectImage: React.FC<SelectImageProps> = ({ onImageUpload }) => {
           <p>Drag 'n' drop files here, or click to select files</p>
         )}
       </div>
-      <div className="grid grid-cols-2 gap-8 px-4 py-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+      <div className="grid grid-cols-1 gap-8 px-4 py-8 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
         {uploadedFiles.map((file, index) => (
           <div key={index}>
             <p className="my-1">{file.name}</p>
@@ -47,6 +53,12 @@ const SelectImage: React.FC<SelectImageProps> = ({ onImageUpload }) => {
               alt={`Uploaded File ${index}`}
               className="object-cover w-full h-full"
             />
+            <button
+              onClick={() => removeImage(index)}
+              className="mt-4 text-sm text-red-500"
+            >
+              Remove
+            </button>
           </div>
         ))}
       </div>

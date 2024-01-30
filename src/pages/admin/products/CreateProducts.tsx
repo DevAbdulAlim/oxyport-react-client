@@ -9,14 +9,14 @@ export default function CreateProducts() {
     discount: 0,
     images: [],
     stock: 0,
-    categoryId: 0,
-    userId: 0,
-    category: "",
-    user: "",
+    categoryId: 1,
+    userId: 2,
+    category: "electronics",
+    user: "admin",
   };
 
   return (
-    <div className="px-4 py-12">
+    <div className="px-3 py-12 md:px-6 xl:px-12">
       <ProductFormContainer initialValues={initialValues} />
     </div>
   );
