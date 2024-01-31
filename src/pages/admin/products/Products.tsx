@@ -4,7 +4,7 @@ import Pagination from "../../../components/Pagination";
 import Link from "../../../components/ui/Link";
 import { useDebounce } from "usehooks-ts";
 import { Product } from "../../../lib/types";
-import { productService } from "../../../services/api";
+import { productService } from "../../../api/api";
 import { FiSearch } from "react-icons/fi";
 import Select from "../../../components/ui/Select";
 import Input from "../../../components/ui/Input";

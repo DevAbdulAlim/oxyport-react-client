@@ -21,11 +21,17 @@ export type Address = {
   userId: number;
 };
 
-export type Category = {
+export type CategoryType = {
   id: number;
   name: string;
   description?: string | null;
   image?: string | null;
+};
+
+export type CategoryFormType = {
+  name: string;
+  description: string;
+  image: File[];
 };
 
 export type Product = {

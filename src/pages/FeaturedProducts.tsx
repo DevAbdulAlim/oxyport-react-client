@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import { productService } from "../services/api";
+import { productService } from "../api/api";
 import { Product } from "../lib/types";
 
 const FeaturedProducts = () => {

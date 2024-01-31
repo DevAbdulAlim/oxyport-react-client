@@ -1,122 +1,47 @@
-import { useEffect, useState } from "react";
-import ProductTable from "../products/ProductTable";
+import { useState } from "react";
 import Pagination from "../../../components/Pagination";
-import Link from "../../../components/ui/Link";
 import { useDebounce } from "usehooks-ts";
-import { Product } from "../../../lib/types";
-import { productService } from "../../../services/api";
 import { FiSearch } from "react-icons/fi";
 import Select from "../../../components/ui/Select";
 import Input from "../../../components/ui/Input";
-import NotFound from "../../../components/NotFound";
-import ExportCSV from "../../../components/ExportCSV";
 import Loader from "../../../components/ui/Loader";
+import Link from "../../../components/ui/Link";
+import CategoryTable from "./CategoryTable";
+import { useCategories } from "../../../api/category";
 
-export default function Products() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<Boolean>(true);
-  const [totalProducts, setTotalProducts] = useState<number>(0);
-  const [error, setError] = useState();
-  const [sortBy, setSortBy] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+export default function Categories() {
+  const [sortBy, setSortBy] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(5);
 
   const debouncedSearch = useDebounce(search, 500);
-  const debouncedSortBy = useDebounce(sortBy, 500);
 
-  useEffect(() => {
-    const params = {
-      sortBy: debouncedSortBy,
-      sortOrder,
-      search: debouncedSearch,
-      page: page,
-      pageSize: pageSize,
-    };
+  const { data, isLoading, error } = useCategories({
+    sortBy,
+    search: debouncedSearch,
+    page,
+    pageSize,
+  });
 
-    productService
-      .getProducts(params)
-      .then((response) => {
-        setProducts(response.data.products);
-        setTotalProducts(response.data.totalItems);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching products", error);
-        setError(error);
-      });
-  }, [page, pageSize, debouncedSortBy, sortOrder, debouncedSearch]);
-
-  const handleDelete = (productId: number) => {
-    productService
-      .deleteProduct(productId)
-      .then((response) => {
-        console.log("Product deleted", response.data);
-        setProducts(products.filter((product) => product.id !== productId));
-      })
-      .catch((error) => {
-        console.log("Product deleted Fail", error);
-        setError(error);
-      });
-  };
+  const totalPages = Math.ceil(
+    data && data.totalItems ? data.totalItems / pageSize : 0
+  );
 
   const handlePageChange = (page: number) => {
     setPage(page);
   };
 
   const handleSearch = () => {
-    const params = {
-      sortBy: debouncedSortBy,
-      sortOrder,
-      search: debouncedSearch,
-      page: 1,
-      pageSize: 5,
-    };
-
-    productService
-      .getProducts(params)
-      .then((response) => {
-        setProducts(response.data.products);
-        setTotalProducts(response.data.totalItems);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching products", error);
-        setError(error);
-      });
+    setPage(1);
   };
 
   const handleSort = (selectedSortBy: string) => {
     setSortBy(selectedSortBy);
-    setSortOrder("asc");
-
-    const params = {
-      sortBy: selectedSortBy,
-      sortOrder: "asc",
-      search: debouncedSearch,
-      page: 1,
-      pageSize: 5,
-    };
-
-    productService
-      .getProducts(params)
-      .then((response) => {
-        setProducts(response.data.products);
-        setTotalProducts(response.data.totalItems);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching products", error);
-        setError(error);
-      });
   };
-
-  const totalPages = Math.ceil(totalProducts / pageSize);
 
   return (
     <div className="container px-3 py-8 mx-auto">
-      {/* topbar */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Category List</h2>
         <Link to="/admin/categories/create">
@@ -132,14 +57,15 @@ export default function Products() {
               clipRule="evenodd"
             />
           </svg>
-          Create Product
+          Create Category
         </Link>
       </div>
-
-      {/* filter */}
       <div className="flex flex-col items-center justify-between space-x-4 space-y-4 md:flex-row">
         <form
-          onSubmit={handleSearch}
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSearch();
+          }}
           className="flex flex-col items-center space-y-4 md:flex-row md:space-y-0 md:space-x-4"
         >
           <div className="relative flex items-center md:w-64">
@@ -147,7 +73,7 @@ export default function Products() {
             <Input
               type="text"
               id="search"
-              placeholder="Search products..."
+              placeholder="Search categories..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-8"
@@ -163,27 +89,23 @@ export default function Products() {
               onChange={(e) => handleSort(e.target.value)}
             >
               <option value="name">Name</option>
-              <option value="price">Price</option>
+              <option value="createdAt">Created At</option>
             </Select>
           </div>
         </form>
-        <ExportCSV data={products} />
       </div>
-      {/* product table */}
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : error ? (
-        <div>Error: {error}</div>
-      ) : products && products.length > 0 ? (
-        <ProductTable products={products} onDelete={handleDelete} />
+        <div>Error: {error.message}</div>
+      ) : data?.categories && data?.categories.length > 0 ? (
+        <CategoryTable categories={data.categories} />
       ) : (
-        <NotFound />
+        <div>Not Found</div>
       )}
-
-      {/* pagination */}
       <Pagination
         itemsPerPage={pageSize}
-        totalItems={totalProducts}
+        totalItems={data?.categories.length ? data?.categories.length : 0}
         totalPages={totalPages}
         currentPage={page}
         onPageChange={handlePageChange}

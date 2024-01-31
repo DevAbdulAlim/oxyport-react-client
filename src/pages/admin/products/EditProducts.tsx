@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ProductFormContainer from "./ProductForm";
 import { Product, ProductFormValues } from "../../../lib/types";
 import { useParams } from "react-router-dom";
-import { productService } from "../../../services/api";
+import { productService } from "../../../api/api";
 import Button from "../../../components/ui/Button";
 import { useReactToPrint } from "react-to-print";
 import PrintComponent from "../../../components/PrintComponent";

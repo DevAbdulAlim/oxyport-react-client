@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
 import { Product } from "../../lib/types";
-import { productService } from "../../services/api";
+import { productService } from "../../api/api";
 
 const ProductSearch = () => {
   const [products, setProducts] = useState<Product[]>([]);
