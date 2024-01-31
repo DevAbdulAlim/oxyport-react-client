@@ -13,8 +13,6 @@ import Checkout from "../pages/checkout/Checkout";
 import Categories from "../pages/admin/categories/Categories";
 import CreateCategory from "../pages/admin/categories/CreateCategory";
 import Users from "../pages/admin/users/Users";
-import UserDetails from "../pages/admin/users/UserDetails";
-import OrderDetails from "../pages/admin/orders/OrderDetails";
 import AdminOrders from "../pages/admin/orders/Orders";
 import EditProducts from "../pages/admin/products/EditProducts";
 import CreateProducts from "../pages/admin/products/CreateProduct";
@@ -32,6 +30,10 @@ import PaymentHistory from "../pages/user/PaymentHistory";
 import Reviews from "../pages/user/Reviews";
 import Settings from "../pages/user/Settings";
 import CancelOrders from "../pages/user/CancelOrders";
+import CreateOrder from "../pages/admin/orders/CreateOrder";
+import EditOrder from "../pages/admin/orders/EditOrder";
+import EditUser from "../pages/admin/users/EditUser";
+import CreateUser from "../pages/admin/users/CreateUser";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -92,11 +94,13 @@ const router = createBrowserRouter(
 
         {/* Orders Routes */}
         <Route path="orders" element={<AdminOrders />} />
-        <Route path="orders/details/:orderId" element={<OrderDetails />} />
+        <Route path="orders/create" element={<CreateOrder />} />
+        <Route path="orders/edit/:orderId" element={<EditOrder />} />
 
         {/* Users Routes */}
         <Route path="users" element={<Users />} />
-        <Route path="users/details/:userId" element={<UserDetails />} />
+        <Route path="users/create" element={<CreateUser />} />
+        <Route path="users/edit/:userId" element={<EditUser />} />
       </Route>
 
       {/* Auth Routes */}
