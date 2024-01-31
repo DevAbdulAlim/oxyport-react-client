@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import AsyncSelect from "react-select/async";
 import axios from "axios";
-import config from "../config";
+import config from "../config/config";
 
 export interface Option {
   value: number;

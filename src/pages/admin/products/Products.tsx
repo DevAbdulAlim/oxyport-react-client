@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ProductTable from "../../../components/products/ProductTable";
+import ProductTable from "./ProductTable";
 import Pagination from "../../../components/Pagination";
 import Link from "../../../components/ui/Link";
 import { useDebounce } from "usehooks-ts";

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import config from "../config";
+import config from "../config/config";
 
 interface SelectImageProps {
   defaultImages: File[]; // URLs of default images from the server

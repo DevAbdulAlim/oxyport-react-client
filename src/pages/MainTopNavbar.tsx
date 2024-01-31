@@ -11,7 +11,7 @@ import {
 import Button from "../components/ui/Button";
 import ClientSideNavbar from "./ClientSideNav";
 import CartSidebar from "./CartSidebar";
-import CategoryDropdown from "./CategoryDropdown";
+import CategoryDropdown from "./category/CategoryDropdown";
 import { useCart } from "../context/CartContext";
 
 const Navbar = () => {

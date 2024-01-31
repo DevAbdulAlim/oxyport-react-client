@@ -3,35 +3,35 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import RootLayout from "./pages/RootLayout";
-import Home from "./pages/Home";
-import AdminLayout from "./pages/admin/AdminLayout";
-import Dashboard from "./pages/admin/Dashboard";
-import Product from "./pages/Product";
-import Search from "./pages/Search";
-import Checkout from "./pages/Checkout";
-import Categories from "./pages/admin/categories/Categories";
-import CreateCategory from "./pages/admin/categories/CreateCategory";
-import Users from "./pages/admin/users/Users";
-import UserDetails from "./pages/admin/users/UserDetails";
-import OrderDetails from "./pages/admin/orders/OrderDetails";
-import AdminOrders from "./pages/admin/orders/Orders";
-import EditProducts from "./pages/admin/products/EditProducts";
-import CreateProducts from "./pages/admin/products/CreateProducts";
-import Products from "./pages/admin/products/Products";
-import EditCategory from "./pages/admin/categories/EditCategory";
-import Cart from "./pages/Cart";
-import LoginForm from "./pages/auth/Login";
-import RegistrationForm from "./pages/auth/Register";
+import RootLayout from "../pages/RootLayout";
+import Home from "../pages/Home";
+import AdminLayout from "../pages/admin/AdminLayout";
+import Dashboard from "../pages/admin/Dashboard";
+import Product from "../pages/product/Product";
+import Search from "../pages/search/Search";
+import Checkout from "../pages/checkout/Checkout";
+import Categories from "../pages/admin/categories/Categories";
+import CreateCategory from "../pages/admin/categories/CreateCategory";
+import Users from "../pages/admin/users/Users";
+import UserDetails from "../pages/admin/users/UserDetails";
+import OrderDetails from "../pages/admin/orders/OrderDetails";
+import AdminOrders from "../pages/admin/orders/Orders";
+import EditProducts from "../pages/admin/products/EditProducts";
+import CreateProducts from "../pages/admin/products/CreateProduct";
+import Products from "../pages/admin/products/Products";
+import EditCategory from "../pages/admin/categories/EditCategory";
+import Cart from "../pages/cart/Cart";
+import LoginForm from "../pages/auth/Login";
+import RegistrationForm from "../pages/auth/Register";
 import PrivateRoute from "./PrivateRoute";
-import UserLayout from "./pages/user/UserLayout";
-import Orders from "./pages/user/Orders";
-import Profile from "./pages/user/Profile";
-import UserDashboard from "./pages/user/UserDashboard";
-import PaymentHistory from "./pages/user/PaymentHistory";
-import Reviews from "./pages/user/Reviews";
-import Settings from "./pages/user/Settings";
-import CancelOrders from "./pages/user/CancelOrders";
+import UserLayout from "../pages/user/UserLayout";
+import Orders from "../pages/user/Orders";
+import Profile from "../pages/user/Profile";
+import UserDashboard from "../pages/user/UserDashboard";
+import PaymentHistory from "../pages/user/PaymentHistory";
+import Reviews from "../pages/user/Reviews";
+import Settings from "../pages/user/Settings";
+import CancelOrders from "../pages/user/CancelOrders";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

@@ -1,8 +1,8 @@
 import React from "react";
-import SalesExpenseChart from "../../sections/SalesExpenseChart";
-import { SalesByCategory } from "../../sections/SalseByCategory";
-import RecentOrders from "../../sections/RecentOrders";
-import StockOutProducts from "../../sections/StockOutProducts";
+import SalesExpenseChart from "./SalesExpenseChart";
+import { SalesByCategory } from "./SalseByCategory";
+import RecentOrders from "./RecentOrders";
+import StockOutProducts from "./StockOutProducts";
 
 export default function Dashboard() {
   const totalSales = 354234;

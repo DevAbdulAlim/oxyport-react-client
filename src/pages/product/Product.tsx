@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../../context/CartContext";
 import axios from "axios";
-import config from "../config";
+import config from "../../config/config";
 import { useParams } from "react-router-dom";
-import { Product } from "../lib/types";
-import ProductImageSlide from "../components/ProductImageSlide";
+import { Product } from "../../lib/types";
+import ProductImageSlide from "../../components/ProductImageSlide";
 
 export default function ProductDetails() {
   const { addToCart } = useCart();

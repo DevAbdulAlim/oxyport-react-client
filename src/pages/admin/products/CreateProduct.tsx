@@ -1,4 +1,5 @@
-import ProductFormContainer from "../../../components/products/ProductForm";
+import Breadcrumb from "../../../components/Breadcrumb";
+import ProductFormContainer from "./ProductForm";
 import { ProductFormValues } from "../../../lib/types";
 
 export default function CreateProducts() {
@@ -17,6 +18,10 @@ export default function CreateProducts() {
 
   return (
     <div className="px-3 py-12 md:px-6 xl:px-12">
+      <Breadcrumb />
+      <div className="flex justify-between py-8">
+        <h3 className="text-2xl font-semibold">Create Product</h3>
+      </div>
       <ProductFormContainer initialValues={initialValues} edit={false} />
     </div>
   );

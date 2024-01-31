@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import ProductFormContainer from "../../../components/products/ProductForm";
+import ProductFormContainer from "./ProductForm";
 import { Product, ProductFormValues } from "../../../lib/types";
 import { useParams } from "react-router-dom";
 import { productService } from "../../../services/api";
 import Button from "../../../components/ui/Button";
 import { useReactToPrint } from "react-to-print";
 import PrintComponent from "../../../components/PrintComponent";
+import Breadcrumb from "../../../components/Breadcrumb";
 
 const parseFilenames = (filenames: string): File[] => {
   return filenames.split(",").map((filename, index) => {
@@ -48,6 +49,7 @@ export default function EditProducts() {
 
   return (
     <div className="px-3 py-12 md:px-6 xl:px-12">
+      <Breadcrumb />
       <div className="flex justify-between py-8">
         <h3 className="text-2xl font-semibold">Update Product</h3>
         <Button onClick={handlePrint}>Print Content</Button>

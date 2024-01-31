@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import Link from "../components/ui/Link";
+import Link from "../../components/ui/Link";
 
 const CategoryDropdown = ({
   isOpen,

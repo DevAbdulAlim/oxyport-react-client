@@ -1,12 +1,12 @@
 import React from "react";
 import { FiEdit, FiTrash2, FiEye } from "react-icons/fi";
 
-import Button from "../ui/Button";
-import Link from "../ui/Link";
-import { Product } from "../../lib/types";
-import Avatar from "../ui/Avater";
-import { truncateName } from "../../lib/utils";
-import config from "../../config";
+import Button from "../../../components/ui/Button";
+import Link from "../../../components/ui/Link";
+import { Product } from "../../../lib/types";
+import Avatar from "../../../components/ui/Avater";
+import { truncateName } from "../../../lib/utils";
+import config from "../../../config/config";
 
 interface ProductTableProps {
   products: Product[];

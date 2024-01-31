@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IoIosHome, IoIosListBox, IoIosCart, IoMdPeople } from "react-icons/io";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { FiLogOut } from "react-icons/fi";
 import { GiMoebiusTriangle } from "react-icons/gi";
 import { FaShopify } from "react-icons/fa";
 import { ImMenu } from "react-icons/im";
-import Button from "../components/ui/Button";
+import Button from "../../components/ui/Button";
 
 const menuItems = [
   {

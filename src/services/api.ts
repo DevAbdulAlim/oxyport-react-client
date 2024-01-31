@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import config from "../config";
+import config from "../config/config";
 
 const baseURL = config.apiBaseUrl;
 

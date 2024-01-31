@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import MainTopNavbar from "../sections/MainTopNavbar";
-import Footer from "../sections/footer";
-import Copyright from "../sections/Copyright";
-import ClientTopBar from "../sections/ClientTopBar";
+import MainTopNavbar from "./MainTopNavbar";
+import Footer from "./footer";
+import Copyright from "./Copyright";
+import ClientTopBar from "./ClientTopBar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

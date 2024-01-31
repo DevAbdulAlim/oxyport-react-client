@@ -9,9 +9,9 @@ import {
   MdPerson,
 } from "react-icons/md";
 import { BsActivity } from "react-icons/bs";
-import Button from "../components/ui/Button";
+import Button from "../../components/ui/Button";
 import { ImMenu } from "react-icons/im";
-import Avatar from "../components/ui/Avater";
+import Avatar from "../../components/ui/Avater";
 
 const AdminTopNavbar = ({
   handleNavToggle,

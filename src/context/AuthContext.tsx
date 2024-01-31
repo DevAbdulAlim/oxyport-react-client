@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react";
 import axios from "axios";
-import config from "../config";
+import config from "../config/config";
 
 interface AuthContextProps {
   children: React.ReactNode;

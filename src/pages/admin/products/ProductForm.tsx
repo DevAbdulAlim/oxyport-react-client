@@ -1,14 +1,14 @@
 import { Formik, Form, useFormikContext } from "formik";
-import QuillEditor from "../QuillEditor";
-import SelectSearch, { Option } from "../SelectSearch";
-import SelectImage from "../SelectImage";
-import { ProductFormValues } from "../../lib/types";
-import { productSchema } from "../../lib/yupSchema";
-import Input from "../ui/Input";
-import Button from "../ui/Button";
+import QuillEditor from "../../../components/QuillEditor";
+import SelectSearch, { Option } from "../../../components/SelectSearch";
+import SelectImage from "../../../components/SelectImage";
+import { ProductFormValues } from "../../../lib/types";
+import { productSchema } from "../../../lib/yupSchema";
+import Input from "../../../components/ui/Input";
+import Button from "../../../components/ui/Button";
 import axios from "axios";
-import config from "../../config";
-import { useAuth } from "../../context/AuthContext";
+import config from "../../../config/config";
+import { useAuth } from "../../../context/AuthContext";
 import { useState } from "react";
 
 const ProductForm = ({ edit }: { edit: boolean }) => {
