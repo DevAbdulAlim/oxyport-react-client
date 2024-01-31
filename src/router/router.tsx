@@ -34,6 +34,8 @@ import CreateOrder from "../pages/admin/orders/CreateOrder";
 import EditOrder from "../pages/admin/orders/EditOrder";
 import EditUser from "../pages/admin/users/EditUser";
 import CreateUser from "../pages/admin/users/CreateUser";
+import OrderDetailsPage from "../pages/admin/orders/OrderDetailsPage";
+import UserDetailsPage from "../pages/admin/users/UserDetailsPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -94,6 +96,7 @@ const router = createBrowserRouter(
 
         {/* Orders Routes */}
         <Route path="orders" element={<AdminOrders />} />
+        <Route path="orders/:orderId" element={<OrderDetailsPage />} />
         <Route path="orders/create" element={<CreateOrder />} />
         <Route path="orders/edit/:orderId" element={<EditOrder />} />
 
@@ -101,6 +104,7 @@ const router = createBrowserRouter(
         <Route path="users" element={<Users />} />
         <Route path="users/create" element={<CreateUser />} />
         <Route path="users/edit/:userId" element={<EditUser />} />
+        <Route path="users/:userId" element={<UserDetailsPage />} />
       </Route>
 
       {/* Auth Routes */}

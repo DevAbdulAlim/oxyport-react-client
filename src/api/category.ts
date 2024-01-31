@@ -12,18 +12,15 @@ interface ApiResponse {
 
 // Fetch all categories
 export function useCategories(params?: any) {
-  return useQuery<ApiResponse, Error>(
-    ["categories", params], // Include parameters in the query key
-    async () => {
-      const response = await axios.get<ApiResponse>(
-        `${config.apiBaseUrl}/categories`,
-        {
-          params: params, // Pass parameters to Axios GET request
-        }
-      );
-      return response.data; // Extract categories array from the response
-    }
-  );
+  return useQuery<ApiResponse, Error>(["categories", params], async () => {
+    const response = await axios.get<ApiResponse>(
+      `${config.apiBaseUrl}/categories`,
+      {
+        params: params,
+      }
+    );
+    return response.data;
+  });
 }
 
 // Fetch a single category by ID
@@ -32,7 +29,7 @@ export function useCategoryById(categoryId: string) {
     const response = await axios.get<{ category: CategoryType }>(
       `/api/categories/${categoryId}`
     );
-    return response.data.category; // Extract the first category from the response
+    return response.data.category;
   });
 }
 

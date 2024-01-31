@@ -2,7 +2,6 @@ import React from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Button from "../../../components/ui/Button";
 import Link from "../../../components/ui/Link";
-import { CategoryType } from "../../../lib/types";
 import { truncateName } from "../../../lib/utils";
 
 interface CategoryTableProps {

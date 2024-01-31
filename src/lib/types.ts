@@ -1,4 +1,4 @@
-export type User = {
+export type UserType = {
   id: number;
   name: string;
   email: string;
@@ -84,7 +84,7 @@ export type CartState = {
   items: CartItem[];
 };
 
-export type Order = {
+export type OrderType = {
   id: number;
   userId: number;
   total: number;
