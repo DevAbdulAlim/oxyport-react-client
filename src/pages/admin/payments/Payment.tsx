@@ -1,5 +1,7 @@
 import React from "react";
 import Button from "../../../components/ui/Button";
+import Link from "../../../components/ui/Link";
+import { FiEye } from "react-icons/fi";
 
 interface Payment {
   id: number;
@@ -101,13 +103,14 @@ const Payment: React.FC = () => {
                   {payment.customerPhone}
                 </td>
                 <td className="px-6 py-3 text-left whitespace-nowrap">
-                  <Button
+                  <Link
+                    to={`/admin/payments/${payment.id}`}
                     variant="secondary"
                     onClick={() => handleTrackOrder(payment.orderId)}
                     size="sm"
                   >
-                    Track Order
-                  </Button>
+                    <FiEye />
+                  </Link>
                 </td>
               </tr>
             ))}
