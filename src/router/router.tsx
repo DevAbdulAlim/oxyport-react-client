@@ -36,6 +36,7 @@ import EditUser from "../pages/admin/users/EditUser";
 import CreateUser from "../pages/admin/users/CreateUser";
 import OrderDetailsPage from "../pages/admin/orders/OrderDetailsPage";
 import UserDetailsPage from "../pages/admin/users/UserDetailsPage";
+import Payment from "../pages/admin/payments/Payment";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -99,6 +100,9 @@ const router = createBrowserRouter(
         <Route path="orders/:orderId" element={<OrderDetailsPage />} />
         <Route path="orders/create" element={<CreateOrder />} />
         <Route path="orders/edit/:orderId" element={<EditOrder />} />
+
+        {/* Payments Routes */}
+        <Route path="payments" element={<Payment />} />
 
         {/* Users Routes */}
         <Route path="users" element={<Users />} />

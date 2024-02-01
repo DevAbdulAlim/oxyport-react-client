@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { IoIosHome, IoIosListBox, IoIosCart, IoMdPeople } from "react-icons/io";
+import {
+  IoIosHome,
+  IoIosListBox,
+  IoIosCart,
+  IoMdPeople,
+  IoIosCard,
+} from "react-icons/io";
 import { useAuth } from "../../context/AuthContext";
 import { FiLogOut } from "react-icons/fi";
 import { GiMoebiusTriangle } from "react-icons/gi";
@@ -28,6 +34,11 @@ const menuItems = [
     icon: <FaShopify className="text-2xl" />,
     label: "Orders",
     link: "/admin/orders",
+  },
+  {
+    icon: <IoIosCard className="text-2xl" />, // Assuming you have an appropriate icon for payments or transactions
+    label: "Payments",
+    link: "/admin/payments",
   },
   {
     icon: <IoMdPeople className="text-2xl" />,
@@ -78,7 +89,7 @@ const AdminSidebar = ({
         <ImMenu />
       </Button>
       <div className="w-full h-[1px] mt-16 bg-gray-600" />
-      <ul className="absolute py-4 ">
+      <ul className="absolute py-5 ">
         {menuItems.map((item, index) => (
           <li key={index} className="flex items-center mb-5">
             {item.icon}
