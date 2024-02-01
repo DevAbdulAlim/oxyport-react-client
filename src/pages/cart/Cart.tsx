@@ -24,7 +24,7 @@ const Cart: React.FC = () => {
       <div className="grid grid-cols-1 gap-6">
         {items.map((item: CartItem) => (
           <div
-            key={item.id}
+            key={item.productId}
             className="flex items-center py-4 border-b border-gray-200"
           >
             <img
@@ -41,7 +41,7 @@ const Cart: React.FC = () => {
                     size="sm"
                     variant="secondary"
                     aria-label="decrease item"
-                    onClick={() => handleDecrease(item.id)}
+                    onClick={() => handleDecrease(item.productId)}
                   >
                     -
                   </Button>
@@ -53,7 +53,7 @@ const Cart: React.FC = () => {
                     size="sm"
                     variant="secondary"
                     aria-label="increase item"
-                    onClick={() => handleIncrease(item.id)}
+                    onClick={() => handleIncrease(item.productId)}
                   >
                     +
                   </Button>
@@ -64,7 +64,10 @@ const Cart: React.FC = () => {
               <p className="text-lg font-bold">
                 ${(item.price * item.quantity).toFixed(2)}
               </p>
-              <Button onClick={() => removeFromCart(item.id)} variant="delete">
+              <Button
+                onClick={() => removeFromCart(item.productId)}
+                variant="delete"
+              >
                 Remove
               </Button>
             </div>

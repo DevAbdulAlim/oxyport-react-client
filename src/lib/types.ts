@@ -73,7 +73,7 @@ export type Review = {
 };
 
 export type CartItem = {
-  id: number;
+  productId: number;
   name: string;
   price: number;
   stock: number;
@@ -87,11 +87,17 @@ export type CartState = {
 export type OrderType = {
   id: number;
   userId: number;
-  total: number;
-  status: string;
-  paymentMethod: string;
-  transactionId?: string | null;
-  deliveryDate?: Date | null;
+  name: string;
+  address: string;
+  city: string;
+  zip: string;
+  email: string;
+  phone: string;
+  order_status: string;
+  total_amount: number;
+  paid_amount: number;
+  due_amount: number;
+  payment_status: string;
 };
 
 export type OrderItem = {

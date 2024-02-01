@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { useCart } from "../../context/CartContext";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import OrderSummary from "./OrderSummary";
+import SelectPaymentMethod from "./SelectPaymetnMethod";
+import { useCreateOrder } from "../../api/order";
 
 const Checkout = () => {
   const { items } = useCart();
+  const { mutate } = useCreateOrder();
 
   // Calculate the total amount
   const totalAmount = items.reduce(
@@ -19,6 +23,7 @@ const Checkout = () => {
     zip: "",
     email: "",
     phone: "",
+    paymentMethod: "",
   };
 
   const addressSchema = Yup.object({
@@ -41,15 +46,25 @@ const Checkout = () => {
     phone: Yup.string()
       .matches(/^\d{10}$/, "Must be exactly 10 digits")
       .required("Phone number is required"),
+    paymentMethod: Yup.string().required("Payment method is required"),
   });
 
   const formik = useFormik({
-    initialValues: initialValues,
+    initialValues: {
+      ...initialValues,
+      items: items,
+    },
     validationSchema: addressSchema,
     onSubmit: (values) => {
       console.log(values);
+      mutate(values);
     },
   });
+
+  const handlePaymentSelection = (value: string) => {
+    formik.setFieldValue("paymentMethod", value);
+    console.log(value);
+  };
 
   return (
     <div className="container px-3 py-20 mx-auto">
@@ -205,36 +220,19 @@ const Checkout = () => {
                 ) : null}
               </div>
             </div>
-          </div>
 
-          {/* Order Summary */}
-          <div className="w-full px-8 md:w-1/2">
-            <h3 className="mb-4 text-xl font-semibold">Order Summary</h3>
-            {/* Display the list of items in the cart with their prices */}
-            <div className="mb-4">
-              {items.map((item) => (
-                <div key={item.id} className="flex justify-between">
-                  <span>{item.name}</span>
-                  <span>${(item.price * item.quantity).toFixed(2)}</span>
+            {/* Payment Methods */}
+            <div className="mb-8">
+              <SelectPaymentMethod handleChange={handlePaymentSelection} />
+              {formik.touched.paymentMethod && formik.errors.paymentMethod ? (
+                <div className="mt-1 text-sm text-red-500">
+                  {formik.errors.paymentMethod}
                 </div>
-              ))}
+              ) : null}
             </div>
-
-            {/* Total Amount */}
-            <div className="flex justify-between pt-4 border-t">
-              <span className="font-semibold">Total</span>
-              <span className="font-semibold">${totalAmount.toFixed(2)}</span>
-            </div>
-
-            {/* Checkout Button */}
-            <button
-              className="px-4 py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none"
-              type="submit"
-              // Add your onClick handler, e.g., to process the order
-            >
-              Process Order
-            </button>
           </div>
+
+          <OrderSummary items={items} totalAmount={totalAmount} />
         </div>
       </form>
     </div>

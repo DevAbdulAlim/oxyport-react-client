@@ -30,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             variant="secondary"
             onClick={() =>
               addToCart({
-                id: product.id,
+                productId: product.id,
                 name: product.name,
                 price: product.price,
                 stock: product.stock,

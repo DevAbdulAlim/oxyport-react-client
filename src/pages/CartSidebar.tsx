@@ -57,7 +57,7 @@ const CartSidebar = ({
       <div className="grid gap-4">
         {items.map((item) => (
           <div
-            key={item.id}
+            key={item.productId}
             className="flex items-center justify-between p-4 border rounded shadow-md"
           >
             <div className="flex items-center">
@@ -74,7 +74,7 @@ const CartSidebar = ({
                     disabled={!(item.quantity > 1)}
                     variant="secondary"
                     aria-label="decrease item"
-                    onClick={() => handleDecrease(item.id)}
+                    onClick={() => handleDecrease(item.productId)}
                   >
                     -
                   </Button>
@@ -86,7 +86,7 @@ const CartSidebar = ({
                     variant="secondary"
                     disabled={!(item.quantity < item.stock)}
                     aria-label="increase item"
-                    onClick={() => handleIncrease(item.id)}
+                    onClick={() => handleIncrease(item.productId)}
                   >
                     +
                   </Button>
@@ -106,7 +106,7 @@ const CartSidebar = ({
               variant="danger"
               onClick={(e) => {
                 e.stopPropagation();
-                removeFromCart(item.id);
+                removeFromCart(item.productId);
               }}
             >
               X

@@ -1,5 +1,5 @@
-import { useQuery, useMutation } from "react-query";
-import axios from "axios";
+import { useQuery, useMutation, MutationFunction } from "react-query";
+import axios, { AxiosResponse } from "axios";
 import config from "../config/config";
 import { OrderType } from "../lib/types";
 
@@ -33,14 +33,13 @@ export function useOrderById(orderId: string) {
   });
 }
 
-// // Create a new order
-// export function useCreateOrder() {
-//   return useMutation<void, unknown, Partial<OrderType>>(
-//     (orderData) => axios.post<void>(`${config.apiBaseUrl}/orders`, orderData)
-//   );
-// }
+export const useCreateOrder = () => {
+  return useMutation(
+    async (orderData: Partial<OrderType>) =>
+      await axios.post<void>(`${config.apiBaseUrl}/orders`, orderData)
+  );
+};
 
-// // Update an existing order
 // export function useUpdateOrder() {
 //   return useMutation<void, unknown, Partial<OrderType>>(
 //     (orderData) => {

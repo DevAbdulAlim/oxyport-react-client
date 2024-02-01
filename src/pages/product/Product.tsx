@@ -59,7 +59,7 @@ export default function ProductDetails() {
               className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none"
               onClick={() =>
                 addToCart({
-                  id: product.id,
+                  productId: product.id,
                   name: product.name,
                   price: product.price,
                   stock: product.stock,
