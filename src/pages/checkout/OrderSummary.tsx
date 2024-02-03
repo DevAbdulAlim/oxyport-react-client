@@ -1,13 +1,24 @@
 import React from "react";
 import { CartItem } from "../../lib/types";
 
-export default function OrderSummary({
-  items,
-  totalAmount,
-}: {
+interface OrderSummaryProps {
   items: CartItem[];
-  totalAmount: number;
-}) {
+}
+
+const OrderSummary: React.FC<OrderSummaryProps> = ({ items }) => {
+  // Calculate order summary
+  const shippingCharge = 30;
+  const taxRate = 0.1; // 10%
+  const subtotal = items.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  const taxes = subtotal * (taxRate / 100);
+  const totalAmount = subtotal + shippingCharge + taxes;
+
+  // Check if there are items in the order
+  const hasItems = items.length > 0;
+
   return (
     <div className="w-full px-8 md:w-1/2">
       <h3 className="mb-4 text-xl font-semibold">Order Summary</h3>
@@ -24,12 +35,13 @@ export default function OrderSummary({
       {/* Shipping Fee */}
       <div className="flex justify-between mb-2">
         <span>Shipping</span>
-        <span>$0</span>
+        <span>${shippingCharge.toFixed(2)}</span>
       </div>
-      {/* Shipping Fee */}
+
+      {/* Tax */}
       <div className="flex justify-between mb-2">
         <span>Tax</span>
-        <span>$0</span>
+        <span>${taxes.toFixed(2)}</span>
       </div>
 
       {/* Total Amount */}
@@ -38,14 +50,18 @@ export default function OrderSummary({
         <span className="font-semibold">${totalAmount.toFixed(2)}</span>
       </div>
 
-      {/* Checkout Button */}
+      {/* Checkout Button (disabled if no items) */}
       <button
-        className="px-4 py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none"
+        className={`px-4 py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none ${
+          !hasItems && "opacity-50 cursor-not-allowed"
+        }`}
         type="submit"
-        // Add your onClick handler, e.g., to process the order
+        disabled={!hasItems}
       >
         Process Order
       </button>
     </div>
   );
-}
+};
+
+export default OrderSummary;

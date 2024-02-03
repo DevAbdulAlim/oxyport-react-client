@@ -23,7 +23,7 @@ const UserDetailsPage: React.FC = () => {
   };
 
   return (
-    <div className="container mt-8">
+    <div className="container px-3 mx-auto mt-8">
       {/* User Details */}
       <div className="p-6 mb-8 bg-white rounded-lg shadow">
         <h2 className="mb-4 text-2xl font-semibold text-gray-800">

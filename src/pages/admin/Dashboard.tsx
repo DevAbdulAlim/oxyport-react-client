@@ -1,4 +1,3 @@
-import React from "react";
 import SalesExpenseChart from "./SalesExpenseChart";
 import { SalesByCategory } from "./SalseByCategory";
 import RecentOrders from "./RecentOrders";

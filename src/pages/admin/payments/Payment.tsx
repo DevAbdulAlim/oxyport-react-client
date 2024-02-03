@@ -55,7 +55,7 @@ const Payment: React.FC = () => {
   };
 
   return (
-    <div className="container py-8 mx-auto">
+    <div className="container px-3 py-8 mx-auto">
       <h1 className="mb-4 text-3xl font-bold">Payment History</h1>
       <div className="overflow-auto bg-white rounded-lg shadow-md">
         <table className="w-full table-auto">

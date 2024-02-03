@@ -10,12 +10,6 @@ const Checkout = () => {
   const { items } = useCart();
   const { mutate } = useCreateOrder();
 
-  // Calculate the total amount
-  const totalAmount = items.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-
   const initialValues = {
     name: "",
     address: "",
@@ -46,7 +40,9 @@ const Checkout = () => {
     phone: Yup.string()
       .matches(/^\d{10}$/, "Must be exactly 10 digits")
       .required("Phone number is required"),
-    paymentMethod: Yup.string().required("Payment method is required"),
+    paymentMethod: Yup.string()
+      .required("Payment method is required")
+      .oneOf(["cash"], "Only cash payments are accepted at the moment"),
   });
 
   const formik = useFormik({
@@ -232,7 +228,7 @@ const Checkout = () => {
             </div>
           </div>
 
-          <OrderSummary items={items} totalAmount={totalAmount} />
+          <OrderSummary items={items} />
         </div>
       </form>
     </div>

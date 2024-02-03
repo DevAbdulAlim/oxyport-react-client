@@ -40,7 +40,7 @@ const PaymentDetailsPage: React.FC = () => {
   };
 
   return (
-    <div className="container py-8 mx-auto">
+    <div className="container px-3 py-8 mx-auto">
       <h1 className="mb-4 text-3xl font-bold">Payment Details</h1>
       <div className="bg-white rounded-lg shadow-md">
         <div className="p-8">
