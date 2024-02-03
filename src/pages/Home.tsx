@@ -1,9 +1,9 @@
-import Facts from "../sections/Facts";
-import RecentPosts from "../sections/RecentPosts";
-import Hero from "../sections/Hero";
-import SpecialOffers from "../sections/SpecialOffers";
-import FeaturedCategories from "../sections/FeaturedCategories";
-import FeaturedProducts from "../sections/FeaturedProducts";
+import Facts from "./Facts";
+import RecentPosts from "./RecentPosts";
+import Hero from "./Hero";
+import SpecialOffers from "./SpecialOffers";
+import FeaturedCategories from "./FeaturedCategories";
+import FeaturedProducts from "./FeaturedProducts";
 
 export default function Home() {
   return (

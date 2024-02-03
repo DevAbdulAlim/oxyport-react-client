@@ -1,14 +1,25 @@
 // AdminLayout.tsx
 
-import React from "react";
-import AdminSidebar from "../../sections/AdminSidebar";
+import React, { useState } from "react";
+import AdminSidebar from "./AdminSidebar";
 import { Outlet } from "react-router-dom";
+import AdminTopNavbar from "./AdminTopNavbar";
 
 const AdminLayout: React.FC = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleNavToggle = () => {
+    setOpen(!open);
+  };
   return (
     <div className="flex flex-col h-screen">
-      <AdminSidebar />
-      <div className="flex-1 p-5 ml-64 overflow-x-hidden overflow-y-auto ">
+      <AdminSidebar open={open} handleNavToggle={handleNavToggle} />
+      <div
+        className={`flex-1 overflow-x-hidden overflow-y-auto ${
+          open ? "xl:ml-64" : "xl:ml-16"
+        } `}
+      >
+        <AdminTopNavbar handleNavToggle={handleNavToggle} />
         <Outlet />
       </div>
     </div>

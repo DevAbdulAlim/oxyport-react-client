@@ -1,4 +1,4 @@
-export type User = {
+export type UserType = {
   id: number;
   name: string;
   email: string;
@@ -21,10 +21,17 @@ export type Address = {
   userId: number;
 };
 
-export type Category = {
+export type CategoryType = {
   id: number;
   name: string;
   description?: string | null;
+  image?: string | null;
+};
+
+export type CategoryFormType = {
+  name: string;
+  description: string;
+  image: File[];
 };
 
 export type Product = {
@@ -32,20 +39,30 @@ export type Product = {
   name: string;
   description?: string | null;
   price: number;
-  image: string;
+  discount: number;
+  images: string;
   stock: number;
   categoryId: number;
   userId: number;
+  category: {
+    name: string;
+  };
+  user: {
+    name: string;
+  };
 };
 
 export type ProductFormValues = {
   name: string;
   description: string;
   price: number;
-  image: string;
+  discount: number;
+  images: File[];
   stock: number;
   categoryId: number;
   userId: number;
+  category: string;
+  user: string;
 };
 
 export type Review = {
@@ -56,7 +73,7 @@ export type Review = {
 };
 
 export type CartItem = {
-  id: number;
+  productId: number;
   name: string;
   price: number;
   stock: number;
@@ -67,14 +84,20 @@ export type CartState = {
   items: CartItem[];
 };
 
-export type Order = {
+export type OrderType = {
   id: number;
   userId: number;
-  total: number;
-  status: string;
-  paymentMethod: string;
-  transactionId?: string | null;
-  deliveryDate?: Date | null;
+  name: string;
+  address: string;
+  city: string;
+  zip: string;
+  email: string;
+  phone: string;
+  order_status: string;
+  total_amount: number;
+  paid_amount: number;
+  due_amount: number;
+  payment_status: string;
 };
 
 export type OrderItem = {

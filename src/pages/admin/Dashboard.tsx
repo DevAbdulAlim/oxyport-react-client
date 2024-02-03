@@ -1,14 +1,13 @@
-import React from "react";
-import SalesExpenseChart from "../../sections/SalesExpenseChart";
-import { SalesByCategory } from "../../sections/SalseByCategory";
-import RecentOrders from "../../sections/RecentOrders";
-import StockOutProducts from "../../sections/StockOutProducts";
+import SalesExpenseChart from "./SalesExpenseChart";
+import { SalesByCategory } from "./SalseByCategory";
+import RecentOrders from "./RecentOrders";
+import StockOutProducts from "./StockOutProducts";
 
 export default function Dashboard() {
   const totalSales = 354234;
   const salesThisMonth = 333;
   return (
-    <div>
+    <div className="container px-3 py-8 mx-auto lg:px-4 xl:px-5">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 2xl:grid-cols-4">
         {[...Array(4)].map((_, index) => (
           <div className="flex items-center justify-between p-6 text-white rounded-lg shadow-md bg-gradient-to-r from-indigo-500 to-purple-500">
