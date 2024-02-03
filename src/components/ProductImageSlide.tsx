@@ -34,7 +34,7 @@ export default function ProductImageSlide() {
             zoomSrc="https://images.unsplash.com/photo-1573612664822-d7d347da7b80?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0NTQ4MTA4OA&ixlib=rb-1.2.1&q=85&w=1600"
             zoomType="hover"
             zoomPreload={true}
-            className="border border-gray-500 h-96"
+            className="border border-gray-500 h-[450px]"
           />
         </div>
       ))}

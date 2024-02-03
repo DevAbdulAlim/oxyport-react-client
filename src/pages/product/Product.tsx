@@ -1,3 +1,4 @@
+import React from "react";
 import { useCart } from "../../context/CartContext";
 import { useParams } from "react-router-dom";
 import ProductImageSlide from "../../components/ProductImageSlide";
@@ -5,6 +6,8 @@ import ProductCard from "../../components/ProductCard";
 import { useProductById } from "../../api/product";
 import Loader from "../../components/ui/Loader";
 import TabComponent from "./Description";
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import Button from "../../components/ui/Button";
 
 export default function ProductDetails() {
   const { addToCart } = useCart();
@@ -33,7 +36,7 @@ export default function ProductDetails() {
   return (
     <>
       <div className="container mx-auto mt-8">
-        <div className="flex pt-8 pb-12">
+        <div className="flex pt-8 pb-12 space-x-12">
           <div className="w-1/2">
             <ProductImageSlide />
           </div>
@@ -48,16 +51,14 @@ export default function ProductDetails() {
               Products: {product.stock} Pieces Available
             </p>
 
-            {/* Rating Information */}
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-8">
               <span className="mr-2">Rating: 1</span>
               {/* Add your rating component or styling here */}
             </div>
 
             {/* Buttons */}
-            <div className="flex items-center mb-4 space-x-4">
-              <button
-                className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none"
+            <div className="flex items-center mb-8 space-x-4">
+              <Button
                 onClick={() =>
                   addToCart({
                     productId: product.id,
@@ -69,28 +70,25 @@ export default function ProductDetails() {
                 }
               >
                 Add to Cart
-              </button>
-              <button className="px-4 py-2 text-white bg-gray-700 rounded-md hover:bg-gray-900 focus:outline-none">
-                Add to Wishlist
-              </button>
+              </Button>
+              <Button variant="secondary">Add to Wishlist</Button>
             </div>
 
             {/* Share Section */}
-            <div className="flex items-center mb-4 space-x-2">
-              Share:
-              {/* Add your social media icons or sharing links here */}
+            <div className="flex items-center mb-8 space-x-4">
+              <span> Share:</span>
+              <FaFacebook className="text-2xl text-blue-500 cursor-pointer hover:text-blue-600" />
+              <FaTwitter className="text-2xl text-blue-400 cursor-pointer hover:text-blue-600" />
+              <FaLinkedin className="text-2xl text-blue-400 cursor-pointer hover:text-blue-600" />
+              <FaInstagram className="text-2xl text-purple-500 cursor-pointer hover:text-purple-600" />
             </div>
 
-            {/* Safe Checkout Information */}
-            <p className="mb-4 text-gray-800">Guaranteed Safe Checkout</p>
-
-            {/* Payment Images */}
+            <p className="mb-8 text-gray-800">Guaranteed Safe Checkout</p>
             <div className="flex space-x-2">
-              {/* Add your payment images or icons here */}
-              <img src="payment-image-1.png" alt="Payment Image" />
-              <img src="payment-image-2.png" alt="Payment Image" />
-              <img src="payment-image-3.png" alt="Payment Image" />
-              <img src="payment-image-4.png" alt="Payment Image" />
+              <img src="/img/payment-methods/discover.png" alt="Payment" />
+              <img src="/img/payment-methods/mastercard.png" alt="Payment" />
+              <img src="/img/payment-methods/paypal.png" alt="Payment" />
+              <img src="/img/payment-methods/visa.png" alt="Payment" />
             </div>
           </div>
         </div>

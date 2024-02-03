@@ -3,7 +3,6 @@ import Link from "../components/ui/Link";
 import {
   FaSearch,
   FaShoppingCart,
-  FaShoppingBasket,
   FaUserCircle,
   FaBars,
   FaHeart,
@@ -13,6 +12,8 @@ import ClientSideNavbar from "./ClientSideNav";
 import CartSidebar from "./CartSidebar";
 import CategoryDropdown from "./category/CategoryDropdown";
 import { useCart } from "../context/CartContext";
+import { BiSolidCategory } from "react-icons/bi";
+import { MdArrowDropDown } from "react-icons/md";
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -73,8 +74,9 @@ const Navbar = () => {
               variant="ghost"
               className="hidden text-xl md:flex"
             >
-              <FaShoppingBasket className="mx-4" />
+              <BiSolidCategory className="mx-2" />
               Categories
+              <MdArrowDropDown className="mx-4" />
             </Button>
             <CategoryDropdown
               isOpen={isCategoryOpen}
