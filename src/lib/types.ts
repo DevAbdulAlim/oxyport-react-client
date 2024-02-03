@@ -34,7 +34,7 @@ export type CategoryFormType = {
   image: File[];
 };
 
-export type Product = {
+export type ProductType = {
   id: number;
   name: string;
   description?: string | null;

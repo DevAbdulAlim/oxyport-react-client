@@ -1,33 +1,32 @@
-import React, { useState, useEffect } from "react";
 import { useCart } from "../../context/CartContext";
-import axios from "axios";
-import config from "../../config/config";
 import { useParams } from "react-router-dom";
-import { Product } from "../../lib/types";
 import ProductImageSlide from "../../components/ProductImageSlide";
+import ProductCard from "../../components/ProductCard";
+import { useProductById } from "../../api/product";
+import Loader from "../../components/ui/Loader";
 
 export default function ProductDetails() {
   const { addToCart } = useCart();
   const params = useParams();
-  const [product, setProduct] = useState<Product | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${config.apiBaseUrl}/products/${params.productId}`
-        );
-        setProduct(response.data.product);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useProductById(parseInt(params.productId!, 10));
 
-    fetchData();
-  }, [params.productId]);
+  // Handle loading state
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  // Handle error state
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <div>Not found</div>;
   }
 
   return (
@@ -91,6 +90,13 @@ export default function ProductDetails() {
             <img src="payment-image-3.png" alt="Payment Image" />
             <img src="payment-image-4.png" alt="Payment Image" />
           </div>
+        </div>
+      </div>
+      {/* recent products */}
+      <div className="py-12">
+        <h3 className="mb-4 text-2xl">Recent Products</h3>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <ProductCard product={product} />
         </div>
       </div>
     </div>

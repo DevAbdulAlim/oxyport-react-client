@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { productService } from "../api/api";
-import { Product } from "../lib/types";
+import { ProductType } from "../lib/types";
 
 const FeaturedProducts = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

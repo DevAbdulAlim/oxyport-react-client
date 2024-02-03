@@ -1,35 +1,46 @@
-import React, { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
-import { Product } from "../../lib/types";
-import { productService } from "../../api/api";
+import { useProducts } from "../../api/product";
+import Loader from "../../components/ui/Loader";
+import CategoryFilter from "./CategoryFilter";
+import BrandFilter from "./BrandFilter";
+import PriceRangeSlider from "./PriceRangeSlider";
 
 const ProductSearch = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading, error } = useProducts();
 
-  useEffect(() => {
-    productService
-      .getProducts()
-      .then((response) => {
-        setProducts(response.data.products);
-        setLoading(false);
-      })
-      .catch((error) => console.error("Error fetching products", error));
-  }, []);
+  // Handle loading state
+  if (isLoading) {
+    return <Loader />;
+  }
 
-  const handleSearch = () => {};
+  // Handle error state
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
+  const handlePriceRangeChange = () => {};
+
+  // If data is loaded successfully
   return (
     <div className="container mx-auto mt-8">
-      <h2 className="mb-4 text-3xl font-semibold">Product Search</h2>
-
-      {/* Display Search Results */}
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {products.map((product: any) => (
-          <div key={product.id}>
-            <ProductCard product={product} />
+      <div className="grid grid-cols-4 gap-8">
+        {/* filters */}
+        <div className="col-span-1">
+          <CategoryFilter />
+          <PriceRangeSlider onRangeChange={handlePriceRangeChange} />
+          <BrandFilter />
+        </div>
+        <div className="col-span-3">
+          <div className="flex justify-between p-8 mb-8 rounded-md shadow-md">
+            <div>Showing 1–16 of 66 results</div>
+            <div>Sort by</div>
           </div>
-        ))}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {data?.products.map((product: any) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

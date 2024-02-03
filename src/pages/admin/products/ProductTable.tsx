@@ -3,13 +3,13 @@ import { FiEdit, FiTrash2, FiEye } from "react-icons/fi";
 
 import Button from "../../../components/ui/Button";
 import Link from "../../../components/ui/Link";
-import { Product } from "../../../lib/types";
+import { ProductType } from "../../../lib/types";
 import Avatar from "../../../components/ui/Avater";
 import { truncateName } from "../../../lib/utils";
 import config from "../../../config/config";
 
 interface ProductTableProps {
-  products: Product[];
+  products: ProductType[];
   onDelete: (id: number) => void;
 }
 

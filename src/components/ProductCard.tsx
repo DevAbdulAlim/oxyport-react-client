@@ -1,5 +1,5 @@
 import React from "react";
-import { Product } from "../lib/types";
+import { ProductType } from "../lib/types";
 import Link from "./ui/Link";
 import Button from "./ui/Button";
 import { FaEye, FaHeart, FaShoppingCart } from "react-icons/fa";
@@ -7,7 +7,7 @@ import { useCart } from "../context/CartContext";
 import config from "../config/config";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductType;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {

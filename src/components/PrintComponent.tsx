@@ -1,7 +1,7 @@
 import React from "react";
-import { Product } from "../lib/types";
+import { ProductType } from "../lib/types";
 
-const PrintComponent: React.FC<{ product: Product }> = ({ product }) => {
+const PrintComponent: React.FC<{ product: ProductType }> = ({ product }) => {
   return (
     <div className="hidden print:block">
       {/* Content to be printed */}

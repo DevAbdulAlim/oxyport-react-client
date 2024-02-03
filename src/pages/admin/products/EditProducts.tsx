@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ProductFormContainer from "./ProductForm";
-import { Product, ProductFormValues } from "../../../lib/types";
+import { ProductType, ProductFormValues } from "../../../lib/types";
 import { useParams } from "react-router-dom";
 import { productService } from "../../../api/api";
 import Button from "../../../components/ui/Button";
@@ -16,7 +16,7 @@ const parseFilenames = (filenames: string): File[] => {
 };
 
 export default function EditProducts() {
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<ProductType | null>(null);
   const { productId } = useParams();
 
   useEffect(() => {

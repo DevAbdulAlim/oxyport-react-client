@@ -3,7 +3,7 @@ import ProductTable from "./ProductTable";
 import Pagination from "../../../components/Pagination";
 import Link from "../../../components/ui/Link";
 import { useDebounce } from "usehooks-ts";
-import { Product } from "../../../lib/types";
+import { ProductType } from "../../../lib/types";
 import { productService } from "../../../api/api";
 import { FiSearch } from "react-icons/fi";
 import Select from "../../../components/ui/Select";
@@ -13,7 +13,7 @@ import ExportCSV from "../../../components/ExportCSV";
 import Loader from "../../../components/ui/Loader";
 
 export default function Products() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState<Boolean>(true);
   const [totalProducts, setTotalProducts] = useState<number>(0);
   const [error, setError] = useState();
