@@ -9,7 +9,7 @@ const FeaturedProducts = () => {
 
   useEffect(() => {
     productService
-      .getProducts()
+      .getProducts({ pageSize: 8 })
       .then((response) => {
         setProducts(response.data.products);
         setLoading(false);

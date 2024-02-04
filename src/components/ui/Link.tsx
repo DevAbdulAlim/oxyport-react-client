@@ -4,27 +4,27 @@ import { Link as RouterLink, LinkProps } from "react-router-dom";
 import { cn } from "../../lib/utils";
 
 const linkVariants = cva(
-  "active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-color focus:outline-none focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events:none",
+  "active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-color focus:outline-none focus:ring-green-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events:none",
   {
     variants: {
       variant: {
-        default: "bg-dark-green text-white hover:bg-green-700",
-        icon: "bg-white text-green-900 hover:text-white hover:bg-green-800 text-xl",
-        secondary: "bg-gray-300 text-gray-700 hover:bg-gray-200",
-        ghost: "bg-transparent hover:text-slate-900 hover:bg-slate-200",
+        default: "bg-green-900 text-white hover:bg-green-800",
+        secondary: "bg-green-300 text-green-700 hover:bg-green-200",
+        ghost: "bg-transparent hover:text-green-900 hover:bg-green-200",
         success: "bg-green-500 text-white hover:bg-green-700",
         danger: "bg-red-500 text-white hover:bg-red-700",
         warning: "bg-yellow-500 text-white hover:bg-yellow-700",
         info: "bg-blue-500 text-white hover:bg-blue-700",
-        dark: "bg-gray-800 text-white hover:bg-gray-900",
+        dark: "bg-green-800 text-white hover:bg-green-900",
         purple: "bg-purple-500 text-white hover:bg-purple-700",
         edit: "bg-yellow-500 text-white hover:bg-yellow-700",
         delete: "bg-red-500 text-white hover:bg-red-700",
+        icon: "text-green-900 hover:text-white hover:bg-green-800 text-xl",
         link: "hover:underline",
       },
       size: {
-        default: "h-10 px-4 ",
-        sm: "h-8 px-2",
+        default: "h-10 px-4",
+        sm: "h-8 px-4",
         lg: "h-12 px-8",
       },
     },

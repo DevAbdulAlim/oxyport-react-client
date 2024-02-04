@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Link from "../components/ui/Link";
+import { Link as RouterLink } from "react-router-dom";
 import {
   FaSearch,
   FaShoppingCart,
@@ -66,12 +67,12 @@ const Navbar = () => {
       <nav className="p-4 bg-white">
         <div className="container flex items-center justify-between mx-auto space-x-2 md:space-x-5">
           {/* Logo on the left */}
-          <div className="flex items-center">
+          <RouterLink to="/" className="flex items-center">
             <FaLeaf className="mr-2 text-4xl text-green-500" />
             <span className="text-xl font-bold text-green-800">
               Organic Shop
             </span>
-          </div>
+          </RouterLink>
 
           {/* Categories Button */}
           <div className="relative">
@@ -117,7 +118,7 @@ const Navbar = () => {
             >
               <FaShoppingCart />
               {totalItems > 0 && (
-                <span className="absolute px-2 text-white bg-red-500 rounded-full -right-2 -top-2">
+                <span className="absolute px-2 text-sm text-white bg-red-500 rounded-full -right-2 -top-2">
                   {totalItems}
                 </span>
               )}

@@ -9,17 +9,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-green-900 text-white hover:bg-green-800",
-        icon: "bg-white text-green-900 hover:text-white hover:bg-green-800 text-xl",
-        secondary: "bg-gray-300 text-gray-700 hover:bg-gray-200",
-        ghost: "bg-transparent hover:text-white hover:bg-green-900",
+        secondary: "bg-green-300 text-green-700 hover:bg-green-200",
+        ghost: "bg-transparent hover:text-green-900 hover:bg-green-200",
         success: "bg-green-500 text-white hover:bg-green-700",
         danger: "bg-red-500 text-white hover:bg-red-700",
         warning: "bg-yellow-500 text-white hover:bg-yellow-700",
         info: "bg-blue-500 text-white hover:bg-blue-700",
-        dark: "bg-gray-800 text-white hover:bg-gray-900",
+        dark: "bg-green-800 text-white hover:bg-green-900",
         purple: "bg-purple-500 text-white hover:bg-purple-700",
         edit: "bg-yellow-500 text-white hover:bg-yellow-700",
-        delete: "bg-red-500 text-white hover:bg-red-700",
+        delete: "text-red-500 hover:text-red-700 text-xl",
+        icon: "text-green-900 hover:text-white hover:bg-green-800 text-xl",
       },
       size: {
         default: "h-10 px-4 ",
