@@ -8,7 +8,8 @@ const linkVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-slate-900 text-white hover:bg-slate-800",
+        default: "bg-dark-green text-white hover:bg-green-700",
+        icon: "bg-white text-green-900 hover:text-white hover:bg-green-800 text-xl",
         secondary: "bg-gray-300 text-gray-700 hover:bg-gray-200",
         ghost: "bg-transparent hover:text-slate-900 hover:bg-slate-200",
         success: "bg-green-500 text-white hover:bg-green-700",
@@ -22,8 +23,8 @@ const linkVariants = cva(
         link: "hover:underline",
       },
       size: {
-        default: "h-10 px-6 ",
-        sm: "h-8 px-4",
+        default: "h-10 px-4 ",
+        sm: "h-8 px-2",
         lg: "h-12 px-8",
       },
     },

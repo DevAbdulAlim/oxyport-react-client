@@ -2,7 +2,7 @@ import { FaDollarSign, FaGlobe, FaMapMarker, FaPhoneAlt } from "react-icons/fa";
 
 export default function ClientTopBar() {
   return (
-    <div className="hidden px-3 py-2 bg-gray-200 md:block">
+    <div className="hidden px-3 py-2 text-white bg-green-900 md:block">
       <div className="container flex items-center justify-between mx-auto">
         {/* Phone and Address section */}
         <div className="flex items-center space-x-4">

@@ -4,13 +4,14 @@ import { ButtonHTMLAttributes, FC } from "react";
 import { cn } from "../../lib/utils";
 
 const buttonVariants = cva(
-  "active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-color focus:outline-none focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events:none",
+  "active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-color focus:outline-none focus:ring-green-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events:none",
   {
     variants: {
       variant: {
-        default: "bg-slate-900 text-white hover:bg-slate-800",
+        default: "bg-green-900 text-white hover:bg-green-800",
+        icon: "bg-white text-green-900 hover:text-white hover:bg-green-800 text-xl",
         secondary: "bg-gray-300 text-gray-700 hover:bg-gray-200",
-        ghost: "bg-transparent hover:text-slate-900 hover:bg-slate-200",
+        ghost: "bg-transparent hover:text-white hover:bg-green-900",
         success: "bg-green-500 text-white hover:bg-green-700",
         danger: "bg-red-500 text-white hover:bg-red-700",
         warning: "bg-yellow-500 text-white hover:bg-yellow-700",

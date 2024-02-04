@@ -6,6 +6,8 @@ import {
   FaUserCircle,
   FaBars,
   FaHeart,
+  FaApple,
+  FaLeaf,
 } from "react-icons/fa";
 import Button from "../components/ui/Button";
 import ClientSideNavbar from "./ClientSideNav";
@@ -14,6 +16,7 @@ import CategoryDropdown from "./category/CategoryDropdown";
 import { useCart } from "../context/CartContext";
 import { BiSolidCategory } from "react-icons/bi";
 import { MdArrowDropDown } from "react-icons/md";
+import { GiCarrot } from "react-icons/gi";
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -60,24 +63,29 @@ const Navbar = () => {
     <>
       <CartSidebar isOpen={isCartOpen} handleClick={handleCartToggle} />
       <ClientSideNavbar isOpen={isNavOpen} handleClick={handleNavToggle} />
-      <nav className="p-4 bg-gray-100 ">
+      <nav className="p-4 bg-white">
         <div className="container flex items-center justify-between mx-auto space-x-2 md:space-x-5">
           {/* Logo on the left */}
-          <Link to="/" variant="secondary">
-            <img src="/img/logo.png" alt="Logo" className="w-full h-8" />
-          </Link>
+          <div className="flex items-center">
+            <FaLeaf className="mr-2 text-4xl text-green-500" />
+            <span className="text-xl font-bold text-green-800">
+              Organic Shop
+            </span>
+          </div>
 
           {/* Categories Button */}
           <div className="relative">
             <Button
               onClick={handleCategoryToggleButtonClick}
               variant="ghost"
-              className="hidden text-xl md:flex"
+              className="hidden text-xl text-green-900 md:flex"
             >
               <BiSolidCategory className="mx-2" />
               Categories
               <MdArrowDropDown className="mx-4" />
             </Button>
+            {/* Assuming CategoryDropdown is a custom component */}
+            {/* You may need to adjust props based on your actual implementation */}
             <CategoryDropdown
               isOpen={isCategoryOpen}
               handleClick={handleCategoryToggle}
@@ -90,7 +98,7 @@ const Navbar = () => {
               <input
                 type="text"
                 placeholder="Search"
-                className="w-full p-2 pl-10 border-none rounded-md"
+                className="w-full p-2 pl-10 border rounded-md"
               />
               <FaSearch className="absolute text-gray-500 top-3 left-3" />
             </div>
@@ -98,13 +106,13 @@ const Navbar = () => {
 
           {/* Wishlist, Cart, Account, and Hamburger Icon on the right */}
           <div className="flex items-center space-x-2 md:space-x-10">
-            <Link to="/" size="sm" variant="secondary">
+            <Link to="/" size="sm" variant="icon">
               <FaHeart />
             </Link>
             <Button
               className="relative"
+              variant="icon"
               size="sm"
-              variant="secondary"
               onClick={handleCartToggleButtonClick}
             >
               <FaShoppingCart />
@@ -114,16 +122,16 @@ const Navbar = () => {
                 </span>
               )}
             </Button>
-            <Link to="/user" size="sm" variant="secondary">
+            <Link to="/user" size="sm" variant="icon">
               <FaUserCircle />
             </Link>
-            <button
+            <Button
               type="button"
               aria-label="navbar toggle"
               onClick={handleNavToggleButtonClick}
             >
-              <FaBars className="text-2xl text-gray-600 cursor-pointer" />
-            </button>
+              <FaBars />
+            </Button>
           </div>
         </div>
       </nav>

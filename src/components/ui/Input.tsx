@@ -3,11 +3,11 @@ import { FC, InputHTMLAttributes } from "react";
 import { cn } from "../../lib/utils";
 
 const inputVariants = cva(
-  "border-gray-300 focus:border-slate-400 focus:ring-slate-400 w-full rounded-md border",
+  "border-gray-300 focus:border-green-500 focus:ring-green-500 w-full rounded-md border",
   {
     variants: {
       variant: {
-        default: "focus:ring-indigo-500",
+        default: "focus:ring-green-500",
         error: "border-red-500 focus:border-red-500 focus:ring-red-500",
       },
       inputSize: {

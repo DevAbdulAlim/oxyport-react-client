@@ -4,6 +4,7 @@ import Hero from "./Hero";
 import SpecialOffers from "./SpecialOffers";
 import FeaturedCategories from "./FeaturedCategories";
 import FeaturedProducts from "./FeaturedProducts";
+import NewsletterSection from "./Newsletter";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <FeaturedProducts />
       <Facts />
       <RecentPosts />
+      <NewsletterSection />
     </>
   );
 }
