@@ -56,7 +56,7 @@ const CartSidebar = ({
         <button
           aria-label="close"
           type="button"
-          className="hidden text-xl group-hover:block"
+          className="hidden w-full text-xl group-hover:block"
           onClick={handleClick}
         >
           Close
