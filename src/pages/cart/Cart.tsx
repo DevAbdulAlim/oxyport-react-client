@@ -3,6 +3,7 @@ import Link from "../../components/ui/Link";
 import { useCart } from "../../context/CartContext";
 import { CartItem } from "../../lib/types";
 import Button from "../../components/ui/Button";
+import { MdDelete } from "react-icons/md";
 
 const Cart: React.FC = () => {
   const { items, handleIncrease, handleDecrease, removeFromCart } = useCart();
@@ -34,13 +35,20 @@ const Cart: React.FC = () => {
             className="overflow-hidden bg-white rounded-lg shadow-md"
           >
             <div className="flex items-center justify-between px-4 py-2 bg-gray-100">
-              <h2 className="text-lg font-semibold">{item.name}</h2>
+              <p>
+                <span className="font-semibold">${item.price}</span>
+                <span className="mx-2 font-semibold">x</span>
+                <span className="font-semibold">{item.quantity}</span>
+                <span className="mx-2 font-semibold">
+                  ${item.quantity * item.price}
+                </span>
+              </p>
               <Button
                 onClick={() => removeFromCart(item.productId)}
                 variant="delete"
                 className="text-red-500"
               >
-                Remove
+                <MdDelete />
               </Button>
             </div>
             <div className="p-4">
@@ -49,32 +57,33 @@ const Cart: React.FC = () => {
                 alt="Product"
                 className="object-cover w-full h-40 mb-4"
               />
-              <p className="mb-2 text-gray-600">${item.price} each</p>
-              <div className="flex items-center space-x-2">
-                {item.quantity > 1 && (
-                  <button
-                    className="px-2 py-1 text-gray-600 bg-gray-200 rounded-l-md"
-                    aria-label="decrease item"
-                    onClick={() => handleDecrease(item.productId)}
-                  >
-                    -
-                  </button>
-                )}
 
-                <span className="text-xl">{item.quantity}</span>
-                {item.quantity < item.stock && (
-                  <button
-                    className="px-2 py-1 text-gray-600 bg-gray-200 rounded-r-md"
-                    aria-label="increase item"
-                    onClick={() => handleIncrease(item.productId)}
-                  >
-                    +
-                  </button>
-                )}
+              <div className="flex justify-between">
+                {" "}
+                <h2 className="text-lg font-semibold">{item.name}</h2>
+                <div className="flex items-center space-x-2">
+                  {item.quantity > 1 && (
+                    <button
+                      className="px-2 py-1 text-gray-600 bg-gray-200 rounded-l-md"
+                      aria-label="decrease item"
+                      onClick={() => handleDecrease(item.productId)}
+                    >
+                      -
+                    </button>
+                  )}
+
+                  <span className="text-xl">{item.quantity}</span>
+                  {item.quantity < item.stock && (
+                    <button
+                      className="px-2 py-1 text-gray-600 bg-gray-200 rounded-r-md"
+                      aria-label="increase item"
+                      onClick={() => handleIncrease(item.productId)}
+                    >
+                      +
+                    </button>
+                  )}
+                </div>
               </div>
-              <p className="mt-2 text-lg font-bold">
-                ${(item.price * item.quantity).toFixed(2)}
-              </p>
             </div>
           </div>
         ))}
