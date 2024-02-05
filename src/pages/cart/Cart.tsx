@@ -51,15 +51,14 @@ const Cart: React.FC = () => {
                 <MdDelete />
               </Button>
             </div>
-            <div className="p-4">
+            <div>
               <img
                 src={process.env.PUBLIC_URL + "/img/products/product-10.png"}
                 alt="Product"
                 className="object-cover w-full h-40 mb-4"
               />
 
-              <div className="flex justify-between">
-                {" "}
+              <div className="flex justify-between p-4">
                 <h2 className="text-lg font-semibold">{item.name}</h2>
                 <div className="flex items-center space-x-2">
                   {item.quantity > 1 && (

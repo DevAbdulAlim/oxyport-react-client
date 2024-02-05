@@ -1,5 +1,6 @@
 import React from "react";
 import { CartItem } from "../../lib/types";
+import Button from "../../components/ui/Button";
 
 interface OrderSummaryProps {
   items: CartItem[];
@@ -20,7 +21,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ items }) => {
   const hasItems = items.length > 0;
 
   return (
-    <div className="w-full px-8 md:w-1/2">
+    <div className="w-full p-6 px-8 md:w-1/2">
       <h3 className="mb-4 text-xl font-semibold">Order Summary</h3>
       {/* Display the list of items in the cart with their prices */}
       <div className="mb-4">
@@ -32,34 +33,34 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ items }) => {
         ))}
       </div>
 
+      {/* Subtotal */}
+      <div className="flex justify-between mb-2">
+        <span>Subtotal</span>
+        <span>${subtotal.toFixed(2)}</span>
+      </div>
+
       {/* Shipping Fee */}
       <div className="flex justify-between mb-2">
         <span>Shipping</span>
-        <span>${shippingCharge.toFixed(2)}</span>
+        <span>+${shippingCharge.toFixed(2)}</span>
       </div>
 
       {/* Tax */}
       <div className="flex justify-between mb-2">
         <span>Tax</span>
-        <span>${taxes.toFixed(2)}</span>
+        <span>+${taxes.toFixed(2)}</span>
       </div>
 
       {/* Total Amount */}
-      <div className="flex justify-between pt-4 border-t">
+      <div className="flex justify-between pt-4 mb-4 border-t">
         <span className="font-semibold">Total</span>
         <span className="font-semibold">${totalAmount.toFixed(2)}</span>
       </div>
 
       {/* Checkout Button (disabled if no items) */}
-      <button
-        className={`px-4 py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none ${
-          !hasItems && "opacity-50 cursor-not-allowed"
-        }`}
-        type="submit"
-        disabled={!hasItems}
-      >
+      <Button type="submit" disabled={!hasItems}>
         Process Order
-      </button>
+      </Button>
     </div>
   );
 };

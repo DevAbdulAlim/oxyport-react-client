@@ -63,7 +63,7 @@ const Checkout = () => {
   };
 
   return (
-    <div className="container px-3 py-20 mx-auto">
+    <div className="container px-3 py-20 mx-auto ">
       <h2 className="mb-4 text-3xl font-semibold">Checkout</h2>
       <form onSubmit={formik.handleSubmit}>
         <div className="flex flex-col md:flex-row">

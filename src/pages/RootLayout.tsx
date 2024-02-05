@@ -24,7 +24,7 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen text-green-900">
       <ClientTopBar />
       <header className={`sticky top-0 z-20 ${isSticky ? "shadow-md" : ""}`}>
         <MainTopNavbar />
