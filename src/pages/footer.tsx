@@ -31,12 +31,22 @@ const Footer = () => {
         <div>
           <h3 className="mb-4 text-xl font-bold">Quick Links</h3>
           <ul>
-            <li className="mb-2">About Our Company</li>
-            <li className="mb-2">Wishlist</li>
-            <li className="mb-2">Cart</li>
-            <li className="mb-2">Flash Offers</li>
-            <li className="mb-2">Terms & Conditions</li>
-            <li className="mb-2">Privacy Policy</li>
+            <li className="mb-2 hover:underline hover:cursor-pointer">
+              About Our Company
+            </li>
+            <li className="mb-2 hover:underline hover:cursor-pointer">
+              Wishlist
+            </li>
+            <li className="mb-2 hover:underline hover:cursor-pointer">Cart</li>
+            <li className="mb-2 hover:underline hover:cursor-pointer">
+              Flash Offers
+            </li>
+            <li className="mb-2 hover:underline hover:cursor-pointer">
+              Terms & Conditions
+            </li>
+            <li className="mb-2 hover:underline hover:cursor-pointer">
+              Privacy Policy
+            </li>
           </ul>
         </div>
 
@@ -44,11 +54,21 @@ const Footer = () => {
         <div>
           <h3 className="mb-4 text-xl font-bold">Categories</h3>
           <ul>
-            <li className="mb-2">Fruit & Vegetables</li>
-            <li className="mb-2">Fresh Fruits</li>
-            <li className="mb-2">Biscuits & Snacks</li>
-            <li className="mb-2">Organic Food</li>
-            <li className="mb-2">Grocery & Staples</li>
+            <li className="mb-2 hover:underline hover:cursor-pointer">
+              Fruit & Vegetables
+            </li>
+            <li className="mb-2 hover:underline hover:cursor-pointer">
+              Fresh Fruits
+            </li>
+            <li className="mb-2 hover:underline hover:cursor-pointer">
+              Biscuits & Snacks
+            </li>
+            <li className="mb-2 hover:underline hover:cursor-pointer">
+              Organic Food
+            </li>
+            <li className="mb-2 hover:underline hover:cursor-pointer">
+              Grocery & Staples
+            </li>
           </ul>
         </div>
 

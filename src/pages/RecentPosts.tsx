@@ -15,24 +15,24 @@ const RecentPosts: React.FC = () => {
   const posts: PostType[] = [
     {
       id: 1,
-      title: "Lorem Ipsum 1",
-      image: "/img/recent-posts/news-thumb-03.jpg", // Example image URL
+      title: "The Benefits of Organic Farming",
+      image: "/img/recent-posts/1.jpg",
       username: "JohnDoe",
       date: "2024-01-15",
       time: "14:30",
     },
     {
       id: 2,
-      title: "Lorem Ipsum 2",
-      image: "/img/recent-posts/news-thumb-08.jpg", // Example image URL
+      title: "10 Easy Recipes with Organic Vegetables",
+      image: "/img/recent-posts/2.png",
       username: "JaneDoe",
       date: "2024-01-14",
       time: "10:45",
     },
     {
       id: 3,
-      title: "Lorem Ipsum 3",
-      image: "/img/recent-posts/news-thumb-09.jpg", // Example image URL
+      title: "How to Start Your Own Organic Garden",
+      image: "/img/recent-posts/3.jpg",
       username: "BobSmith",
       date: "2024-01-13",
       time: "18:15",
@@ -52,7 +52,7 @@ const RecentPosts: React.FC = () => {
             <img
               src={process.env.PUBLIC_URL + post.image}
               alt={`Image for ${post.title}`}
-              className="mb-2 rounded-md"
+              className="w-full h-64 mb-2 rounded-md"
             />
             <div className="flex justify-between">
               <h3 className="mb-2 text-lg font-semibold">{post.title}</h3>
