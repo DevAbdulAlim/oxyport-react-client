@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   IoIosHome,
@@ -9,8 +8,8 @@ import {
 } from "react-icons/io";
 import { useAuth } from "../../context/AuthContext";
 import { FiLogOut } from "react-icons/fi";
-import { GiMoebiusTriangle } from "react-icons/gi";
-import { FaShopify } from "react-icons/fa";
+import { Link as RouterLink } from "react-router-dom";
+import { FaLeaf, FaShopify } from "react-icons/fa";
 import { ImMenu } from "react-icons/im";
 import Button from "../../components/ui/Button";
 
@@ -62,33 +61,35 @@ const AdminSidebar = ({
 
   return (
     <nav
-      className={`fixed   left-0 h-full p-4 transition-all duration-300 group z-30 overflow-hidden shadow-2xl xl:shadow-none text-white bg-gray-800 ${
+      className={`fixed   left-0 h-full p-4 transition-all duration-300 group z-30 overflow-hidden shadow-2xl xl:shadow-none text-green-50 bg-green-800 ${
         open
           ? "w-full md:w-64 block"
           : "w-0 md:w-0 hover:w-64 xl:w-16 hidden xl:block"
       }`}
     >
       <div className="absolute flex items-center space-x-2">
-        <GiMoebiusTriangle className="text-4xl text-indigo-500" />
-        <span
-          className={`${
-            open ? "block" : "hidden"
-          } text-indigo-500 group-hover:block text-2xl font-semibold`}
-        >
-          ActivEco
-        </span>
+        <RouterLink to="/" className="flex items-center">
+          <FaLeaf className="mr-2 text-4xl text-green-500" />
+          <span
+            className={`${
+              open ? "block" : "hidden"
+            }  group-hover:block text-xl font-bold text-green-50`}
+          >
+            Organic Shop
+          </span>
+        </RouterLink>
       </div>
 
       <Button
         onClick={handleNavToggle}
         variant="ghost"
         className={`absolute top-2 right-2 ${
-          open ? "block opacity-100 bg-gray-700" : "opacity-0"
+          open ? "block opacity-100 bg-green-700" : "opacity-0"
         }  group-hover:opacity-100 transition-opacity group-hover:delay-300 duration-100`}
       >
         <ImMenu />
       </Button>
-      <div className="w-full h-[1px] mt-16 bg-gray-600" />
+      <div className="w-full h-[1px] mt-16 bg-green-600" />
       <ul className="absolute py-5 ">
         {menuItems.map((item, index) => (
           <li key={index} className="flex items-center mb-5">

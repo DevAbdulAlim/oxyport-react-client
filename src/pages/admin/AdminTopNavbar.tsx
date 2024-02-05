@@ -19,7 +19,7 @@ const AdminTopNavbar = ({
   handleNavToggle: () => void;
 }) => {
   return (
-    <div className="sticky top-0 z-10 flex items-center justify-between w-full p-4 text-gray-500 bg-gray-100 shadow-md">
+    <div className="sticky top-0 z-10 flex items-center justify-between w-full p-4 text-green-900 bg-green-100 shadow-md">
       <Button className="xl:hidden" variant="ghost" onClick={handleNavToggle}>
         <ImMenu className="text-xl" />
       </Button>
@@ -29,7 +29,7 @@ const AdminTopNavbar = ({
         <input
           type="text"
           placeholder="Search"
-          className="px-3 py-1 text-gray-700 bg-gray-200 rounded focus:outline-none"
+          className="px-3 py-1 text-green-700 bg-green-200 rounded focus:outline-none"
         />
       </div>
       {/* Icons */}

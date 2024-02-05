@@ -1,4 +1,6 @@
 import React from "react";
+import { IoIosArrowDropright } from "react-icons/io";
+import Link from "../../components/ui/Link";
 
 const dummyStockOutProducts = [
   {
@@ -36,11 +38,16 @@ const dummyStockOutProducts = [
 const StockOutProducts = () => {
   return (
     <div>
-      <h2 className="mb-4 text-xl font-semibold">Stock Out Products</h2>
+      <div className="flex justify-between">
+        <h2 className="mb-4 text-xl font-semibold">Stock Out Products</h2>
+        <Link to="/admin/orders" variant="link">
+          <IoIosArrowDropright className="text-3xl" />
+        </Link>
+      </div>
       <div className="overflow-x-auto bg-white rounded-lg shadow-md">
         <div className="min-w-max">
           <div className="flex flex-col divide-y">
-            <div className="flex items-center p-2 bg-gray-100">
+            <div className="flex items-center p-2 bg-green-100">
               <p className="flex-1 font-semibold">Product</p>
               <p className="flex-1 font-semibold">Stock</p>
               <p className="flex-1 font-semibold">Amount</p>

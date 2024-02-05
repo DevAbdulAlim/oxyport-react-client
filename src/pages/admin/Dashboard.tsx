@@ -1,42 +1,57 @@
+import {
+  FaCubes,
+  FaShoppingCart,
+  FaClipboardList,
+  FaUsers,
+} from "react-icons/fa";
 import SalesExpenseChart from "./SalesExpenseChart";
 import { SalesByCategory } from "./SalseByCategory";
 import RecentOrders from "./RecentOrders";
 import StockOutProducts from "./StockOutProducts";
+import Button from "../../components/ui/Button";
 
 export default function Dashboard() {
-  const totalSales = 354234;
-  const salesThisMonth = 333;
+  const data = [
+    { name: "Total Categories", amount: 50, increase: 50, icon: <FaCubes /> },
+    {
+      name: "Total Products",
+      amount: 1000,
+      increase: 150,
+      icon: <FaShoppingCart />,
+    },
+    {
+      name: "Total Orders",
+      amount: 500,
+      increase: 100,
+      icon: <FaClipboardList />,
+    },
+    {
+      name: "Total Customers",
+      amount: 750,
+      increase: 150,
+      icon: <FaUsers />,
+    },
+  ];
+
   return (
     <div className="container px-3 py-8 mx-auto lg:px-4 xl:px-5">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 2xl:grid-cols-4">
-        {[...Array(4)].map((_, index) => (
-          <div className="flex items-center justify-between p-6 text-white rounded-lg shadow-md bg-gradient-to-r from-indigo-500 to-purple-500">
+        {data.map((item, index) => (
+          <div
+            key={index}
+            className="flex items-center justify-between p-6 text-white rounded-lg shadow-md bg-gradient-to-r from-green-500 to-green-800"
+          >
             <div className="flex items-center">
-              <div className="p-3 mr-4 bg-yellow-500 rounded-full">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-8 h-8"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
+              <div className="p-3 mr-4 text-3xl bg-green-500 rounded-full shadow-md">
+                {item.icon}
               </div>
               <div>
-                <p className="text-xl font-semibold">Total Sales</p>
-                <p className="text-3xl font-bold">{`$${totalSales}`}</p>
-                <p className="text-sm">{`+ $${salesThisMonth}`}</p>
+                <p className="text-xl font-semibold">{item.name}</p>
+                <p className="text-3xl font-bold">{`$${item.amount}`}</p>
+                <p className="text-sm">{`+ $${item.increase}`}</p>
               </div>
             </div>
-            <button className="px-4 py-2 text-white bg-blue-500 rounded-full">
-              See All
-            </button>
+            <Button>See All</Button>
           </div>
         ))}
       </div>

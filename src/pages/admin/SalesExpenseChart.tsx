@@ -37,12 +37,12 @@ const data = {
     {
       label: "Dataset 1",
       data: [400, 700, 300, 900, 500, 800, 200],
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
+      backgroundColor: "rgba(0, 128, 0, 0.5)", // Dark green color
     },
     {
       label: "Dataset 2",
       data: [600, 300, 700, 100, 500, 200, 800],
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
+      backgroundColor: "rgba(0, 255, 0, 0.5)", // Lighter green color
     },
   ],
 };

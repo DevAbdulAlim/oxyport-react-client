@@ -12,7 +12,7 @@ const AdminLayout: React.FC = () => {
     setOpen(!open);
   };
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen text-green-900">
       <AdminSidebar open={open} handleNavToggle={handleNavToggle} />
       <div
         className={`flex-1 overflow-x-hidden overflow-y-auto ${
