@@ -71,7 +71,7 @@ export default function UserLayout() {
         </div>
       </div>
       <div className="mt-8 border-t md:flex">
-        <nav className="p-4 bg-gray-200 md:w-1/4">
+        <nav className="p-4 bg-green-200 md:w-1/4">
           <ul>{navItems.map(renderNavItem)}</ul>
         </nav>
 

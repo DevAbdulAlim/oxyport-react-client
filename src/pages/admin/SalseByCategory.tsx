@@ -11,12 +11,12 @@ export const data = {
       label: "# of Votes",
       data: [12, 9, 3, 5, 2, 3],
       backgroundColor: [
-        "rgba(0, 128, 0, 0.2)", // Dark green color
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(0, 255, 0, 0.2)", // Darker green color
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
+        "rgba(0, 128, 0, 0.5)", // Dark green color
+        "rgba(54, 162, 235, 0.5)",
+        "rgba(255, 206, 86, 0.5)",
+        "rgba(0, 255, 0, 0.5)", // Darker green color
+        "rgba(153, 102, 255, 0.5)",
+        "rgba(255, 159, 64, 0.5)",
       ],
       borderColor: [
         "rgba(0, 128, 0, 1)", // Dark green color

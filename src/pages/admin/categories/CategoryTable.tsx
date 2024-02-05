@@ -16,8 +16,8 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
   return (
     <div className="container mt-8 overflow-auto rounded-lg shadow">
       <table className="min-w-full overflow-hidden g-white">
-        <thead className="bg-gray-200">
-          <tr className="text-gray-800">
+        <thead className="bg-green-200">
+          <tr className="">
             <th className="px-4 py-2">ID</th>
             <th className="px-4 py-2">Image</th>
             <th className="px-4 py-2">Name</th>

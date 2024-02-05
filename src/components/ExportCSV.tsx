@@ -9,7 +9,7 @@ export default function ExportCSV({ data }: ExportCSVProps) {
     <CSVLink
       data={data}
       filename={"table-data.csv"}
-      className="px-4 py-2 text-gray-800 transition-colors duration-300 bg-gray-200 rounded-md shadow-sm hover:bg-gray-300"
+      className="px-4 py-2 transition-colors duration-300 bg-green-200 rounded-md shadow-sm hover:bg-green-300"
     >
       Export to CSV
     </CSVLink>

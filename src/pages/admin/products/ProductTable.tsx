@@ -15,10 +15,10 @@ interface ProductTableProps {
 
 const ProductTable: React.FC<ProductTableProps> = ({ products, onDelete }) => {
   return (
-    <div className="container mt-8 overflow-auto rounded-lg shadow">
+    <div className="container mt-8 overflow-auto rounded-lg shadow bg-green-50">
       <table className="min-w-full overflow-hidden g-white">
-        <thead className="bg-gray-200">
-          <tr className="text-gray-800">
+        <thead className="bg-green-200">
+          <tr>
             <th className="px-4 py-2">ID</th>
             <th className="px-4 py-2">Image</th>
             <th className="px-4 py-2">Name</th>

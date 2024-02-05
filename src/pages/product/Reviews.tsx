@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaStar, FaUser } from "react-icons/fa";
 import Button from "../../components/ui/Button";
+import Input from "../../components/ui/Input";
 
 interface Review {
   id: number;
@@ -50,10 +51,13 @@ const Reviews: React.FC = () => {
     <div>
       <h2 className="mb-4 text-xl font-semibold">Reviews</h2>
       {reviews.map((review) => (
-        <div key={review.id} className="p-4 mb-4 bg-white border-b rounded-md">
+        <div
+          key={review.id}
+          className="p-4 mb-4 border-b rounded-md bg-green-50"
+        >
           <div className="flex items-center mb-2">
-            <FaUser className="mr-2 text-gray-500" />
-            <span className="text-gray-700">{review.user}</span>
+            <FaUser className="mr-2" />
+            <span>{review.user}</span>
           </div>
           <div className="flex items-center mb-2">
             <div className="flex items-center">
@@ -72,27 +76,23 @@ const Reviews: React.FC = () => {
         <h3 className="mb-4 text-lg font-semibold">Write a Review</h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="user" className="block font-semibold text-gray-700">
+            <label htmlFor="user" className="block font-semibold ">
               Your Name:
             </label>
-            <input
+            <Input
               type="text"
               name="user"
               id="user"
               value={newReview.user}
               onChange={handleInputChange}
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
               required
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="rating"
-              className="block font-semibold text-gray-700"
-            >
+            <label htmlFor="rating" className="block font-semibold ">
               Rating:
             </label>
-            <input
+            <Input
               type="number"
               name="rating"
               id="rating"
@@ -100,15 +100,11 @@ const Reviews: React.FC = () => {
               onChange={handleInputChange}
               min="1"
               max="5"
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
               required
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="comment"
-              className="block font-semibold text-gray-700"
-            >
+            <label htmlFor="comment" className="block font-semibold ">
               Your Review:
             </label>
             <textarea
@@ -116,7 +112,7 @@ const Reviews: React.FC = () => {
               id="comment"
               value={newReview.comment}
               onChange={handleInputChange}
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:border-blue-500"
+              className="block w-full px-4 py-2 border border-green-300 rounded-md resize-none focus:outline-none focus:border-green-500"
               rows={4}
               required
             ></textarea>

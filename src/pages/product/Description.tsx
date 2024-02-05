@@ -9,7 +9,7 @@ interface TabProps {
 
 const Tab: React.FC<TabProps> = ({ label, isActive, onClick }) => (
   <div
-    className={`cursor-pointer  py-2 px-4 ${isActive ? "bg-gray-300" : ""}`}
+    className={`cursor-pointer  py-2 px-4 ${isActive ? "bg-green-300" : ""}`}
     onClick={onClick}
   >
     {label}
@@ -49,7 +49,7 @@ const TabComponent: React.FC = () => {
       <TabPanel isActive={activeTab === "description"}>
         <div className="mb-4">
           <h2 className="mb-2 text-lg font-semibold">Introduction</h2>
-          <p className="mb-4 leading-relaxed text-gray-700">
+          <p className="mb-4 leading-relaxed">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
@@ -63,17 +63,10 @@ const TabComponent: React.FC = () => {
           </p>
           <h2 className="mb-2 text-lg font-semibold">Features :</h2>
           <ul className="pl-6 list-disc">
-            <li className="mb-2 text-gray-700">Slim body with metal cover</li>
-            <li className="mb-2 text-gray-700">
-              Latest Intel Core i5-1135G7 processor (4 cores / 8 threads)
-            </li>
-            <li className="mb-2 text-gray-700">
-              8GB DDR4 RAM and fast 512GB PCIe SSD
-            </li>
-            <li className="mb-2 text-gray-700">
-              NVIDIA GeForce MX350 2GB GDDR5 graphics card backlit keyboard,
-              touchpad with gesture support
-            </li>
+            <li className="mb-2">Organic fruits directly from the farm</li>
+            <li className="mb-2">Freshly harvested and pesticide-free</li>
+            <li className="mb-2">Various seasonal fruits available</li>
+            <li className="mb-2">Perfect for a healthy lifestyle</li>
           </ul>
         </div>
       </TabPanel>
