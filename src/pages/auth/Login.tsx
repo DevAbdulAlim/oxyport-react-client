@@ -4,7 +4,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../../context/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { FaLeaf } from "react-icons/fa";
+import Button from "../../components/ui/Button";
+import Input from "../../components/ui/Input";
+import Link from "../../components/ui/Link";
 
 const LoginForm: React.FC = () => {
   const { login } = useAuth();
@@ -28,18 +32,19 @@ const LoginForm: React.FC = () => {
   });
 
   return (
-    <div className="flex items-center justify-center h-screen max-w-sm mx-auto ">
-      <div className="p-8 shadow-md">
-        <img src="/img/logo.png" alt="Logo" className="mx-auto mb-4" />
+    <div className="flex items-center justify-center h-screen max-w-sm mx-auto text-green-900">
+      <div className="p-8 shadow-md w-96">
+        <RouterLink to="/" className="flex items-center justify-center mb-4">
+          <FaLeaf className="mr-2 text-4xl text-green-500" />
+          <span className="text-xl font-bold text-green-800">Organic Shop</span>
+        </RouterLink>
+        <h1 className="mb-4 font-bold text-center">Login Account</h1>
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-bold text-gray-700"
-            >
+            <label htmlFor="email" className="block mb-2 text-sm font-bold">
               Email
             </label>
-            <input
+            <Input
               type="text"
               id="email"
               name="email"
@@ -60,13 +65,10 @@ const LoginForm: React.FC = () => {
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block mb-2 text-sm font-bold text-gray-700"
-            >
+            <label htmlFor="password" className="block mb-2 text-sm font-bold">
               Password
             </label>
-            <input
+            <Input
               type="password"
               id="password"
               name="password"
@@ -86,13 +88,14 @@ const LoginForm: React.FC = () => {
             )}
           </div>
 
-          <button
-            type="submit"
-            className="p-2 text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
-          >
-            Login
-          </button>
+          <Button type="submit">Login</Button>
         </form>
+        <div className="mt-4 text-center">
+          <span className="text-sm text-gray-600">Don't have an account? </span>
+          <Link to="/register" className="text-green-500" variant="link">
+            Register here
+          </Link>
+        </div>
       </div>
     </div>
   );
