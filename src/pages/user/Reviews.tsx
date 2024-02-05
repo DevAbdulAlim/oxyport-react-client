@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "../../components/ui/Button";
 
 interface Review {
   id: number;
@@ -66,14 +67,14 @@ const Reviews: React.FC = () => {
                   Rating: {review.rating}/5
                 </span>
               </div>
-              <button
-                className="text-blue-500 hover:underline"
+              <Button
+                variant="ghost"
                 onClick={() => handleEditReview(review.id)}
               >
                 Edit
-              </button>
+              </Button>
             </div>
-            <p className="text-gray-600">{review.comment}</p>
+            <p>{review.comment}</p>
           </div>
         ))}
       </div>
@@ -90,10 +91,7 @@ const Reviews: React.FC = () => {
               }}
             >
               <div className="mb-4">
-                <label
-                  htmlFor="editedRating"
-                  className="block mb-2 text-gray-600"
-                >
+                <label htmlFor="editedRating" className="block mb-2 ">
                   Rating:
                 </label>
                 <input
@@ -111,10 +109,7 @@ const Reviews: React.FC = () => {
                 />
               </div>
               <div className="mb-4">
-                <label
-                  htmlFor="editedComment"
-                  className="block mb-2 text-gray-600"
-                >
+                <label htmlFor="editedComment" className="block mb-2 ">
                   Comment:
                 </label>
                 <textarea
@@ -132,19 +127,14 @@ const Reviews: React.FC = () => {
                 />
               </div>
               <div className="flex justify-end">
-                <button
+                <Button
                   type="button"
-                  className="mr-2 text-gray-600 hover:underline"
+                  variant="ghost"
                   onClick={handleCloseModal}
                 >
                   Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-                >
-                  Save
-                </button>
+                </Button>
+                <Button type="submit">Save</Button>
               </div>
             </form>
           </div>
