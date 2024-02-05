@@ -22,6 +22,7 @@ import {
   GiTomato,
 } from "react-icons/gi";
 import { AiOutlineApple } from "react-icons/ai";
+import Input from "../components/ui/Input";
 
 const categories = [
   { name: "Fruits", link: "/fruits", reactIcon: <AiOutlineApple /> },
@@ -75,35 +76,45 @@ const ClientSideNavbar = ({
       ref={navbarRef}
       className="fixed top-0 right-0 z-30 w-full h-screen p-4 text-white bg-green-800 shadow-2xl md:w-[400px]"
     >
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-4">
         <RouterLink to="/" className="flex items-center">
           <FaLeaf className="mr-2 text-4xl text-green-500" />
           <span className="text-xl font-bold text-green-100">Organic Shop</span>
         </RouterLink>
-        <Button variant="danger" onClick={handleClick}>
-          X
-        </Button>
+        <Button onClick={handleClick}>X</Button>
       </div>
 
-      <div className="flex justify-between text-lg">
-        <Link to="/" className="flex items-center">
-          <FaHome className="mr-2" />
+      <div className="flex justify-center py-2 space-x-2 text-lg border-b">
+        <Link
+          to="/"
+          className="flex items-center justify-center text-2xl"
+          variant="ghost"
+        >
+          <FaHome />
         </Link>
 
-        <Link to="/categories" className="flex items-center">
-          <FaShoppingBasket className="mr-2" />
+        <Link
+          to="/wishlist"
+          className="flex items-center justify-center text-2xl"
+          variant="ghost"
+        >
+          <FaHeart />
         </Link>
 
-        <Link to="/wishlist" className="flex items-center">
-          <FaHeart className="mr-2" />
+        <Link
+          to="/cart"
+          className="flex items-center justify-center text-2xl"
+          variant="ghost"
+        >
+          <FaShoppingCart />
         </Link>
 
-        <Link to="/cart" className="flex items-center">
-          <FaShoppingCart className="mr-2" />
-        </Link>
-
-        <Link to="/user" className="flex items-center">
-          <FaUserCircle className="mr-2" />
+        <Link
+          to="/user"
+          className="flex items-center justify-center text-2xl"
+          variant="ghost"
+        >
+          <FaUserCircle />
         </Link>
       </div>
 

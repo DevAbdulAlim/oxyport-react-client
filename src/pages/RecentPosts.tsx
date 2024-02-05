@@ -49,11 +49,13 @@ const RecentPosts: React.FC = () => {
             key={post.id}
             className="p-6 transition duration-300 bg-white rounded-md hover:shadow-lg"
           >
-            <img
-              src={process.env.PUBLIC_URL + post.image}
-              alt={`Image for ${post.title}`}
-              className="w-full h-64 mb-2 rounded-md"
-            />
+            <div className="overflow-hidden">
+              <img
+                src={process.env.PUBLIC_URL + post.image}
+                alt={`${post.title}`}
+                className="w-full h-64 mb-2 transition-all duration-500 transform rounded-md hover:cursor-pointer hover:scale-110"
+              />
+            </div>
             <div className="flex justify-between">
               <h3 className="mb-2 text-lg font-semibold">{post.title}</h3>
               <p>

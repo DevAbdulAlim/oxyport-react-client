@@ -58,27 +58,33 @@ export default function UserLayout() {
   };
 
   return (
-    <div className="container py-20 mx-auto">
-      <div className="flex items-center">
-        <img
-          src="/img/profile.jpg"
-          alt="Profile"
-          className="w-48 h-48 rounded-full"
-        />
-        <div className="ml-4">
-          <p className="text-2xl">Hello,</p>
-          <h2 className="text-4xl font-bold">Jay Anne</h2>
+    <>
+      <div className="text-green-100 bg-green-900">
+        <div className="container py-20 mx-auto">
+          <div className="flex items-center ">
+            <img
+              src="/img/profile.png"
+              alt="Profile"
+              className="w-48 h-48 bg-white rounded-full"
+            />
+            <div className="ml-4">
+              <p className="text-2xl">Hello,</p>
+              <h2 className="text-4xl font-bold">Ava Smith</h2>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="mt-8 border-t md:flex">
-        <nav className="p-4 bg-green-200 md:w-1/4">
-          <ul>{navItems.map(renderNavItem)}</ul>
-        </nav>
+      <div className="container py-8 mx-auto">
+        <div className="mt-8 space-x-8 md:flex">
+          <nav className="p-4 bg-green-50 md:w-1/4">
+            <ul>{navItems.map(renderNavItem)}</ul>
+          </nav>
 
-        <div className="w-3/4 p-4">
-          <Outlet />
+          <div className="w-3/4 p-4">
+            <Outlet />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

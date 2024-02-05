@@ -9,8 +9,9 @@ const linkVariants = cva(
     variants: {
       variant: {
         default: "bg-green-900 text-white hover:bg-green-800",
-        secondary: "bg-green-300 text-green-700 hover:bg-green-200",
-        ghost: "bg-transparent hover:text-green-900 hover:bg-green-200",
+        secondary:
+          "bg-green-50 text-green-900 hover:text-green-100 hover:bg-green-500",
+        ghost: "bg-transparent hover:text-green-900 hover:bg-green-100",
         success: "bg-green-500 text-white hover:bg-green-700",
         danger: "bg-red-500 text-white hover:bg-red-700",
         warning: "bg-yellow-500 text-white hover:bg-yellow-700",
@@ -23,9 +24,9 @@ const linkVariants = cva(
         link: "hover:underline",
       },
       size: {
-        default: "h-10 px-4",
-        sm: "h-8 px-4",
-        lg: "h-12 px-8",
+        default: "h-10 px-2",
+        sm: "h-8 px-3",
+        lg: "h-12 px-4",
       },
     },
     defaultVariants: {

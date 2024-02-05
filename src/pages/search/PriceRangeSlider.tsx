@@ -24,24 +24,25 @@ const PriceRangeSlider: React.FC<PriceRangeSliderProps> = ({
     track: {
       background: getTrackBackground({
         values: sliderValues,
-        colors: ["lightblue", "blue", "lightblue"],
+        colors: ["#22c55e", "#14532d", "#22c55e"],
         min: 0,
         max: 1500,
       }),
-      height: "10px",
+      height: "20px",
       borderRadius: "5px",
     },
     thumb: {
-      height: "20px",
-      width: "20px",
-      backgroundColor: "blue",
-      boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+      height: "30px",
+      width: "30px",
+      backgroundColor: "#14532d",
+      boxShadow: "#14532d",
       borderRadius: "50%",
     },
   };
 
   return (
     <div className="mt-6">
+      <h3 className="mb-2 text-xl font-bold">Price Range</h3>
       <Range
         values={sliderValues}
         step={10}
