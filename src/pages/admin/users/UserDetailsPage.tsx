@@ -1,11 +1,22 @@
 import React from "react";
-import { FiEdit, FiTrash2, FiMail, FiPhone, FiMapPin } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiMail, FiMapPin } from "react-icons/fi";
 import Button from "../../../components/ui/Button";
-import Link from "../../../components/ui/Link";
+import { useParams } from "react-router-dom";
+import { useUserById } from "../../../api/user";
+import Loader from "../../../components/ui/Loader";
+import ErrorPage from "../../../components/ErrorPage";
+import NotFound from "../../../components/NotFound";
 
 const UserDetailsPage: React.FC = () => {
+  const { userId } = useParams();
+  const { data: user, isLoading, error } = useUserById(userId!);
+
+  if (isLoading) return <Loader />;
+  if (error) return <ErrorPage message={error.message} />;
+  if (!user) return <NotFound />;
+
   // Sample user data
-  const user = {
+  const DummyUser = {
     id: 123,
     name: "John Doe",
     email: "john@example.com",
@@ -32,17 +43,19 @@ const UserDetailsPage: React.FC = () => {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="flex items-center space-x-4">
             <img
-              src={user.profileImage}
+              src={DummyUser.profileImage}
               alt="Profile"
               className="w-20 h-20 rounded-full"
             />
             <div>
               <p className="text-lg font-semibold">{user.name}</p>
               <p className="text-gray-600">{user.email}</p>
-              <p className="text-gray-600">{user.phone}</p>
+              <p className="text-gray-600">
+                {user.phone ? user.phone : DummyUser.phone}
+              </p>
               <p className="text-gray-600">
                 <FiMapPin className="inline-block mr-1" />
-                {user.address}
+                {DummyUser.address}
               </p>
             </div>
           </div>
@@ -52,11 +65,11 @@ const UserDetailsPage: React.FC = () => {
             </p>
             <p>
               <span className="font-semibold">Created At:</span>{" "}
-              {new Date(user.createdAt).toLocaleDateString()}
+              {new Date(DummyUser.createdAt).toLocaleDateString()}
             </p>
             <p>
               <span className="font-semibold">Last Login:</span>{" "}
-              {new Date(user.lastLogin).toLocaleString()}
+              {new Date(DummyUser.lastLogin).toLocaleString()}
             </p>
           </div>
         </div>
@@ -68,7 +81,7 @@ const UserDetailsPage: React.FC = () => {
           Order History
         </h2>
         <div>
-          {user.orders.map((order: any) => (
+          {DummyUser.orders.map((order: any) => (
             <div
               key={order.id}
               className="flex items-center justify-between py-2 border-b border-gray-200"
@@ -79,7 +92,7 @@ const UserDetailsPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-gray-600">{order.status}</p>
-                <Button size="sm" variant="ghost">
+                <Button size="sm" variant="ghost" disabled={true}>
                   <FiMail className="mr-2" />
                   Resend Email
                 </Button>
@@ -91,15 +104,15 @@ const UserDetailsPage: React.FC = () => {
 
       {/* Actions */}
       <div className="flex items-center justify-end">
-        <Button size="lg" variant="secondary" className="mr-4">
+        <Button size="lg" variant="secondary" disabled={true} className="mr-4">
           <FiEdit className="mr-2" />
           Edit User
         </Button>
-        <Button size="lg" variant="secondary" className="mr-4">
+        <Button size="lg" variant="secondary" disabled={true} className="mr-4">
           <FiTrash2 className="mr-2" />
           Delete User
         </Button>
-        <Button size="lg" variant="secondary">
+        <Button size="lg" variant="secondary" disabled={true}>
           <FiMail className="mr-2" />
           Send Email
         </Button>

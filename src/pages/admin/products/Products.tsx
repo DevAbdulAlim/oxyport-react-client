@@ -10,6 +10,7 @@ import NotFound from "../../../components/NotFound";
 import ExportCSV from "../../../components/ExportCSV";
 import Loader from "../../../components/ui/Loader";
 import { useDeleteProduct, useProducts } from "../../../api/product";
+import ErrorPage from "../../../components/ErrorPage";
 
 export default function Products() {
   const [sortBy, setSortBy] = useState<string>("");
@@ -50,6 +51,9 @@ export default function Products() {
   const totalPages = Math.ceil(
     data && data.totalItems ? data.totalItems / pageSize : 0
   );
+
+  if (isLoading) return <Loader />;
+  if (error) return <ErrorPage message={error.message} />;
 
   return (
     <div className="container px-3 py-8 mx-auto">
@@ -106,12 +110,9 @@ export default function Products() {
         </form>
         {data && <ExportCSV data={data.products} />}
       </div>
+
       {/* product table */}
-      {isLoading ? (
-        <Loader />
-      ) : error ? (
-        <div>Error: {error.message}</div>
-      ) : data && data.products.length > 0 ? (
+      {data?.products?.length ? (
         <ProductTable products={data.products} onDelete={handleDelete} />
       ) : (
         <NotFound />

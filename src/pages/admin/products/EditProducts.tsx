@@ -8,6 +8,8 @@ import PrintComponent from "../../../components/PrintComponent";
 import Breadcrumb from "../../../components/Breadcrumb";
 import { useProductById } from "../../../api/product";
 import ErrorPage from "../../../components/ErrorPage";
+import Loader from "../../../components/ui/Loader";
+import NotFound from "../../../components/NotFound";
 
 const parseFilenames = (filenames: string): File[] => {
   return filenames.split(",").map((filename, index) => {
@@ -26,8 +28,9 @@ export default function EditProducts() {
     content: () => componentRef.current,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loader />;
   if (error) return <ErrorPage message={error.message} />;
+  if (!product) return <NotFound />;
 
   const initialValues: ProductFormValues = {
     name: product ? product.name : "",
@@ -51,17 +54,16 @@ export default function EditProducts() {
       </div>
 
       {/* Product edit form */}
-      {product && (
-        <ProductFormContainer
-          initialValues={initialValues}
-          edit={true}
-          productId={productId}
-        />
-      )}
+
+      <ProductFormContainer
+        initialValues={initialValues}
+        edit={true}
+        productId={productId}
+      />
 
       {/* Invisible print component */}
       <div ref={componentRef}>
-        {product && <PrintComponent product={product} />}
+        <PrintComponent product={product} />
       </div>
     </div>
   );
