@@ -20,11 +20,7 @@ export default function ProductDetails() {
   const { addToCart } = useCart();
   const params = useParams();
 
-  const {
-    data: product,
-    isLoading,
-    error,
-  } = useProductById(parseInt(params.productId!, 10));
+  const { data: product, isLoading, error } = useProductById(params.productId!);
 
   // Handle loading state
   if (isLoading) {

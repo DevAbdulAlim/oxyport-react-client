@@ -6,10 +6,9 @@ import { ProductFormValues } from "../../../lib/types";
 import { productSchema } from "../../../lib/yupSchema";
 import Input from "../../../components/ui/Input";
 import Button from "../../../components/ui/Button";
-import axios from "axios";
-import config from "../../../config/config";
 import { useAuth } from "../../../context/AuthContext";
 import { useState } from "react";
+import { useCreateProduct, useUpdateProduct } from "../../../api/product";
 
 const ProductForm = ({ edit }: { edit: boolean }) => {
   // initial formik hook
@@ -33,14 +32,6 @@ const ProductForm = ({ edit }: { edit: boolean }) => {
     if (value) {
       setFieldValue("categoryId", value.value);
       console.log("Selected category is: ", value);
-    }
-  };
-
-  // handle adding product user
-  const handleUserSelectChange = (value: Option | null) => {
-    if (value) {
-      setFieldValue("userId", value.value);
-      console.log("Selected user is: ", value);
     }
   };
 
@@ -169,38 +160,28 @@ const ProductFormContainer = ({
   productId?: string;
 }) => {
   const { state } = useAuth();
+  const { mutate: createProduct } = useCreateProduct();
+  const { mutate: updateProduct } = useUpdateProduct();
 
   const handleSubmit = async (
     values: ProductFormValues,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     try {
-      const updatedValues = {
+      if (!state.user) {
+        throw new Error("Please login to perform this action");
+      }
+      const productData = {
         ...values,
-        id: state.user?.id,
+        userId: parseInt(state.user?.id),
       };
       if (edit) {
-        const response = await axios.put(
-          `${config.apiBaseUrl}/products/${productId}`,
-          updatedValues,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log("updated successfully:", response.data);
+        if (!productId) {
+          throw new Error("Product Not Found");
+        }
+        updateProduct({ productId, productData });
       } else {
-        const response = await axios.post(
-          `${config.apiBaseUrl}/products`,
-          updatedValues,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log("added successfully:", response.data);
+        createProduct(productData);
       }
     } catch (error) {
       console.error("Error submitting form:", error);

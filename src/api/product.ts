@@ -1,6 +1,6 @@
-import { useQuery, useMutation, QueryFunctionContext } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import axios, { AxiosResponse } from "axios";
-import { ProductType } from "../lib/types";
+import { ProductFormValues, ProductType } from "../lib/types";
 
 interface ApiResponse {
   success: boolean;
@@ -18,7 +18,7 @@ export function useProducts(params?: any) {
   });
 }
 
-export function useProductById(productId: number) {
+export function useProductById(productId: string) {
   return useQuery<ProductType, Error>(["product", productId], async () => {
     const response = await axios.get<{
       success: Boolean;
@@ -33,24 +33,57 @@ export function useProductById(productId: number) {
 
 // Create a new product
 export function useCreateProduct() {
-  return useMutation<AxiosResponse<void, any>, unknown, Partial<ProductType>>(
-    (productData) => axios.post<void>("/api/products", productData)
-  );
-}
+  const queryClient = useQueryClient();
 
-// Update an existing product
-export function useUpdateProduct() {
-  return useMutation<AxiosResponse<void, any>, unknown, Partial<ProductType>>(
-    (productData) => {
-      const { id, ...rest } = productData;
-      return axios.put<void>(`/api/products/${id}`, rest);
+  return useMutation<void, unknown, Partial<ProductFormValues>>(
+    async (productData) => {
+      const response = await axios.post<void>("/api/products", productData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("products");
+      },
     }
   );
 }
 
+// Update an existing product
+export const useUpdateProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    void,
+    unknown,
+    { productId: string; productData: ProductFormValues }
+  >(
+    async ({ productId, productData }) => {
+      await axios.put<void>(`/api/products/${productId}`, productData);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("products");
+      },
+    }
+  );
+};
+
 // Delete a product
 export function useDeleteProduct() {
-  return useMutation<AxiosResponse<void, any>, unknown, number>((productId) =>
-    axios.delete<void>(`/api/products/${productId}`)
+  const queryClient = useQueryClient();
+
+  return useMutation<void, unknown, number>(
+    async (productId) => {
+      await axios.delete<void>(`/api/products/${productId}`);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("products");
+      },
+    }
   );
 }

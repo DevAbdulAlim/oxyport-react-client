@@ -1,19 +1,15 @@
 import React from "react";
-import { FiEdit, FiEye, FiTrash2 } from "react-icons/fi";
+import { FiEye, FiTrash2 } from "react-icons/fi";
 import Button from "../../../components/ui/Button";
 import Link from "../../../components/ui/Link";
-import { truncateName } from "../../../lib/utils";
+
 import { FcManager } from "react-icons/fc";
 
 interface UserTableProps {
   users: any;
-  // onDelete: (id: number) => void;
 }
 
-const UserTable: React.FC<UserTableProps> = ({
-  users,
-  // onDelete,
-}) => {
+const UserTable: React.FC<UserTableProps> = ({ users }) => {
   return (
     <div className="container mt-8 overflow-auto rounded-lg shadow">
       <table className="min-w-full overflow-hidden g-white">
@@ -56,13 +52,6 @@ const UserTable: React.FC<UserTableProps> = ({
                 >
                   <FiEye />
                 </Link>
-                <Button
-                  // onClick={() => onDelete(user.id)}
-                  size="sm"
-                  variant="ghost"
-                >
-                  <FiTrash2 />
-                </Button>
               </td>
             </tr>
           ))}

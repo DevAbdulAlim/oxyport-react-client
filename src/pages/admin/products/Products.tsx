@@ -1,118 +1,55 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import ProductTable from "./ProductTable";
 import Pagination from "../../../components/Pagination";
 import Link from "../../../components/ui/Link";
 import { useDebounce } from "usehooks-ts";
-import { ProductType } from "../../../lib/types";
-import { productService } from "../../../api/api";
 import { FiSearch } from "react-icons/fi";
 import Select from "../../../components/ui/Select";
 import Input from "../../../components/ui/Input";
 import NotFound from "../../../components/NotFound";
 import ExportCSV from "../../../components/ExportCSV";
 import Loader from "../../../components/ui/Loader";
+import { useDeleteProduct, useProducts } from "../../../api/product";
 
 export default function Products() {
-  const [products, setProducts] = useState<ProductType[]>([]);
-  const [loading, setLoading] = useState<Boolean>(true);
-  const [totalProducts, setTotalProducts] = useState<number>(0);
-  const [error, setError] = useState();
-  const [sortBy, setSortBy] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(5);
 
   const debouncedSearch = useDebounce(search, 500);
   const debouncedSortBy = useDebounce(sortBy, 500);
 
-  useEffect(() => {
-    const params = {
-      sortBy: debouncedSortBy,
-      sortOrder,
-      search: debouncedSearch,
-      page: page,
-      pageSize: pageSize,
-    };
-
-    productService
-      .getProducts(params)
-      .then((response) => {
-        setProducts(response.data.products);
-        setTotalProducts(response.data.totalItems);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching products", error);
-        setError(error);
-      });
-  }, [page, pageSize, debouncedSortBy, sortOrder, debouncedSearch]);
-
-  const handleDelete = (productId: number) => {
-    productService
-      .deleteProduct(productId)
-      .then((response) => {
-        console.log("Product deleted", response.data);
-        setProducts(products.filter((product) => product.id !== productId));
-      })
-      .catch((error) => {
-        console.log("Product deleted Fail", error);
-        setError(error);
-      });
-  };
+  const { mutate } = useDeleteProduct();
+  const { data, isLoading, error } = useProducts({
+    sortBy: debouncedSortBy,
+    sortOrder,
+    search: debouncedSearch,
+    page: page,
+    pageSize: pageSize,
+  });
 
   const handlePageChange = (page: number) => {
     setPage(page);
   };
 
   const handleSearch = () => {
-    const params = {
-      sortBy: debouncedSortBy,
-      sortOrder,
-      search: debouncedSearch,
-      page: 1,
-      pageSize: 5,
-    };
-
-    productService
-      .getProducts(params)
-      .then((response) => {
-        setProducts(response.data.products);
-        setTotalProducts(response.data.totalItems);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching products", error);
-        setError(error);
-      });
+    setPage(1);
   };
 
   const handleSort = (selectedSortBy: string) => {
     setSortBy(selectedSortBy);
-    setSortOrder("asc");
-
-    const params = {
-      sortBy: selectedSortBy,
-      sortOrder: "asc",
-      search: debouncedSearch,
-      page: 1,
-      pageSize: 5,
-    };
-
-    productService
-      .getProducts(params)
-      .then((response) => {
-        setProducts(response.data.products);
-        setTotalProducts(response.data.totalItems);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching products", error);
-        setError(error);
-      });
   };
 
-  const totalPages = Math.ceil(totalProducts / pageSize);
+  const handleDelete = (productId: number) => {
+    mutate(productId);
+    console.log("Deleted Product", productId);
+  };
+
+  const totalPages = Math.ceil(
+    data && data.totalItems ? data.totalItems / pageSize : 0
+  );
 
   return (
     <div className="container px-3 py-8 mx-auto">
@@ -167,15 +104,15 @@ export default function Products() {
             </Select>
           </div>
         </form>
-        <ExportCSV data={products} />
+        {data && <ExportCSV data={data.products} />}
       </div>
       {/* product table */}
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : error ? (
-        <div>Error: {error}</div>
-      ) : products && products.length > 0 ? (
-        <ProductTable products={products} onDelete={handleDelete} />
+        <div>Error: {error.message}</div>
+      ) : data && data.products.length > 0 ? (
+        <ProductTable products={data.products} onDelete={handleDelete} />
       ) : (
         <NotFound />
       )}
@@ -183,7 +120,7 @@ export default function Products() {
       {/* pagination */}
       <Pagination
         itemsPerPage={pageSize}
-        totalItems={totalProducts}
+        totalItems={data?.products ? data.products.length : 0}
         totalPages={totalPages}
         currentPage={page}
         onPageChange={handlePageChange}

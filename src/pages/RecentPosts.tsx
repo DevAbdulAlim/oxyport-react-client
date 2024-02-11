@@ -42,7 +42,7 @@ const RecentPosts: React.FC = () => {
   return (
     <div className="container py-12 mx-auto">
       <h2 className="font-bold text-center">News Insight</h2>
-      <h3 className="mb-4 text-2xl font-bold text-center">News From Orgado</h3>
+      <h3 className="mb-4 text-2xl font-bold text-center">News From Organic</h3>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <div
