@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { ProductFormValues, ProductType } from "../lib/types";
 
 interface ApiResponse {
