@@ -31,8 +31,10 @@ const PaginateProduct: React.FC<PaginationProps> = ({
 
   return (
     <div className="flex items-center justify-center mt-4">
-      <Button onClick={prevPage} disabled={currentPage === 1}>
-        <MdOutlineArrowLeft />
+      <Button onClick={prevPage} disabled={currentPage === 1} variant="ghost">
+        <span className="text-3xl">
+          <MdOutlineArrowLeft />
+        </span>
       </Button>
       <div className="px-3 py-1 ">
         Showing {(currentPage - 1) * pageSize + 1}–
@@ -41,8 +43,14 @@ const PaginateProduct: React.FC<PaginationProps> = ({
           : currentPage * pageSize}{" "}
         of {totalItems} results
       </div>
-      <Button onClick={nextPage} disabled={currentPage === totalPages}>
-        <MdOutlineArrowRight />
+      <Button
+        onClick={nextPage}
+        disabled={currentPage === totalPages}
+        variant="ghost"
+      >
+        <span className="text-3xl">
+          <MdOutlineArrowRight />
+        </span>
       </Button>
     </div>
   );
