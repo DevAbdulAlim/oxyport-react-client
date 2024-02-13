@@ -1,7 +1,16 @@
 import React from "react";
 import Select from "react-select";
 
-const SortProduct: React.FC = () => {
+type selectedOption = {
+  value: string;
+  label: string;
+};
+
+const SortProduct = ({
+  handleChange,
+}: {
+  handleChange: (selectedOption: selectedOption) => void;
+}) => {
   const options = [
     { value: "name", label: "Name" },
     { value: "price", label: "Price" },
@@ -23,9 +32,8 @@ const SortProduct: React.FC = () => {
     }),
   };
 
-  const handleChange = (selectedOption: any) => {
-    console.log("Sort By:", selectedOption);
-    // Add your logic for handling the selected option here
+  const handleSelectChange = (selectedOption: any) => {
+    handleChange(selectedOption);
   };
 
   return (
@@ -33,7 +41,7 @@ const SortProduct: React.FC = () => {
       <Select
         options={options}
         defaultValue={options[0]}
-        onChange={handleChange}
+        onChange={handleSelectChange}
         styles={customStyles}
         className="w-full"
       />

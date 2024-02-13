@@ -11,7 +11,10 @@ import { useState } from "react";
 const ProductSearch = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  const [sortBy, setSortBy] = useState("name");
+
   const { data, isLoading, error } = useProducts({
+    sortBy: sortBy,
     page: currentPage,
     pageSize: pageSize,
   });
@@ -22,6 +25,10 @@ const ProductSearch = () => {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+  };
+
+  const handleSortChange = (values: { value: string; label: string }) => {
+    setSortBy(values.value);
   };
 
   const handlePriceRangeChange = () => {};
@@ -47,7 +54,7 @@ const ProductSearch = () => {
             </div>
             <div className="flex items-center text-lg">
               <MdSort className="mr-2 text-2xl" /> {/* sort icon */}
-              <SortProduct />
+              <SortProduct handleChange={handleSortChange} />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
