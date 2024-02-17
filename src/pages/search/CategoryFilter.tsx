@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { AiOutlineApple } from "react-icons/ai";
 import {
   GiBroccoli,
@@ -26,17 +25,19 @@ const categories = [
   { name: "Tomatoes", link: "/tomatoes", reactIcon: <GiTomato /> },
 ];
 
-const CategoryFilter: React.FC = () => {
+interface CategoryFilterProps {
+  handleChange: (categories: string[]) => void;
+}
+
+const CategoryFilter: React.FC<CategoryFilterProps> = ({ handleChange }) => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const toggleCategory = (category: string) => {
-    if (selectedCategories.includes(category)) {
-      setSelectedCategories(
-        selectedCategories.filter((cat) => cat !== category)
-      );
-    } else {
-      setSelectedCategories([...selectedCategories, category]);
-    }
+    const updatedCategories = selectedCategories.includes(category)
+      ? selectedCategories.filter((cat) => cat !== category)
+      : [...selectedCategories, category];
+    setSelectedCategories(updatedCategories);
+    handleChange(updatedCategories);
   };
 
   return (

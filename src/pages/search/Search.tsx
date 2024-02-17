@@ -6,7 +6,7 @@ import PriceRangeSlider from "./PriceRangeSlider";
 import { MdSort } from "react-icons/md";
 import SortProduct from "./SortProduct";
 import PaginateProduct from "./PaginateProduct";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const ProductSearch = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,7 +31,13 @@ const ProductSearch = () => {
     setSortBy(values.value);
   };
 
-  const handlePriceRangeChange = () => {};
+  const handleCategoryChange = (categories: string[]) => {
+    console.log(categories);
+  };
+
+  const handlePriceRangeChange = (values: number[]) => {
+    console.log(values);
+  };
 
   return (
     <div className="container px-3 mx-auto my-12">
@@ -39,7 +45,7 @@ const ProductSearch = () => {
         {/* filters */}
         <div className="lg:col-span-1">
           {/* CategoryFilter and PriceRangeSlider components */}
-          <CategoryFilter />
+          <CategoryFilter handleChange={handleCategoryChange} />
           <PriceRangeSlider onRangeChange={handlePriceRangeChange} />
         </div>
         <div className="lg:col-span-3">

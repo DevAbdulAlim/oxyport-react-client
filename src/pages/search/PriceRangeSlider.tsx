@@ -15,8 +15,7 @@ const PriceRangeSlider: React.FC<PriceRangeSliderProps> = ({
   };
 
   const handleFinalChange = (values: number[]) => {
-    console.log(values);
-    // You can call the onRangeChange function here if needed
+
     onRangeChange(values);
   };
 
