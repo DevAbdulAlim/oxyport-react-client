@@ -6,7 +6,7 @@ import PriceRangeSlider from "./PriceRangeSlider";
 import { MdSort } from "react-icons/md";
 import SortProduct from "./SortProduct";
 import PaginateProduct from "./PaginateProduct";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 const ProductSearch = () => {
   const [currentPage, setCurrentPage] = useState(1);
