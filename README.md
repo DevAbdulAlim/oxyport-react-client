@@ -1,46 +1,87 @@
-# Getting Started with Create React App
+## E-commerce Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to our E-commerce Website! This is an online platform where you can browse, buy, and sell a wide range of products.
 
-## Available Scripts
+## Home Page
+![Screenshot_10-3-2024_13581_localhost](https://github.com/DevAbdulAlim/oxyport-react-client/assets/83014949/388a65a7-bb41-41b5-a4df-bf951ed449a6)
 
-In the project directory, you can run:
+## Product Details Page
 
-### `npm start`
+![detailspage](https://github.com/DevAbdulAlim/oxyport-react-client/assets/83014949/32a13629-5f52-4595-a100-f13431d44d0d)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Search Page
+![searchpage](https://github.com/DevAbdulAlim/oxyport-react-client/assets/83014949/aa296170-91d8-4744-8d58-36331a531397)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## User Dashboard
+![userdashboard](https://github.com/DevAbdulAlim/oxyport-react-client/assets/83014949/2dd399af-a7fb-47bb-8e03-001247d2db90)
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Payment Page
+![paymentpage](https://github.com/DevAbdulAlim/oxyport-react-client/assets/83014949/e7a6b0ad-dd28-4098-bee1-c5b9b50c5f1e)
 
-### `npm run build`
+## Admin Dashboard
+![admindashboard](https://github.com/DevAbdulAlim/oxyport-react-client/assets/83014949/0dc4e25b-9f04-4370-bf00-76f2c9d85780)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Product Create Page
+![createProduct](https://github.com/DevAbdulAlim/oxyport-react-client/assets/83014949/3ed9fa44-950a-4370-a681-0aaedbb22bd9)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Features
 
-### `npm run eject`
+- Browse through a diverse collection of products across various categories.
+- Search for products based on keywords or filters.
+- Add products to your cart and proceed to checkout.
+- Manage your orders and track delivery status.
+- Sellers can list their products and manage inventory.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Technologies Used
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- React: A JavaScript library for building user interfaces.
+- React Query: A powerful data-fetching library for React applications.
+- Axios: A promise-based HTTP client for making API requests.
+- Tailwind CSS: A utility-first CSS framework for building custom designs etc.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Getting Started
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+To get started with Your E-commerce Website, follow these steps:
 
-## Learn More
+1. Clone the repository:
+  
+  ```bash
+  https://github.com/DevAbdulAlim/oxyport-react-client.git
+  ```
+  
+2. Navigate to the project directory:
+  
+  ```bash
+  cd oxyport-react-client
+  ```
+  
+3. Install dependencies:
+  
+  ```bash
+  npm install
+  ```
+  
+4. Start the development server:
+  
+  ```bash
+  npm start
+  ```
+  
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
+  
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Contributing
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+We welcome contributions from the community! If you'd like to contribute to Your E-commerce Website, please follow these guidelines:
+
+1. Fork the repository and create a new branch.
+2. Make your changes and test them thoroughly.
+3. Commit your changes with clear and descriptive messages.
+4. Push your changes to your forked repository.
+5. Submit a pull request to the main repository.
+
+## License
+
+[MIT License](LICENSE)
