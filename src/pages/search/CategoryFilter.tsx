@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { AiOutlineApple } from "react-icons/ai";
 import {
   GiBroccoli,
@@ -26,19 +26,22 @@ const categories = [
 ];
 
 interface CategoryFilterProps {
+  selectedCategories: string[];
   handleChange: (categories: string[]) => void;
 }
 
-const CategoryFilter: React.FC<CategoryFilterProps> = ({ handleChange }) => {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-
+const CategoryFilter: React.FC<CategoryFilterProps> = ({
+  selectedCategories,
+  handleChange,
+}) => {
   const toggleCategory = (category: string) => {
     const updatedCategories = selectedCategories.includes(category)
       ? selectedCategories.filter((cat) => cat !== category)
       : [...selectedCategories, category];
-    setSelectedCategories(updatedCategories);
     handleChange(updatedCategories);
   };
+
+  console.log("CategoryFilter");
 
   return (
     <div>
@@ -64,4 +67,4 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ handleChange }) => {
   );
 };
 
-export default CategoryFilter;
+export default memo(CategoryFilter);

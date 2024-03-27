@@ -6,22 +6,24 @@ import PriceRangeSlider from "./PriceRangeSlider";
 import { MdSort } from "react-icons/md";
 import SortProduct from "./SortProduct";
 import PaginateProduct from "./PaginateProduct";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const ProductSearch = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [sortBy, setSortBy] = useState("name");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [minPrice, setMinPrice] = useState<number>();
+  const [maxPrice, setMaxPrice] = useState<number>();
 
   const { data, isLoading, error } = useProducts({
     sortBy: sortBy,
     page: currentPage,
     pageSize: pageSize,
+    categories: selectedCategories,
+    minPrice: minPrice,
+    maxPrice: maxPrice,
   });
-
-  if (isLoading) return <Loader />;
-  if (error) return <div>Error: {error.message}</div>;
-  if (data?.totalItems && data.totalItems <= 0) return <div>Not Found</div>;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -31,21 +33,25 @@ const ProductSearch = () => {
     setSortBy(values.value);
   };
 
-  const handleCategoryChange = (categories: string[]) => {
-    console.log(categories);
-  };
+  const handleCategoryChange = useCallback((categories: string[]) => {
+    setSelectedCategories(categories);
+  }, []);
 
   const handlePriceRangeChange = (values: number[]) => {
-    console.log(values);
+    setMinPrice(values[0]);
+    setMaxPrice(values[1]);
   };
 
   return (
-    <div className="container px-3 mx-auto my-12">
+    <div className="container min-h-screen px-3 mx-auto my-12">
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
         {/* filters */}
         <div className="lg:col-span-1">
           {/* CategoryFilter and PriceRangeSlider components */}
-          <CategoryFilter handleChange={handleCategoryChange} />
+          <CategoryFilter
+            selectedCategories={selectedCategories}
+            handleChange={handleCategoryChange}
+          />
           <PriceRangeSlider onRangeChange={handlePriceRangeChange} />
         </div>
         <div className="lg:col-span-3">
@@ -63,12 +69,20 @@ const ProductSearch = () => {
               <SortProduct handleChange={handleSortChange} />
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {/* Render product cards */}
-            {data?.products.map((product: any) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+
+          {/* Render loading, error, or product cards based on data */}
+          {isLoading && <Loader />}
+          {error && <div>Error: {error.message}</div>}
+          {data?.totalItems && data.totalItems <= 0 && <div>Not Found</div>}
+
+          {data && data.products && (
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {/* Render product cards */}
+              {data.products.map((product: any) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
