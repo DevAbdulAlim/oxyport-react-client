@@ -12,20 +12,20 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
+
   return (
-    <div className="relative bg-white">
-      <div className="absolute top-0 left-0 z-10 px-2 py-1 text-white bg-green-500 ">
-        <span className="text-sm">Save 25%</span>
+    <div className="relative bg-white rounded-lg overflow-hidden flex flex-col">
+      <div className="absolute top-2 left-2 z-10 px-3 py-1 text-white bg-green-600 text-sm font-semibold rounded-md">
+        <span>Save 25%</span>
       </div>
 
-      {/* Card Image */}
       <div className="relative overflow-hidden h-80 group">
         <img
           src={`${config.apiStaticPath}/images/${product.images.split(",")[0]}`}
           alt={product.name}
-          className="object-cover w-full h-full mb-4 transition-all duration-300 bg-gray-100 hover:scale-110"
+          className="object-cover w-full h-full transition-transform duration-300 transform group-hover:scale-110"
         />
-        <div className="absolute flex space-x-2 transition-all duration-300 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bottom-4 left-1/2">
+        <div className="absolute flex space-x-3 transition-all duration-300 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bottom-4 left-1/2">
           <Button
             variant="secondary"
             onClick={() =>
@@ -53,18 +53,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
       </div>
 
-      <Link
-        to={`/product/${product.id}`}
-        variant="link"
-        className="flex items-center p-0 my-4 text-lg text-center "
-      >
-        {product.name}
-      </Link>
-      <div className="flex items-center justify-center space-x-2 ">
-        <del className="text-xl text-gray-500">$450</del>
+      <div className="flex flex-col flex-grow p-4">
+        <Link
+          to={`/product/${product.id}`}
+          variant="link"
+          className="block text-lg font-semibold text-center mt-4 mb-2 hover:text-green-700 transition-all duration-300"
+        >
+          {product.name}
+        </Link>
 
-        <div className="flex flex-col items-end">
-          <span className="text-2xl font-semibold">${product.price}</span>
+        <div className="flex justify-center items-center space-x-4 mb-4">
+          <del className="text-xl text-gray-500">$450</del>
+          <span className="text-2xl font-semibold text-green-900">
+            ${product.price}
+          </span>
         </div>
       </div>
     </div>

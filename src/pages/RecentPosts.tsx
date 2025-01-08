@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "../components/ui/Link";
+import { FaArrowRight } from "react-icons/fa"; // Importing the arrow icon
 
 // Define the Post type
 type PostType = {
@@ -40,33 +41,53 @@ const RecentPosts: React.FC = () => {
   ];
 
   return (
-    <div className="container py-12 mx-auto">
-      <h2 className="font-bold text-center">News Insight</h2>
-      <h3 className="mb-4 text-2xl font-bold text-center">News From Organic</h3>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="container py-16 mx-auto">
+      <h2 className="text-4xl font-extrabold text-center text-green-900 mb-6">
+        GreenMart News Insight
+      </h2>
+      <h3 className="text-3xl font-semibold text-center text-green-700 mb-10">
+        Fresh News From Organic Farming
+      </h3>
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <div
             key={post.id}
-            className="p-6 transition duration-300 bg-white rounded-md hover:shadow-lg"
+            className="relative p-8 bg-white rounded-lg transition-all duration-300 ease-in-out hover:bg-green-50"
           >
-            <div className="overflow-hidden">
+            {/* New Post Badge */}
+            <span className="absolute top-2 right-2 bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+              New
+            </span>
+
+            <div className="overflow-hidden rounded-md mb-4">
               <img
                 src={process.env.PUBLIC_URL + post.image}
                 alt={`${post.title}`}
-                className="w-full h-64 mb-2 transition-all duration-500 transform rounded-md hover:cursor-pointer hover:scale-110"
+                className="w-full h-64 object-cover rounded-lg transition-transform duration-500 ease-in-out transform group-hover:scale-110"
               />
             </div>
-            <div className="flex justify-between">
-              <h3 className="mb-2 text-lg font-semibold">{post.title}</h3>
-              <p>
+
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-green-900 group-hover:text-green-600 transition-colors duration-300">
+                {post.title}
+              </h3>
+              <p className="text-sm text-gray-500">
                 <span>{post.date}</span> <span>{post.time}</span>
               </p>
             </div>
 
-            <p className="text-gray-600">Posted by {post.username}</p>
+            <p className="text-gray-600 text-sm mb-4">
+              Posted by {post.username}
+            </p>
 
-            <Link to="/" variant="link" className="p-0">
+            {/* Updated "READ MORE" button with React Icon */}
+            <Link
+              to="/"
+              variant="link"
+              className="inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg text-lg font-medium transition-all duration-300 ease-in-out transform hover:scale-105"
+            >
               READ MORE
+              <FaArrowRight className="ml-2" />
             </Link>
           </div>
         ))}

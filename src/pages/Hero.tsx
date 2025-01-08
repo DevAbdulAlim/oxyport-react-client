@@ -6,7 +6,7 @@ const Hero = () => {
       {/* Content Container on Left */}
       <div className="z-10 p-10 text-center text-white bg-green-900 bg-opacity-70 2xl:w-1/2">
         <h1 className="mb-4 text-4xl font-extrabold leading-tight md:text-6xl">
-          Welcome to Our Organic Store
+          Welcome to GreenMart
         </h1>
         <p className="mb-8 text-lg">
           Discover fresh, locally sourced organic foods and vegetables.
