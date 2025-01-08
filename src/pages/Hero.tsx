@@ -13,22 +13,27 @@ const Hero = () => {
         </p>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="flex flex-col items-center justify-center p-6 text-green-900 bg-green-100 rounded-lg shadow-md">
-            <BsCardList className="mb-2 text-5xl text-green-600" /> {/* Icon */}
+            <div className="bg-green-600 p-6 rounded-full mb-4">
+              <BsCardList className="text-white text-3xl" /> {/* Icon */}
+            </div>
             <h2 className="mb-2 text-lg font-bold">Wide Selection</h2>
             <p className="text-base">
               Choose from a wide variety of organic produce and products.
             </p>
           </div>
           <div className="flex flex-col items-center justify-center p-6 text-green-900 bg-green-100 rounded-lg shadow-md">
-            <BsShieldCheck className="mb-2 text-5xl text-green-600" />{" "}
-            {/* Icon */}
+            <div className="bg-green-600 p-6 rounded-full mb-4">
+              <BsShieldCheck className="text-white text-3xl" /> {/* Icon */}
+            </div>
             <h2 className="mb-2 text-lg font-bold">Quality Guaranteed</h2>
             <p className="text-base">
               We ensure the highest quality standards for all our products.
             </p>
           </div>
           <div className="flex flex-col items-center justify-center p-6 text-green-900 bg-green-100 rounded-lg shadow-md">
-            <BsPeople className="mb-2 text-5xl text-green-600" /> {/* Icon */}
+            <div className="bg-green-600 p-6 rounded-full mb-4">
+              <BsPeople className="text-white text-3xl" /> {/* Icon */}
+            </div>
             <h2 className="mb-2 text-lg font-bold">Local Farmers</h2>
             <p className="text-base">
               Support local farmers and sustainable agriculture practices.
