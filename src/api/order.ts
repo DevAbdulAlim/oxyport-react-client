@@ -1,7 +1,7 @@
-import { useQuery, useMutation, MutationFunction } from "react-query";
-import axios, { AxiosResponse } from "axios";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import axios, { type AxiosError } from "axios";
 import config from "../config/config";
-import { OrderType } from "../lib/types";
+import type { OrderType } from "../lib/types";
 
 // Define the interface for the API response
 interface ApiResponse {
@@ -11,47 +11,82 @@ interface ApiResponse {
 }
 
 // Fetch all orders
-export function useOrders(params?: any) {
-  return useQuery<ApiResponse, Error>(["orders", params], async () => {
-    const response = await axios.get<ApiResponse>(
-      `${config.apiBaseUrl}/orders`,
-      {
-        params: params,
-      }
-    );
-    return response.data;
+export function useOrders(params?: Record<string, unknown>) {
+  return useQuery<ApiResponse, AxiosError>({
+    queryKey: ["orders", params],
+    queryFn: async () => {
+      const response = await axios.get<ApiResponse>(
+        `${config.apiBaseUrl}/orders`,
+        { params }
+      );
+      return response.data;
+    },
   });
 }
 
 // Fetch a single order by ID
 export function useOrderById(orderId: string) {
-  return useQuery<OrderType, Error>(["order", orderId], async () => {
-    const response = await axios.get<{ order: OrderType }>(
-      `${config.apiBaseUrl}/orders/${orderId}`
-    );
-    return response.data.order;
+  return useQuery<OrderType, AxiosError>({
+    queryKey: ["order", orderId],
+    queryFn: async () => {
+      const response = await axios.get<{ order: OrderType }>(
+        `${config.apiBaseUrl}/orders/${orderId}`
+      );
+      return response.data.order;
+    },
   });
 }
 
-export const useCreateOrder = () => {
-  return useMutation(
-    async (orderData: Partial<OrderType>) =>
-      await axios.post<void>(`${config.apiBaseUrl}/orders`, orderData)
-  );
-};
+// Create a new order
+export function useCreateOrder() {
+  const queryClient = useQueryClient();
 
-// export function useUpdateOrder() {
-//   return useMutation<void, unknown, Partial<OrderType>>(
-//     (orderData) => {
-//       const { id, ...rest } = orderData;
-//       return axios.put<void>(`${config.apiBaseUrl}/orders/${id}`, rest);
-//     }
-//   );
-// }
+  return useMutation<OrderType, AxiosError, Partial<OrderType>>({
+    mutationFn: async (orderData) => {
+      const response = await axios.post<OrderType>(
+        `${config.apiBaseUrl}/orders`,
+        orderData
+      );
+      return response.data;
+    },
+    onSuccess: (newOrder) => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.setQueryData(["order", newOrder.id], newOrder);
+    },
+  });
+}
 
-// // Delete an order
-// export function useDeleteOrder() {
-//   return useMutation<void, unknown, string>((orderId) =>
-//     axios.delete<void>(`${config.apiBaseUrl}/orders/${orderId}`)
-//   );
-// }
+// Update an existing order
+export function useUpdateOrder() {
+  const queryClient = useQueryClient();
+
+  return useMutation<OrderType, AxiosError, Partial<OrderType>>({
+    mutationFn: async (orderData) => {
+      const { id, ...rest } = orderData;
+      const response = await axios.put<OrderType>(
+        `${config.apiBaseUrl}/orders/${id}`,
+        rest
+      );
+      return response.data;
+    },
+    onSuccess: (updatedOrder) => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.setQueryData(["order", updatedOrder.id], updatedOrder);
+    },
+  });
+}
+
+// Delete an order
+export function useDeleteOrder() {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, AxiosError, string>({
+    mutationFn: async (orderId) => {
+      await axios.delete<void>(`${config.apiBaseUrl}/orders/${orderId}`);
+    },
+    onSuccess: (_, deletedOrderId) => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.removeQueries({ queryKey: ["order", deletedOrderId] });
+    },
+  });
+}

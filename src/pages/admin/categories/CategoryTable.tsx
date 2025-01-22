@@ -1,23 +1,20 @@
-import React from "react";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
-import Button from "../../../components/ui/Button";
+import type React from "react";
+import { FiEdit } from "react-icons/fi";
 import Link from "../../../components/ui/Link";
 import { truncateName } from "../../../lib/utils";
+import type { CategoryType } from "../../../lib/types";
+import DeleteCategory from "./DeleteCategory";
 
 interface CategoryTableProps {
-  categories: any;
-  // onDelete: (id: number) => void;
+  categories: CategoryType[];
 }
 
-const CategoryTable: React.FC<CategoryTableProps> = ({
-  categories,
-  // onDelete,
-}) => {
+const CategoryTable: React.FC<CategoryTableProps> = ({ categories }) => {
   return (
     <div className="container mt-8 overflow-auto rounded-lg shadow">
-      <table className="min-w-full overflow-hidden g-white">
+      <table className="min-w-full overflow-hidden bg-white">
         <thead className="bg-green-200">
-          <tr className="">
+          <tr>
             <th className="px-4 py-2">ID</th>
             <th className="px-4 py-2">Image</th>
             <th className="px-4 py-2">Name</th>
@@ -25,10 +22,21 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {categories.map((category: any) => (
+          {categories.map((category: CategoryType) => (
             <tr key={category.id} className="text-gray-700">
               <td className="px-4 py-2 text-nowrap">{category.id}</td>
-              <td className="px-4 py-2 text-nowrap">{category.image}</td>
+              <td className="px-4 py-2 text-nowrap">
+                {category.image ? (
+                  <img
+                    src={`/images/${category.image.split(",")[0]}`} // Get the first image from the comma-separated string
+                    alt={category.name}
+                    className="w-16 h-16 object-cover" // Adjust the width and height as needed
+                  />
+                ) : (
+                  "No image"
+                )}
+              </td>
+
               <td className="px-4 py-2 text-nowrap">
                 {truncateName(category.name, 20)}
               </td>
@@ -41,13 +49,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
                 >
                   <FiEdit />
                 </Link>
-                <Button
-                  // onClick={() => onDelete(category.id)}
-                  size="sm"
-                  variant="ghost"
-                >
-                  <FiTrash2 />
-                </Button>
+                <DeleteCategory categoryId={category.id} />
               </td>
             </tr>
           ))}

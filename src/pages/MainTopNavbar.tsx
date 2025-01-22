@@ -7,7 +7,6 @@ import {
   FaUserCircle,
   FaBars,
   FaHeart,
-  FaApple,
   FaLeaf,
 } from "react-icons/fa";
 import Button from "../components/ui/Button";
@@ -17,7 +16,6 @@ import CategoryDropdown from "./category/CategoryDropdown";
 import { useCart } from "../context/CartContext";
 import { BiSolidCategory } from "react-icons/bi";
 import { MdArrowDropDown } from "react-icons/md";
-import { GiCarrot } from "react-icons/gi";
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -39,7 +37,7 @@ const Navbar = () => {
   const handleNavToggleButtonClick = (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
-    e.stopPropagation(); // Prevent the click event from reaching parent elements
+    e.stopPropagation();
     handleNavToggle();
   };
 
@@ -85,8 +83,7 @@ const Navbar = () => {
               Categories
               <MdArrowDropDown className="mx-4" />
             </Button>
-            {/* Assuming CategoryDropdown is a custom component */}
-            {/* You may need to adjust props based on your actual implementation */}
+
             <CategoryDropdown
               isOpen={isCategoryOpen}
               handleClick={handleCategoryToggle}

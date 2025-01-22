@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const FeaturedCategories = () => {
   return (
@@ -12,7 +13,11 @@ const FeaturedCategories = () => {
         </p>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
           {[...Array(10)].map((_, index) => (
-            <div key={index} className="p-4 bg-green-50 rounded-lg">
+            <Link
+              to={`/search?category=category`}
+              key={index}
+              className="p-4 bg-green-50 rounded-lg"
+            >
               <div className="flex justify-center overflow-hidden">
                 <img
                   src="/img/categories/tea.jpg"
@@ -23,7 +28,7 @@ const FeaturedCategories = () => {
               <h3 className="text-lg font-semibold text-center text-green-800">
                 Tea Category
               </h3>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
   FaHome,
-  FaShoppingBasket,
   FaHeart,
   FaShoppingCart,
   FaUserCircle,
@@ -22,7 +21,6 @@ import {
   GiTomato,
 } from "react-icons/gi";
 import { AiOutlineApple } from "react-icons/ai";
-import Input from "../components/ui/Input";
 
 const categories = [
   { name: "Fruits", link: "/fruits", reactIcon: <AiOutlineApple /> },

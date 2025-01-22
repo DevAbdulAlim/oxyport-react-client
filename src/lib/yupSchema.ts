@@ -38,12 +38,13 @@ const categorySchema = yup.object().shape({
   name: yup.string().required("Name is required"),
   description: yup.string().required("Description is required"),
   image: yup
-    .object()
-    .shape({
-      file: yup.mixed().required("Image file is required"),
-      fileType: yup.string().required("Image file type is required"),
-    })
-    .required("Image is required"),
+    .array()
+    .of(
+      yup.object().shape({
+        path: yup.string().required("Image path is required"),
+      })
+    )
+    .required("At least one image is required"),
 });
 
 export { categorySchema, productSchema };

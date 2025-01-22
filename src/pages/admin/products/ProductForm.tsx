@@ -112,11 +112,11 @@ const ProductForm = ({ edit }: { edit: boolean }) => {
       {/* Select product image */}
       <div>
         <label className="block mb-1">Select product images:</label>
-        <SelectImage
+        {/* <SelectImage
           defaultImages={images}
           onImageUpload={handleImageUpload}
           onImageState={updateImageState}
-        />
+        /> */}
         {touched.images && errors.images && (
           <div>
             {typeof errors.images === "string" ? (

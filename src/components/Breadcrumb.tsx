@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import Link from "./ui/Link";
+import React from "react";
 
 const Breadcrumb = () => {
   const location = useLocation();
@@ -13,10 +14,9 @@ const Breadcrumb = () => {
       aria-label="Breadcrumb"
     >
       {pathSegments.map((segment, index) => (
-        <>
+        <React.Fragment key={index}>
           <Link
             variant="link"
-            key={segment}
             to={"/" + pathSegments.slice(0, index + 1).join("/")}
             className={`hover:underline ${
               index < pathSegments.length - 1
@@ -27,11 +27,9 @@ const Breadcrumb = () => {
             {segment}
           </Link>
           {index < pathSegments.length - 1 && (
-            <span key={index} className="text-gray-400">
-              /
-            </span>
+            <span className="text-gray-400">/</span>
           )}
-        </>
+        </React.Fragment>
       ))}
     </nav>
   );

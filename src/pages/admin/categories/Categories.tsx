@@ -10,13 +10,16 @@ import CategoryTable from "./CategoryTable";
 import { useCategories } from "../../../api/category";
 
 export default function Categories() {
+  // State management
   const [sortBy, setSortBy] = useState<string>("");
   const [search, setSearch] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
 
+  // Debounced search to minimize API calls
   const debouncedSearch = useDebounce(search, 500);
 
+  // Fetching categories data
   const { data, isLoading, error } = useCategories({
     sortBy,
     search: debouncedSearch,
@@ -24,27 +27,25 @@ export default function Categories() {
     pageSize,
   });
 
+  // Calculate total pages
   const totalPages = Math.ceil(
-    data && data.totalItems ? data.totalItems / pageSize : 0
+    data?.totalItems ? data.totalItems / pageSize : 0
   );
 
-  const handlePageChange = (page: number) => {
-    setPage(page);
-  };
-
-  const handleSearch = () => {
-    setPage(1);
-  };
-
-  const handleSort = (selectedSortBy: string) => {
-    setSortBy(selectedSortBy);
-  };
+  // Event handlers
+  const handlePageChange = (page: number) => setPage(page);
+  const handleSearch = () => setPage(1);
+  const handleSort = (selectedSortBy: string) => setSortBy(selectedSortBy);
 
   return (
     <div className="container px-3 py-8 mx-auto">
+      {/* Header Section */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Category List</h2>
-        <Link to="/admin/categories/create">
+        <Link
+          to="/admin/categories/create"
+          className="flex items-center text-blue-500"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-5 h-5 mr-2"
@@ -60,7 +61,9 @@ export default function Categories() {
           Create Category
         </Link>
       </div>
-      <div className="flex flex-col items-center justify-between space-x-4 space-y-4 md:flex-row">
+
+      {/* Search and Sort Section */}
+      <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0 md:space-x-4">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -68,8 +71,9 @@ export default function Categories() {
           }}
           className="flex flex-col items-center space-y-4 md:flex-row md:space-y-0 md:space-x-4"
         >
+          {/* Search Input */}
           <div className="relative flex items-center md:w-64">
-            <FiSearch className="absolute w-6 h-6 text-gray-400 pointer-events-none left-1 top-2" />
+            <FiSearch className="absolute w-6 h-6 text-gray-400 left-2 top-2" />
             <Input
               type="text"
               id="search"
@@ -79,6 +83,8 @@ export default function Categories() {
               className="pl-8"
             />
           </div>
+
+          {/* Sort Dropdown */}
           <div className="flex items-center">
             <label htmlFor="sortBy" className="mr-2 font-medium text-gray-700">
               Sort by:
@@ -94,18 +100,24 @@ export default function Categories() {
           </div>
         </form>
       </div>
-      {isLoading ? (
-        <Loader />
-      ) : error ? (
-        <div>Error: {error.message}</div>
-      ) : data?.categories && data?.categories.length > 0 ? (
-        <CategoryTable categories={data.categories} />
-      ) : (
-        <div>Not Found</div>
-      )}
+
+      {/* Content Section */}
+      <div className="mt-6">
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          <div className="text-red-500">Error: {error.message}</div>
+        ) : data?.categories && data?.categories?.length > 0 ? (
+          <CategoryTable categories={data.categories} />
+        ) : (
+          <div className="text-gray-500">No categories found.</div>
+        )}
+      </div>
+
+      {/* Pagination */}
       <Pagination
         itemsPerPage={pageSize}
-        totalItems={data?.categories.length ? data?.categories.length : 0}
+        totalItems={data?.totalItems || 0}
         totalPages={totalPages}
         currentPage={page}
         onPageChange={handlePageChange}

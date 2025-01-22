@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import AdminSidebar from "./AdminSidebar";
 import { Outlet } from "react-router-dom";
 import AdminTopNavbar from "./AdminTopNavbar";
+import { ToastContainer } from "react-toastify";
 
 const AdminLayout: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -22,6 +23,7 @@ const AdminLayout: React.FC = () => {
         <AdminTopNavbar handleNavToggle={handleNavToggle} />
         <Outlet />
       </div>
+      <ToastContainer />
     </div>
   );
 };

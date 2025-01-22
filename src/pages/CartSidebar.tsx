@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import Button from "../components/ui/Button";
 import { useCart } from "../context/CartContext";
 import Link from "../components/ui/Link";
-import { FaMinusCircle, FaPlusCircle, FaWindowClose } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { BiSolidShow } from "react-icons/bi";
 import { IoBagCheckOutline } from "react-icons/io5";

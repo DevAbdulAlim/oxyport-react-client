@@ -1,29 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import Link from "../../components/ui/Link";
-
-const SubCategoryDropdown = ({
-  subCategories,
-  handleClick,
-}: {
-  subCategories: string[];
-  handleClick: () => void;
-}) => {
-  return (
-    <ul className="absolute top-0 hidden mt-0 bg-white border rounded-md shadow-md left-full group-hover:block">
-      {subCategories.map((subcategory, index) => (
-        <li
-          key={index}
-          className="p-1 cursor-pointer hover:bg-gray-200"
-          onClick={handleClick}
-        >
-          <Link to="/search" variant="ghost">
-            {subcategory}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-};
+import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const CategoryDropdown = ({
   isOpen,
@@ -32,25 +8,37 @@ const CategoryDropdown = ({
   isOpen: boolean;
   handleClick: () => void;
 }) => {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const dummyCategories = [
     {
-      name: "Electronics",
-      subCategories: ["Mobiles", "Laptops", "Tablets"],
+      name: "Fruits",
     },
     {
-      name: "Clothing",
-      subCategories: ["Men's Clothing", "Women's Clothing", "Kids' Clothing"],
+      name: "Vegetables",
     },
-    // Add more categories as needed
+    {
+      name: "Organic Products",
+    },
+    {
+      name: "Dairy & Eggs",
+    },
+    {
+      name: "Bakery",
+    },
+    {
+      name: "Beverages",
+    },
   ];
 
   const categoryRef = useRef<HTMLDivElement | null>(null);
 
+  // Close the dropdown if clicked outside
   useEffect(() => {
     const handleDocumentClick = (e: MouseEvent) => {
-      if (categoryRef.current && isOpen) {
-        handleClick();
+      if (
+        categoryRef.current &&
+        !categoryRef.current.contains(e.target as Node)
+      ) {
+        handleClick(); // Close the dropdown
       }
     };
 
@@ -59,41 +47,24 @@ const CategoryDropdown = ({
     return () => {
       document.removeEventListener("click", handleDocumentClick);
     };
-  }, [handleClick, isOpen]);
-
-  const handleCategoryHover = (category: string) => {
-    setActiveCategory(category);
-  };
-
-  const handleCategoryLeave = () => {
-    setActiveCategory(null);
-  };
+  }, [handleClick]);
 
   if (!isOpen) {
     return null;
   }
 
   return (
-    <div ref={categoryRef}>
-      <ul className="absolute z-10 w-full mt-2 bg-white border rounded-md shadow-md">
+    <div ref={categoryRef} className="relative">
+      <ul className="absolute z-10 w-48 mt-2 bg-white border rounded-md shadow-md">
         {dummyCategories.map((category, index) => (
           <li
             key={index}
-            className="p-1 cursor-pointer hover:bg-gray-200 group"
-            onMouseEnter={() => handleCategoryHover(category.name)}
-            onMouseLeave={handleCategoryLeave}
+            className="p-2 cursor-pointer hover:bg-gray-100"
+            onClick={handleClick} // Close the dropdown when clicked
           >
-            <div>
-              <Link to="/search" variant="ghost">
-                {category.name}
-              </Link>
-            </div>
-            {activeCategory === category.name && (
-              <SubCategoryDropdown
-                subCategories={category.subCategories}
-                handleClick={handleClick}
-              />
-            )}
+            <Link to={`/category/${category.name.toLowerCase()}`}>
+              {category.name}
+            </Link>
           </li>
         ))}
       </ul>
