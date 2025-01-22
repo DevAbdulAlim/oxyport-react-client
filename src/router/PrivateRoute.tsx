@@ -1,6 +1,7 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Loader from "../components/ui/Loader";
 
 interface PrivateRouteProps {
   isAdminRoute?: boolean;
@@ -15,9 +16,11 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
 }) => {
   const { state } = useAuth();
 
+  const location = useLocation();
+
   if (state.isLoading) {
     // Render loading state or placeholder
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return state.isAuthenticated ? (
@@ -27,7 +30,11 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
       <>{children}</>
     )
   ) : (
-    <Navigate to={redirectTo || "/login"} replace={true} /> // Redirect to login or default path
+    <Navigate
+      to={redirectTo || "/login"}
+      state={{ from: location.pathname }}
+      replace={true}
+    /> // Redirect to login or default path
   );
 };
 

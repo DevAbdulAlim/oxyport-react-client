@@ -27,6 +27,7 @@ const LoginForm: React.FC = () => {
     onSubmit: async (values) => {
       await login(values.email, values.password);
       const intendedDestination = location.state?.from || "/";
+      console.log(location.state);
       navigate(intendedDestination);
     },
   });
