@@ -103,13 +103,7 @@ export default function Orders() {
       ) : (
         <div>Not Found</div>
       )}
-      <Pagination
-        itemsPerPage={pageSize}
-        totalItems={data?.orders.length ? data?.orders.length : 0}
-        totalPages={totalPages}
-        currentPage={page}
-        onPageChange={handlePageChange}
-      />
+      <Pagination totalItems={data?.orders.length ? data?.orders.length : 0} />
     </div>
   );
 }

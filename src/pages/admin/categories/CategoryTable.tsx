@@ -28,9 +28,9 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ categories }) => {
               <td className="px-4 py-2 text-nowrap">
                 {category.image ? (
                   <img
-                    src={`/images/${category.image.split(",")[0]}`} // Get the first image from the comma-separated string
+                    src={`/images/${category.image.split(",")[0]}`}
                     alt={category.name}
-                    className="w-16 h-16 object-cover" // Adjust the width and height as needed
+                    className="w-16 h-16 object-cover"
                   />
                 ) : (
                   "No image"

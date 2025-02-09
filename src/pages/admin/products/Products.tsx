@@ -9,8 +9,12 @@ import Input from "../../../components/ui/Input";
 import NotFound from "../../../components/NotFound";
 import ExportCSV from "../../../components/ExportCSV";
 import Loader from "../../../components/ui/Loader";
-import { useDeleteProduct, useProducts } from "../../../api/product";
 import ErrorPage from "../../../components/ErrorPage";
+import {
+  useDeleteProduct,
+  useProducts,
+} from "../../../hooks/useProductQueries";
+import { FaPlus } from "react-icons/fa";
 
 export default function Products() {
   const [sortBy, setSortBy] = useState<string>("");
@@ -61,18 +65,7 @@ export default function Products() {
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Product List</h2>
         <Link to="/admin/products/create">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5 mr-2"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 2a1 1 0 00-1 1v6H3a1 1 0 100 2h6v6a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 00-1-1z"
-              clipRule="evenodd"
-            />
-          </svg>
+          <FaPlus className="mr-2" />
           Create Product
         </Link>
       </div>
@@ -119,13 +112,7 @@ export default function Products() {
       )}
 
       {/* pagination */}
-      <Pagination
-        itemsPerPage={pageSize}
-        totalItems={data?.products ? data.products.length : 0}
-        totalPages={totalPages}
-        currentPage={page}
-        onPageChange={handlePageChange}
-      />
+      <Pagination totalItems={data?.products ? data.products.length : 0} />
     </div>
   );
 }

@@ -103,13 +103,7 @@ export default function Users() {
       ) : (
         <div>Not Found</div>
       )}
-      <Pagination
-        itemsPerPage={pageSize}
-        totalItems={data?.users.length ? data?.users.length : 0}
-        totalPages={totalPages}
-        currentPage={page}
-        onPageChange={handlePageChange}
-      />
+      <Pagination totalItems={data?.users.length ? data?.users.length : 0} />
     </div>
   );
 }
