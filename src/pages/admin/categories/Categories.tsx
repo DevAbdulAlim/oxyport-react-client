@@ -47,7 +47,12 @@ export default function Categories() {
       <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0 md:space-x-4">
         <div className="flex flex-col items-center space-y-4 md:flex-row md:space-y-0 md:space-x-4">
           <Search />
-          <Sort />
+          <Sort
+            options={[
+              { value: "name", label: "Name" },
+              { value: "createdAt", label: "Created At" },
+            ]}
+          />
         </div>
       </div>
 

@@ -1,7 +1,11 @@
 import Select from "./ui/Select";
 import { useSearchParams } from "react-router-dom";
 
-export default function Sort() {
+interface SortProps {
+  options: { value: string; label: string }[];
+}
+
+export default function Sort({ options }: SortProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -27,8 +31,11 @@ export default function Sort() {
         defaultValue={searchParams.get("sortBy") || ""}
         onChange={handleSortChange}
       >
-        <option value="name">Name</option>
-        <option value="createdAt">Created At</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
       </Select>
     </div>
   );
