@@ -1,31 +1,40 @@
 import type React from "react";
 import { FiTrash2 } from "react-icons/fi";
 import Button from "../../../components/ui/Button";
-import { useDeleteCategory } from "../../../api/category";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 interface DeleteCategoryProps {
   categoryId: number;
 }
 
-const DeleteCategory: React.FC<DeleteCategoryProps> = ({ categoryId }) => {
-  const deleteCategory = useDeleteCategory();
+const deleteCategoryRequest = async (categoryId: number) => {
+  const response = await fetch(`/api/categories/${categoryId}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to delete category");
+  }
+};
 
-  const handleDelete = () => {
-    deleteCategory.mutate(categoryId, {
-      onSuccess: () => {
-        toast.success("Category deleted successfully");
-      },
-      onError: (error) => {
-        console.error("Failed to delete category:", error);
-        toast.error("Failed to delete category. Please try again.");
-      },
-    });
-  };
+const DeleteCategory: React.FC<DeleteCategoryProps> = ({ categoryId }) => {
+  const queryClient = useQueryClient();
+
+  const deleteCategory = useMutation({
+    mutationFn: () => deleteCategoryRequest(categoryId),
+    onSuccess: () => {
+      toast.success("Category deleted successfully");
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+    },
+    onError: (error) => {
+      console.error("Failed to delete category:", error);
+      toast.error("Failed to delete category. Please try again.");
+    },
+  });
 
   return (
     <Button
-      onClick={handleDelete}
+      onClick={() => deleteCategory.mutate()}
       size="sm"
       variant="ghost"
       disabled={deleteCategory.isPending}
