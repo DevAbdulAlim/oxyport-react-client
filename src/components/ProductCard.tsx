@@ -14,7 +14,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
 
   return (
-    <div className="relative bg-white rounded-lg overflow-hidden flex flex-col">
+    <div className="relative border bg-white rounded-lg overflow-hidden flex flex-col">
       <div className="absolute top-2 left-2 z-10 px-3 py-1 text-white bg-green-600 text-sm font-semibold rounded-md">
         <span>Save 25%</span>
       </div>

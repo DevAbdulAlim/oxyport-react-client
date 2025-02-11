@@ -26,7 +26,7 @@ export default function Search() {
       <Input
         type="text"
         id="search"
-        placeholder="Search categories..."
+        placeholder="Search..."
         defaultValue={debouncedSearch}
         onChange={handleSearchChange}
         className="pl-8"

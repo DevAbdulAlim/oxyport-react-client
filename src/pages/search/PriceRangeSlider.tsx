@@ -1,13 +1,9 @@
 import React from "react";
 import { Range, getTrackBackground } from "react-range";
+import { useNavigate } from "react-router-dom";
 
-interface PriceRangeSliderProps {
-  onRangeChange: (values: number[]) => void;
-}
-
-const PriceRangeSlider: React.FC<PriceRangeSliderProps> = ({
-  onRangeChange,
-}) => {
+const PriceRangeSlider: React.FC = () => {
+  const navigate = useNavigate();
   const [sliderValues, setSliderValues] = React.useState<number[]>([300, 900]);
 
   const handleSliderChange = (values: number[]) => {
@@ -15,8 +11,12 @@ const PriceRangeSlider: React.FC<PriceRangeSliderProps> = ({
   };
 
   const handleFinalChange = (values: number[]) => {
-
-    onRangeChange(values);
+    setSliderValues(values);
+    // Update the URL with the new price range
+    const newParams = new URLSearchParams(window.location.search);
+    newParams.set("minPrice", values[0].toString());
+    newParams.set("maxPrice", values[1].toString());
+    navigate(`/search?${newParams.toString()}`);
   };
 
   const sliderStyle = {

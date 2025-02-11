@@ -1,63 +1,61 @@
-import React, { memo, useState } from "react";
-import { AiOutlineApple } from "react-icons/ai";
-import {
-  GiBroccoli,
-  GiHerbsBundle,
-  GiCoconuts,
-  GiCarrot,
-  GiBananaBunch,
-  GiWatermelon,
-  GiStrawberry,
-  GiPineapple,
-  GiTomato,
-} from "react-icons/gi";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
-const categories = [
-  { name: "Fruits", link: "/fruits", reactIcon: <AiOutlineApple /> },
-  { name: "Vegetables", link: "/vegetables", reactIcon: <GiBroccoli /> },
-  { name: "Herbs", link: "/herbs", reactIcon: <GiHerbsBundle /> },
-  { name: "Nuts", link: "/nuts", reactIcon: <GiCoconuts /> },
-  { name: "Carrots", link: "/carrots", reactIcon: <GiCarrot /> },
-  { name: "Bananas", link: "/bananas", reactIcon: <GiBananaBunch /> },
-  { name: "Watermelon", link: "/watermelon", reactIcon: <GiWatermelon /> },
-  { name: "Strawberries", link: "/strawberries", reactIcon: <GiStrawberry /> },
-  { name: "Pineapples", link: "/pineapples", reactIcon: <GiPineapple /> },
-  { name: "Tomatoes", link: "/tomatoes", reactIcon: <GiTomato /> },
-];
+const CategoryFilter: React.FC = () => {
+  const navigate = useNavigate();
 
-interface CategoryFilterProps {
-  selectedCategories: string[];
-  handleChange: (categories: string[]) => void;
-}
+  const {
+    data: categories = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const { data } = await axios.get("/api/categories");
+      return Array.isArray(data.categories) ? data.categories : [];
+    },
+  });
 
-const CategoryFilter: React.FC<CategoryFilterProps> = ({
-  selectedCategories,
-  handleChange,
-}) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCategories = new Set(searchParams.getAll("categories"));
+
   const toggleCategory = (category: string) => {
-    const updatedCategories = selectedCategories.includes(category)
-      ? selectedCategories.filter((cat) => cat !== category)
-      : [...selectedCategories, category];
-    handleChange(updatedCategories);
+    const newParams = new URLSearchParams(searchParams);
+    if (selectedCategories.has(category)) {
+      const updatedCategories = Array.from(selectedCategories).filter(
+        (cat) => cat !== category
+      );
+      if (updatedCategories.length > 0) {
+        newParams.set("categories", updatedCategories.join(","));
+      } else {
+        newParams.delete("categories");
+      }
+    } else {
+      newParams.append("categories", category);
+    }
+    setSearchParams(newParams);
+    navigate(`?${newParams.toString()}`); // Update URL with new params
   };
 
-  console.log("CategoryFilter");
+  if (isLoading) return <p>Loading categories...</p>;
+  if (error) return <p>Failed to load categories.</p>;
 
   return (
     <div>
       <h3 className="mb-2 text-xl font-bold">Categories</h3>
       <ul>
-        {categories.map((category, index) => (
+        {categories.map((category: { name: string }, index: number) => (
           <li key={index} className="mb-1">
             <button
               className={`flex items-center rounded-full px-3 py-1 ${
-                selectedCategories.includes(category.name)
+                selectedCategories.has(category.name)
                   ? "bg-green-500 text-green-50"
                   : "bg-white text-green-900"
               }`}
               onClick={() => toggleCategory(category.name)}
             >
-              <span className="text-2xl">{category.reactIcon}</span>
               <span className="ml-2">{category.name}</span>
             </button>
           </li>
@@ -67,4 +65,4 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   );
 };
 
-export default memo(CategoryFilter);
+export default CategoryFilter;

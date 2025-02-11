@@ -23,9 +23,6 @@ export default function Sort({ options }: SortProps) {
 
   return (
     <div className="flex items-center">
-      <label htmlFor="sortBy" className="mr-2 font-medium text-gray-700">
-        Sort by:
-      </label>
       <Select
         id="sortBy"
         defaultValue={searchParams.get("sortBy") || ""}
