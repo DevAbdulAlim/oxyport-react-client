@@ -41,7 +41,7 @@ export default function ProductDetails() {
       <div className="container px-3 mx-auto mt-8">
         <div className="flex flex-col pt-8 pb-12 space-x-12 space-y-12 lg:flex-row">
           <div className="lg:w-1/2">
-            <ProductImageSlide />
+            <ProductImageSlide images={product.images} />
           </div>
           <div className="px-8 lg:w-1/2">
             <h2 className="mb-4 text-3xl font-semibold">{product.name}</h2>
