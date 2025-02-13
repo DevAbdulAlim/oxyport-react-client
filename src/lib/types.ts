@@ -9,7 +9,8 @@ export type UserType = {
   phone?: string | null;
   birthDate?: Date | null;
   gender?: string | null;
-  active: boolean;
+  active: number;
+  createdAt: Date;
 };
 
 export type Address = {
@@ -98,6 +99,7 @@ export type OrderType = {
   paid_amount: number;
   due_amount: number;
   payment_status: string;
+  createdAt: Date;
 };
 
 export type OrderItem = {
@@ -105,4 +107,15 @@ export type OrderItem = {
   orderId: number;
   productId: number;
   quantity: number;
+};
+
+export type PaymentType = {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  method: string;
+  amount: number;
+  transactionId?: string;
+  orderId: number;
 };

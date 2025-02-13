@@ -12,3 +12,18 @@ export function truncateName(name: string, maxLength: number) {
     return name.slice(0, maxLength) + "...";
   }
 }
+
+export function formatDate(date: Date): string {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+export function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(amount);
+}
