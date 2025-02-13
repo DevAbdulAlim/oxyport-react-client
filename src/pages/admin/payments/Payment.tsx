@@ -1,124 +1,77 @@
-import React from "react";
-import Button from "../../../components/ui/Button";
+import Pagination from "../../../components/Pagination";
+import Loader from "../../../components/ui/Loader";
 import Link from "../../../components/ui/Link";
-import { FiEye } from "react-icons/fi";
+import PaymentTable from "./PaymentTable";
+import { useQuery } from "@tanstack/react-query";
+import { api as axios } from "../../../lib/api";
+import { FaPlus } from "react-icons/fa";
+import Search from "../../../components/Search";
+import { useSearchParams } from "react-router-dom";
+import Sort from "../../../components/Sort";
 
-interface Payment {
-  id: number;
-  customerName: string;
-  orderId: string;
-  date: string;
-  amount: number;
-  method: string;
-  customerEmail: string;
-  customerPhone: string;
-}
+export default function Payments() {
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search") || "";
+  const sortBy = searchParams.get("sortBy") || "";
+  const page = searchParams.get("page") || "1";
+  const pageSize = Number.parseInt(searchParams.get("pageSize") || "10");
 
-const dummyPayments: Payment[] = [
-  {
-    id: 1,
-    customerName: "John Doe",
-    orderId: "ORD123",
-    date: "2024-02-01",
-    amount: 50.0,
-    method: "Cash",
-    customerEmail: "john@example.com",
-    customerPhone: "123-456-7890",
-  },
-  {
-    id: 2,
-    customerName: "Jane Smith",
-    orderId: "ORD124",
-    date: "2024-01-30",
-    amount: 75.0,
-    method: "Credit Card",
-    customerEmail: "jane@example.com",
-    customerPhone: "987-654-3210",
-  },
-  {
-    id: 3,
-    customerName: "Alice Johnson",
-    orderId: "ORD125",
-    date: "2024-01-28",
-    amount: 100.0,
-    method: "Digital Wallet",
-    customerEmail: "alice@example.com",
-    customerPhone: "555-123-4567",
-  },
-  // Add more dummy payment data as needed
-];
-
-const Payment: React.FC = () => {
-  const handleTrackOrder = (orderId: string) => {
-    // Logic to track the order goes here
-    console.log("Tracking order:", orderId);
-  };
+  // Fetching payments data
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["payments", search, sortBy, page, pageSize],
+    queryFn: () =>
+      axios
+        .get(`/payments`, {
+          params: {
+            search: search,
+            sortBy,
+            page,
+            pageSize,
+          },
+        })
+        .then((res) => res.data),
+  });
 
   return (
     <div className="container px-3 py-8 mx-auto">
-      <h1 className="mb-4 text-3xl font-bold">Payment History</h1>
-      <div className="overflow-auto bg-white rounded-lg shadow-md">
-        <table className="w-full table-auto">
-          <thead>
-            <tr className="text-sm leading-normal text-gray-600 bg-gray-200">
-              <th className="px-6 py-3 text-left">ID</th>
-              <th className="px-6 py-3 text-left">Customer Name</th>
-              <th className="px-6 py-3 text-left">Order ID</th>
-              <th className="px-6 py-3 text-left">Date</th>
-              <th className="px-6 py-3 text-left">Amount</th>
-              <th className="px-6 py-3 text-left">Payment Method</th>
-              <th className="px-6 py-3 text-left">Customer Email</th>
-              <th className="px-6 py-3 text-left">Customer Phone</th>
-              <th className="px-6 py-3 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="text-gray-600 ">
-            {dummyPayments.map((payment) => (
-              <tr
-                key={payment.id}
-                className="border-b border-gray-200 hover:bg-gray-100"
-              >
-                <td className="px-6 py-3 text-left whitespace-nowrap">
-                  {payment.id}
-                </td>
-                <td className="px-6 py-3 text-left whitespace-nowrap">
-                  {payment.customerName}
-                </td>
-                <td className="px-6 py-3 text-left whitespace-nowrap">
-                  {payment.orderId}
-                </td>
-                <td className="px-6 py-3 text-left whitespace-nowrap">
-                  {payment.date}
-                </td>
-                <td className="px-6 py-3 text-left whitespace-nowrap">
-                  ${payment.amount.toFixed(2)}
-                </td>
-                <td className="px-6 py-3 text-left whitespace-nowrap">
-                  {payment.method}
-                </td>
-                <td className="px-6 py-3 text-left whitespace-nowrap">
-                  {payment.customerEmail}
-                </td>
-                <td className="px-6 py-3 text-left whitespace-nowrap">
-                  {payment.customerPhone}
-                </td>
-                <td className="px-6 py-3 text-left whitespace-nowrap">
-                  <Link
-                    to={`/admin/payments/${payment.id}`}
-                    variant="secondary"
-                    onClick={() => handleTrackOrder(payment.orderId)}
-                    size="sm"
-                  >
-                    <FiEye />
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Header Section */}
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-gray-800">Payment List</h2>
+        <Link to="/admin/payments/create">
+          <FaPlus className="mr-2" />
+          Create Payment
+        </Link>
       </div>
+
+      {/* Search and Sort Section */}
+      <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0 md:space-x-4">
+        <div className="flex flex-col items-center space-y-4 md:flex-row md:space-y-0 md:space-x-4">
+          <Search />
+          <Sort
+            options={[
+              { value: "createdAt", label: "Date" },
+              { value: "amount", label: "Amount" },
+              { value: "method", label: "Payment Method" },
+            ]}
+          />
+        </div>
+      </div>
+
+      {/* Content Section */}
+      <div className="mt-6">
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          <div className="text-red-500">Error: {error.message}</div>
+        ) : data?.payments && data?.payments?.length > 0 ? (
+          <PaymentTable payments={data.payments} />
+        ) : (
+          <div className="text-gray-500">No payments found.</div>
+        )}
+      </div>
+
+      {/* Pagination */}
+      <Pagination totalItems={data?.totalItems || 0} />
     </div>
   );
-};
-
-export default Payment;
+}
