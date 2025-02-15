@@ -116,6 +116,7 @@ export type PaymentType = {
   phone: string;
   method: string;
   amount: number;
-  transactionId?: string;
+  transactionId: string | null;
   orderId: number;
+  createdAt: Date;
 };
