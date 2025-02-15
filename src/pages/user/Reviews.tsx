@@ -1,147 +1,106 @@
-import React, { useState } from "react";
-import Button from "../../components/ui/Button";
+import type React from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { Star, User, Calendar } from "lucide-react";
 
 interface Review {
   id: number;
-  productId: number;
-  productName: string;
+  text: string;
   rating: number;
-  comment: string;
+  productId: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
-const userReviews: Review[] = [
-  {
-    id: 1,
-    productId: 101,
-    productName: "Product A",
-    rating: 4,
-    comment: "Great product! Highly recommended.",
-  },
-  {
-    id: 2,
-    productId: 102,
-    productName: "Product B",
-    rating: 5,
-    comment: "Excellent quality and fast delivery.",
-  },
-  {
-    id: 3,
-    productId: 103,
-    productName: "Product C",
-    rating: 3,
-    comment: "Good product but a bit pricey.",
-  },
-];
+const fetchReviews = async (): Promise<Review[]> => {
+  const { data } = await axios.get<Review[]>("/api/reviews");
+  return data;
+};
 
-const Reviews: React.FC = () => {
-  const [editingReview, setEditingReview] = useState<Review | null>(null);
-
-  const handleEditReview = (reviewId: number) => {
-    const reviewToEdit = userReviews.find((review) => review.id === reviewId);
-    setEditingReview(reviewToEdit || null);
-  };
-
-  const handleCloseModal = () => {
-    setEditingReview(null);
-  };
-
-  const handleSaveReview = (editedReview: Review) => {
-    // Implement your logic to save the edited review here
-    console.log("Saving edited review:", editedReview);
-    setEditingReview(null);
-  };
-
+const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
   return (
-    <div className="container p-6 mx-auto">
-      <h2 className="mb-6 text-3xl font-bold">Your Reviews</h2>
-      <div>
-        {userReviews.map((review) => (
-          <div
-            key={review.id}
-            className="p-4 mb-4 bg-white rounded-md shadow-md"
-          >
-            <div className="flex items-center justify-between mb-2">
-              <div>
-                <span className="text-lg font-bold">{review.productName}</span>
-                <span className="ml-2 text-gray-500">
-                  Rating: {review.rating}/5
-                </span>
-              </div>
-              <Button
-                variant="ghost"
-                onClick={() => handleEditReview(review.id)}
-              >
-                Edit
-              </Button>
-            </div>
-            <p>{review.comment}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Edit Review Modal */}
-      {editingReview && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="p-6 bg-white rounded-md shadow-md">
-            <h3 className="mb-4 text-xl font-bold">Edit Review</h3>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSaveReview(editingReview);
-              }}
-            >
-              <div className="mb-4">
-                <label htmlFor="editedRating" className="block mb-2 ">
-                  Rating:
-                </label>
-                <input
-                  type="number"
-                  id="editedRating"
-                  name="editedRating"
-                  value={editingReview.rating}
-                  onChange={(e) =>
-                    setEditingReview({
-                      ...editingReview,
-                      rating: +e.target.value,
-                    })
-                  }
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="editedComment" className="block mb-2 ">
-                  Comment:
-                </label>
-                <textarea
-                  id="editedComment"
-                  name="editedComment"
-                  value={editingReview.comment}
-                  onChange={(e) =>
-                    setEditingReview({
-                      ...editingReview,
-                      comment: e.target.value,
-                    })
-                  }
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  rows={4}
-                />
-              </div>
-              <div className="flex justify-end">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={handleCloseModal}
-                >
-                  Cancel
-                </Button>
-                <Button type="submit">Save</Button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+    <div className="flex">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Star
+          key={star}
+          className={`w-5 h-5 ${
+            star <= rating ? "text-yellow-400 fill-current" : "text-gray-300"
+          }`}
+        />
+      ))}
     </div>
   );
 };
 
-export default Reviews;
+const UserReviewList: React.FC = () => {
+  const {
+    data: reviews,
+    isLoading,
+    isError,
+  } = useQuery<Review[]>({
+    queryKey: ["reviews"],
+    queryFn: fetchReviews,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div
+        className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+        role="alert"
+      >
+        <strong className="font-bold">Error!</strong>
+        <span className="block sm:inline">
+          {" "}
+          Unable to load reviews. Please try again later.
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">
+        Customer Reviews
+      </h2>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {reviews?.map((review) => (
+          <div
+            key={review.id}
+            className="bg-white rounded-lg shadow-md p-6 transition duration-300 ease-in-out hover:shadow-lg"
+          >
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <StarRating rating={review.rating} />
+                <p className="text-sm text-gray-600 mt-1">
+                  Product ID: {review.productId}
+                </p>
+              </div>
+              <div className="flex items-center text-sm text-gray-500">
+                <Calendar className="w-4 h-4 mr-1" />
+                {new Date(review.createdAt).toLocaleDateString()}
+              </div>
+            </div>
+            <p className="text-gray-700 mb-4">{review.text}</p>
+            <div className="flex items-center justify-between text-sm text-gray-500">
+              <div className="flex items-center">
+                <User className="w-4 h-4 mr-1" />
+                <span>Anonymous User</span>
+              </div>
+              <span>ID: {review.id}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default UserReviewList;
